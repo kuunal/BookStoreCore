@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RepositoryLayer.Interface;
+using RepositoryLayer.Implementation;
 
 namespace BookStore
 {
@@ -26,6 +28,9 @@ namespace BookStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            DatabaseConfigurations connectionString = Configuration.GetSection("ConnectionStrings")
+                                        .Get<DatabaseConfigurations>();
+            services.AddSingleton(connectionString);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
