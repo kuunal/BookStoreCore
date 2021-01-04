@@ -2,7 +2,6 @@
 using ModelLayer.UserDto;
 using RepositoryLayer.Interface;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +11,7 @@ namespace RepositoryLayer.Implementation
     public class UserRepository : IUserRepository
     {
         private readonly SqlConnection _conn;
+
         public UserRepository(IDBContext dBContext)
         {
             this._conn = dBContext.GetConnection();
@@ -51,9 +51,8 @@ namespace RepositoryLayer.Implementation
             };
         }
         
-        public async Task<UserResponseDto> Insert(UserRequestDto requestDto)
+        public async Task<int> Insert(UserRequestDto requestDto)
         {
-            UserResponseDto user = null;
             SqlCommand command = new SqlCommand("sp_users_insert", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
@@ -65,14 +64,8 @@ namespace RepositoryLayer.Implementation
             command.Parameters.AddWithValue("@password", requestDto.Password);
             command.Parameters.AddWithValue("@role", requestDto.Role);
             await _conn.OpenAsync();
-            using(SqlDataReader reader = command.ExecuteReader())
-            {
-                while (await reader.ReadAsync())
-                {
-                    user = MapUserFromReader(reader);
-                }
-            }
-            return user;
+            int id = Convert.ToInt32(await command.ExecuteScalarAsync());
+            return id;
         }
     }
 }
