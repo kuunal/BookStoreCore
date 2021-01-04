@@ -24,6 +24,7 @@ namespace RepositoryLayer.Implementation
             command.Parameters.AddWithValue("@description", requestDto.Description);
             command.Parameters.AddWithValue("@title", requestDto.Title);
             command.Parameters.AddWithValue("@author", requestDto.Author);
+            command.Parameters.AddWithValue("@image", requestDto.Image);
             command.Parameters.AddWithValue("@price", requestDto.Price);
             command.Parameters.AddWithValue("@quantity", requestDto.Quantity);
             await _conn.OpenAsync();

@@ -42,6 +42,7 @@ namespace BookStore
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenManager, TokenManager>();
             services.AddScoped<IBooksRepository, BooksRepository>();
+            services.AddScoped<IBookService, BookService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
         }
