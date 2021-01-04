@@ -9,7 +9,7 @@ namespace RepositoryLayer.Interface
 {
     public interface IUserRepository
     {
-        Task<UserResponseDto> AuthenticateUser(LoginDto loginDto);
+        Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto);
         Task<int> Insert(UserRequestDto requestDto);
 
     }

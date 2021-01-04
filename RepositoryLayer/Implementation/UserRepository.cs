@@ -17,25 +17,26 @@ namespace RepositoryLayer.Implementation
             this._conn = dBContext.GetConnection();
         }
 
-        public async Task<UserResponseDto> AuthenticateUser(LoginDto loginDto)
+        public async Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto)
         {
             UserResponseDto user = null;
-            SqlCommand command = new SqlCommand("sp_users_login", _conn)
+            string password = null;
+            SqlCommand command = new SqlCommand("sp_users_getByEmail", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
-            command.Parameters.AddWithValue("@loginId", loginDto.Email);
-            command.Parameters.AddWithValue("@password", loginDto.Password);
+            command.Parameters.AddWithValue("@email", loginDto.Email);
             await _conn.OpenAsync();
             using(SqlDataReader reader = await command.ExecuteReaderAsync())
             {
                 while(await reader.ReadAsync())
                 {
                     user = MapUserFromReader(reader);
+                    password = (string) reader["password"];
                 }
             }
             await _conn.CloseAsync();
-            return user;
+            return (user, password);
         }
 
         private UserResponseDto MapUserFromReader(SqlDataReader reader)
@@ -44,7 +45,7 @@ namespace RepositoryLayer.Implementation
             {
                 Id = (int)reader["id"],
                 FirstName = (string)reader["firstname"],
-                LastName = (string)reader["firstname"],
+                LastName = (string)reader["lastname"],
                 PhoneNumber = (string)reader["phonenumber"],
                 Email = (string)reader["email"],
                 Role = (string) reader["role"]
