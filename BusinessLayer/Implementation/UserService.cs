@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using BusinessLayer.Exceptions;
 using BusinessLayer.Interface;
 using ModelLayer;
 using ModelLayer.UserDto;
+using RepositoryLayer.Implementation;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +32,8 @@ namespace BusinessLayer.Implementation
 
         public async Task<UserResponseDto> AddUser(UserRequestDto requestDto)
         {
+            try
+            {
             UserResponseDto response = null;
             int id = await _repository.Insert(requestDto);
             if (id > 0)
@@ -36,6 +42,10 @@ namespace BusinessLayer.Implementation
             }
             response.Id = id;
             return response;
+            }catch(SqlException e) when (e.Number == SqlErrorNumbers.DuplicateKey)
+            {
+                throw new BookstoreException(ExceptionMessages.ACCOUNT_ALREADY_EXISTS, (int)HttpStatusCode.BadRequest);
+            }
         }
     }
 }
