@@ -15,6 +15,7 @@ using RepositoryLayer.Implementation;
 using BusinessLayer.Implementation;
 using BusinessLayer.Interface;
 using Fundoo.Utilities;
+using AutoMapper;
 
 namespace BookStore
 {
@@ -37,7 +38,7 @@ namespace BookStore
             services.AddScoped<IDBContext, DBContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
         }
 
@@ -48,6 +49,8 @@ namespace BookStore
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseExceptionHandler("/Error");
 
             app.UseHttpsRedirection();
 
