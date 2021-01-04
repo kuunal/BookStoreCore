@@ -23,6 +23,7 @@ namespace Fundoo.Controllers
                 "BookstoreException" => Convert.ToInt32(exception.Error.ToString()),
                 _ => (int)HttpStatusCode.InternalServerError
             };
+            HttpContext.Response.StatusCode = statusCode;
             return new JsonResult(new { detail = message, statusCode = statusCode });
         }
     }
