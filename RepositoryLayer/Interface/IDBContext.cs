@@ -8,6 +8,6 @@ namespace RepositoryLayer.Interface
 {
     public interface IDBContext
     {
-        SqlConnection GetConnection(DatabaseConfigurations connectionString);
+        SqlConnection GetConnection();
     }
 }

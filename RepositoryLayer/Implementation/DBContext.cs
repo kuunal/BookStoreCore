@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RepositoryLayer.Interface;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
@@ -7,10 +8,15 @@ namespace RepositoryLayer.Implementation
 {
     public class DBContext: IDBContext
     {
-
-        public SqlConnection GetConnection(DatabaseConfigurations connectionString)
+        string connectionString;
+        public DBContext(DatabaseConfigurations connectionString)
         {
-            return new SqlConnection(connectionString.ConnectionString);
+            this.connectionString = connectionString.ConnectionString;
+        }
+
+        public SqlConnection GetConnection()
+        {
+            return new SqlConnection(connectionString);
         }
     }
 }
