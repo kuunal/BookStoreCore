@@ -10,7 +10,7 @@ namespace ModelLayer.UserDto
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        [RegularExpression(@"^+[0-9]{12}$"
+        [RegularExpression(@"^\+[0-9]{12}$"
             ,ErrorMessage = "Phone number should be in +91[Phone Number] format")]
         public string PhoneNumber { get; set; }
 
