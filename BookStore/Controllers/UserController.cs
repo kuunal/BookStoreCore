@@ -2,6 +2,7 @@
 using BusinessLayer.Interface;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
+using ModelLayer.UserDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
+        [Route("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
             UserResponseDto user = await _service.AuthenticateUser(loginDto);
@@ -42,6 +44,20 @@ namespace BookStore.Controllers
                      Data = user
                  });
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser(UserRequestDto requestDto) 
+        {
+
+            UserResponseDto user = await _service.AddUser(requestDto);
+            return Ok(new Response<UserResponseDto>
+            {
+                StatusCode = (int)HttpStatusCode.Created,
+                Message = ResponseMessage.USER_ADDED,
+                Data = user
+            });
+
         }
     }
 }
