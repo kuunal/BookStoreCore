@@ -24,10 +24,10 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            UserDto user = await _service.AuthenticateUser(loginDto);
+            UserResponseDto user = await _service.AuthenticateUser(loginDto);
             if (user != null)
             {
-                return Ok(new Response<UserDto>
+                return Ok(new Response<UserResponseDto>
                 {
                     StatusCode = (int)HttpStatusCode.OK,
                     Message = ResponseMessage.LOGIN_SUCCESS,
@@ -35,7 +35,7 @@ namespace BookStore.Controllers
                 });
             }
             else { 
-                return Unauthorized(new Response<UserDto>
+                return Unauthorized(new Response<UserResponseDto>
                  {
                      StatusCode = (int)HttpStatusCode.Unauthorized,
                      Message = ResponseMessage.LOGIN_SUCCESS,

@@ -8,6 +8,6 @@ namespace RepositoryLayer.Interface
 {
     public interface IUserRepository
     {
-        Task<UserDto> AuthenticateUser(LoginDto loginDto);
+        Task<UserResponseDto> AuthenticateUser(LoginDto loginDto);
     }
 }

@@ -8,6 +8,6 @@ namespace BusinessLayer.Interface
 {
     public interface IUserService
     {
-        Task<UserDto> AuthenticateUser(LoginDto loginDto); 
+        Task<UserResponseDto> AuthenticateUser(LoginDto loginDto); 
     }
 }

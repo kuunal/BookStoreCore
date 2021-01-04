@@ -1,4 +1,5 @@
 ﻿using ModelLayer;
+using ModelLayer.UserDto;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace RepositoryLayer.Implementation
             this._conn = dBContext.GetConnection();
         }
 
-        public async Task<UserDto> AuthenticateUser(LoginDto loginDto)
+        public async Task<UserResponseDto> AuthenticateUser(LoginDto loginDto)
         {
-            UserDto user = null;
+            UserResponseDto user = null;
             SqlCommand command = new SqlCommand("sp_users_login", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
@@ -37,9 +38,9 @@ namespace RepositoryLayer.Implementation
             return user;
         }
 
-        private UserDto MapUserFromReader(SqlDataReader reader)
+        private UserResponseDto MapUserFromReader(SqlDataReader reader)
         {
-            return new UserDto
+            return new UserResponseDto
             {
                 Id = (int)reader["id"],
                 FirstName = (string)reader["firstname"],
@@ -48,6 +49,30 @@ namespace RepositoryLayer.Implementation
                 Email = (string)reader["email"],
                 Role = (string) reader["role"]
             };
+        }
+        
+        public async Task<UserResponseDto> Insert(UserRequestDto requestDto)
+        {
+            UserResponseDto user = null;
+            SqlCommand command = new SqlCommand("sp_users_insert", _conn)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@firstname", requestDto.FirstName);
+            command.Parameters.AddWithValue("@lastname", requestDto.LastName);
+            command.Parameters.AddWithValue("@email", requestDto.Email);
+            command.Parameters.AddWithValue("@phonenumber", requestDto.PhoneNumber);
+            command.Parameters.AddWithValue("@password", requestDto.Password);
+            command.Parameters.AddWithValue("@role", requestDto.Role);
+            await _conn.OpenAsync();
+            using(SqlDataReader reader = command.ExecuteReader())
+            {
+                while (await reader.ReadAsync())
+                {
+                    user = MapUserFromReader(reader);
+                }
+            }
+            return user;
         }
     }
 }

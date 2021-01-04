@@ -23,12 +23,12 @@ namespace Greeting.TokenAuthentication
 
         }
 
-        public string Encode(UserDto account)
+        public string Encode(UserResponseDto account)
         {
             return Encode(account, expiryTime);
         }
 
-        public string Encode(UserDto account, int ExpiryTimeInMinutes, byte[] secret=null)
+        public string Encode(UserResponseDto account, int ExpiryTimeInMinutes, byte[] secret=null)
         {
             var tokenDescriptor = new SecurityTokenDescriptor
             {

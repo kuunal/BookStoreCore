@@ -17,7 +17,7 @@ namespace BusinessLayer.Implementation
             _repository = repository;
         }
 
-        public async Task<UserDto> AuthenticateUser(LoginDto loginDto)
+        public async Task<UserResponseDto> AuthenticateUser(LoginDto loginDto)
         {
             return await _repository.AuthenticateUser(loginDto);
         }
