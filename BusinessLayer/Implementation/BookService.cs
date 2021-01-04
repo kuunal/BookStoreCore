@@ -47,5 +47,11 @@ namespace BusinessLayer.Implementation
         {
             return _repository.Get();
         }
+
+        public async Task<int> Delete(int id)
+        {
+            return await _repository.Delete(id);
+        }
+
     }
 }

@@ -64,5 +64,26 @@ namespace BookStore.Controllers
                 Data = book
             });
         }
+
+        [HttpDelete("id")]
+        public async Task<IActionResult> RemoveBook(int id)
+        {
+            int isDeleted = await _service.Delete(id);
+            if (isDeleted <= 0)
+            {
+                return NotFound(new Response<object>
+                {
+                    StatusCode = (int)HttpStatusCode.NotFound,
+                    Message = ResponseMessage.BOOK_REMOVE_FAILED,
+                    Data = null
+                });
+            }
+            return Ok(new Response<object>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.BOOK_REMOVE,
+                Data = null
+            });
+        }
     }
 }

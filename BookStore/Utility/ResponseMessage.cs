@@ -10,7 +10,10 @@ namespace ModelLayer
         public const string LOGIN_FAILED = "Login failed! please enter proper id or password.";
         public const string USER_ADDED = "User created successfully";
         public const string BOOK_ADDED = "Book added successfully";
+        public const string BOOK_REMOVE = "Book removed successfully";
+        public const string BOOK_REMOVE_FAILED = "No such book exists!";
         public const string SUCCESSFUL = "Successful";
         public const string BOOK_NOT_FOUND = "No such book exists!";
+
     }
 }

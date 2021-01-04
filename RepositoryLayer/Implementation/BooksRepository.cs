@@ -86,5 +86,18 @@ namespace RepositoryLayer.Implementation
             await _conn.CloseAsync();
             return book;
         }
+
+        public async Task<int> Delete(int id)
+        {
+            SqlCommand command = new SqlCommand("sp_books_delete", _conn)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@id", id);
+            await _conn.OpenAsync();
+            int isDeleted = await command.ExecuteNonQueryAsync();
+            await _conn.CloseAsync();
+            return isDeleted;
+        }
     }
 }
