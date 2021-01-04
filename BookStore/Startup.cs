@@ -34,6 +34,7 @@ namespace BookStore
             DatabaseConfigurations connectionString = Configuration.GetSection("ConnectionStrings")
                                         .Get<DatabaseConfigurations>();
             services.AddSingleton(connectionString);
+            services.AddScoped<IDBContext, DBContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
 
@@ -53,6 +54,8 @@ namespace BookStore
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCustomSwagger();
 
             app.UseEndpoints(endpoints =>
             {

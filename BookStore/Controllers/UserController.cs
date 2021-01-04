@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Implementation;
+using BusinessLayer.Interface;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using System;
@@ -10,11 +11,12 @@ using System.Threading.Tasks;
 namespace BookStore.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly UserService _service;
+        private readonly IUserService _service;
 
-        public UserController(UserService service)
+        public UserController(IUserService service)
         {
             _service = service;
         }
