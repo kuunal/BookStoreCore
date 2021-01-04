@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using ModelLayer.UserDto;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,14 +27,14 @@ namespace BookStore.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            UserResponseDto user = await _service.AuthenticateUser(loginDto);
+            var(user, token) = await _service.AuthenticateUser(loginDto);
             if (user != null)
             {
-                return Ok(new Response<UserResponseDto>
+                return Ok(new Response<Hashtable>
                 {
                     StatusCode = (int)HttpStatusCode.OK,
                     Message = ResponseMessage.LOGIN_SUCCESS,
-                    Data = user
+                    Data = new Hashtable { {"user", user }, { "token", token } }
                 });
             }
             else { 

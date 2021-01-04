@@ -9,7 +9,7 @@ namespace BusinessLayer.Interface
 {
     public interface IUserService
     {
-        Task<UserResponseDto> AuthenticateUser(LoginDto loginDto);
+        Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto);
         Task<UserResponseDto> AddUser(UserRequestDto requestDto);
     }
 }

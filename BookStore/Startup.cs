@@ -16,6 +16,8 @@ using BusinessLayer.Implementation;
 using BusinessLayer.Interface;
 using Fundoo.Utilities;
 using AutoMapper;
+using TokenAuthorization;
+using Greeting.TokenAuthorization;
 
 namespace BookStore
 {
@@ -38,6 +40,7 @@ namespace BookStore
             services.AddScoped<IDBContext, DBContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITokenManager, TokenManager>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
         }
