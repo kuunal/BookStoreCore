@@ -31,7 +31,7 @@ namespace RepositoryLayer.Implementation
                     user = mapUserFromReader(reader);
                 }
             }
-            _conn.Close();
+            await _conn.CloseAsync();
             return user;
         }
 

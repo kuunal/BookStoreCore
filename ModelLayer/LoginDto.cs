@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ModelLayer
 {
-    class LoginDto
+    public class LoginDto
     {
         [Required]
         public string Email { get; set; }
