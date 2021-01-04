@@ -1,4 +1,5 @@
 ﻿using ModelLayer;
+using ModelLayer.UserDto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,7 @@ namespace BusinessLayer.Interface
 {
     public interface IUserService
     {
-        Task<UserResponseDto> AuthenticateUser(LoginDto loginDto); 
+        Task<UserResponseDto> AuthenticateUser(LoginDto loginDto);
+        Task<UserResponseDto> AddUser(UserRequestDto requestDto);
     }
 }
