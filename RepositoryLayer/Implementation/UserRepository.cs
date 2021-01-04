@@ -11,7 +11,7 @@ namespace RepositoryLayer.Implementation
     public class UserRepository : IUserRepository
     {
         private readonly SqlConnection _conn;
-        public UserRepository(DBContext dBContext)
+        public UserRepository(IDBContext dBContext)
         {
             this._conn = dBContext.GetConnection();
         }
