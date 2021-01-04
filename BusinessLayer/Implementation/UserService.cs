@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Interface;
+﻿using AutoMapper;
+using BusinessLayer.Interface;
 using ModelLayer;
 using ModelLayer.UserDto;
 using RepositoryLayer.Interface;
@@ -12,10 +13,12 @@ namespace BusinessLayer.Implementation
     public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository)
+        public UserService(IUserRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public async Task<UserResponseDto> AuthenticateUser(LoginDto loginDto)
@@ -25,7 +28,14 @@ namespace BusinessLayer.Implementation
 
         public async Task<UserResponseDto> AddUser(UserRequestDto requestDto)
         {
-            return await _repository.Insert(requestDto);
+            UserResponseDto response = null;
+            int id = await _repository.Insert(requestDto);
+            if (id > 0)
+            {
+               response = _mapper.Map<UserResponseDto>(requestDto);
+            }
+            response.Id = id;
+            return response;
         }
     }
 }
