@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TokenAuthentication;
+using TokenAuthorization;
 
-namespace Greeting.TokenAuthentication
+namespace Greeting.TokenAuthorization
 {
-    public class TokenAuthenticationFilter : Attribute, IAuthorizationFilter
+    public class TokenAuthorizationFilter : Attribute, IAuthorizationFilter
     {
         private readonly string _role;
-        public TokenAuthenticationFilter(string role)
+        public TokenAuthorizationFilter(string role)
         {
             _role = role;
         }

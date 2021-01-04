@@ -5,9 +5,9 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TokenAuthentication;
+using TokenAuthorization;
 
-namespace Greeting.TokenAuthentication
+namespace Greeting.TokenAuthorization
 {
     public class TokenManager : ITokenManager
     {

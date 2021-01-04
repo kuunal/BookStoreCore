@@ -1,7 +1,7 @@
 ﻿using ModelLayer;
 using System.Security.Claims;
 
-namespace TokenAuthentication
+namespace TokenAuthorization
 {
     public interface ITokenManager
     {
