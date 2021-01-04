@@ -53,5 +53,16 @@ namespace BusinessLayer.Implementation
             return await _repository.Delete(id);
         }
 
+        public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto)
+        {
+            try
+            {
+                return await _repository.Update(id, requestDto);
+            }catch(SqlException e) when(e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
+            {
+                throw new BookstoreException("Invalid data");
+            }
+        }
+
     }
 }

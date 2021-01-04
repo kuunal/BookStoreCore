@@ -85,5 +85,28 @@ namespace BookStore.Controllers
                 Data = null
             });
         }
+
+
+        [HttpPost("id")]
+        public async Task<IActionResult> UpdateBook(int id, BookRequestDto requestDto)
+        {
+            BookResponseDto book = await _service.Update(id, requestDto);
+            if (book == null)
+            {
+                return NotFound(new Response<BookResponseDto>
+                {
+                    StatusCode = (int)HttpStatusCode.NotFound,
+                    Message = ResponseMessage.BOOK_NOT_FOUND,
+                    Data = book
+                });
+            }
+            return Ok(new Response<BookResponseDto>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.BOOK_UPDATED,
+                Data = book
+            });
+        }
+
     }
 }

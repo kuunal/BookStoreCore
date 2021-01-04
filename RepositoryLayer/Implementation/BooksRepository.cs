@@ -99,5 +99,32 @@ namespace RepositoryLayer.Implementation
             await _conn.CloseAsync();
             return isDeleted;
         }
+
+        public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto)
+        {
+            BookResponseDto book = null;
+            SqlCommand command = new SqlCommand("sp_books_update", _conn)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@id",id);
+            command.Parameters.AddWithValue("@description", requestDto.Description);
+            command.Parameters.AddWithValue("@author", requestDto.Author);
+            command.Parameters.AddWithValue("@title", requestDto.Title);
+            command.Parameters.AddWithValue("@image", requestDto.Image);
+            command.Parameters.AddWithValue("@price", requestDto.Price);
+            command.Parameters.AddWithValue("@quantity", requestDto.Quantity);
+            await _conn.OpenAsync();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    book = MapReaderTobook(reader);
+                }
+            }
+            await _conn.CloseAsync();
+            return book;
+        }
+
     }
 }
