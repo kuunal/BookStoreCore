@@ -1,6 +1,7 @@
 ﻿using ModelLayer.BookDto;
 using RepositoryLayer.Interface;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -13,6 +14,39 @@ namespace RepositoryLayer.Implementation
         public BooksRepository(IDBContext dBContext)
         {
             _conn = dBContext.GetConnection();
+        }
+
+        public async Task<List<BookResponseDto>> Get()
+        {
+            List<BookResponseDto> bookList = new List<BookResponseDto>();
+            SqlCommand command = new SqlCommand("sp_books_get", _conn)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            await _conn.OpenAsync();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    bookList.Add(MapReaderTobook(reader));
+                }
+            }
+            await _conn.CloseAsync();
+            return bookList;
+        }
+
+        private BookResponseDto MapReaderTobook(SqlDataReader reader)
+        {
+            return new BookResponseDto
+            {
+                Id = (int)reader["id"],
+                Price = (int)reader["price"],
+                Quantity = (int)reader["quantity"],
+                Title = (string)reader["title"],
+                Author = (string)reader["author"],
+                Image = (string)reader["image"],
+                Description = (string) reader["description"]
+            };
         }
 
         public async Task<int> Insert(BookRequestDto requestDto)

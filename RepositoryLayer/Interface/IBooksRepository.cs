@@ -9,5 +9,6 @@ namespace RepositoryLayer.Interface
     public interface IBooksRepository
     {
         Task<int> Insert(BookRequestDto requestDto);
+        Task<List<BookResponseDto>> Get();
     }
 }
