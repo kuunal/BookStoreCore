@@ -10,7 +10,7 @@ namespace RepositoryLayer.Implementation
 {
     public class UserRepository : IUserRepository
     {
-        private SqlConnection _conn;
+        private readonly SqlConnection _conn;
         public UserRepository(DBContext dBContext)
         {
             this._conn = dBContext.GetConnection();
@@ -19,8 +19,10 @@ namespace RepositoryLayer.Implementation
         public async Task<UserDto> AuthenticateUser(LoginDto loginDto)
         {
             UserDto user = null;
-            SqlCommand command = new SqlCommand("sp_users_login", _conn);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = new SqlCommand("sp_users_login", _conn)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
             command.Parameters.AddWithValue("@loginId", loginDto.Email);
             command.Parameters.AddWithValue("@password", loginDto.Password);
             await _conn.OpenAsync();
@@ -28,14 +30,14 @@ namespace RepositoryLayer.Implementation
             {
                 while(await reader.ReadAsync())
                 {
-                    user = mapUserFromReader(reader);
+                    user = MapUserFromReader(reader);
                 }
             }
             await _conn.CloseAsync();
             return user;
         }
 
-        private UserDto mapUserFromReader(SqlDataReader reader)
+        private UserDto MapUserFromReader(SqlDataReader reader)
         {
             return new UserDto
             {
@@ -44,7 +46,7 @@ namespace RepositoryLayer.Implementation
                 LastName = (string)reader["firstname"],
                 PhoneNumber = (string)reader["phonenumber"],
                 Email = (string)reader["email"],
-                role = (string) reader["role"]
+                Role = (string) reader["role"]
             };
         }
     }

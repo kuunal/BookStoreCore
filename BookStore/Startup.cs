@@ -12,6 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using RepositoryLayer.Interface;
 using RepositoryLayer.Implementation;
+using BusinessLayer.Implementation;
+using BusinessLayer.Interface;
+using Fundoo.Utilities;
 
 namespace BookStore
 {
@@ -31,6 +34,10 @@ namespace BookStore
             DatabaseConfigurations connectionString = Configuration.GetSection("ConnectionStrings")
                                         .Get<DatabaseConfigurations>();
             services.AddSingleton(connectionString);
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

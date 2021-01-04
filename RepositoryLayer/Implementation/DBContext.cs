@@ -8,7 +8,7 @@ namespace RepositoryLayer.Implementation
 {
     public class DBContext: IDBContext
     {
-        string connectionString;
+        readonly string connectionString;
         public DBContext(DatabaseConfigurations connectionString)
         {
             this.connectionString = connectionString.ConnectionString;

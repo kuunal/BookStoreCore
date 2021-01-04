@@ -10,7 +10,7 @@ namespace BusinessLayer.Implementation
 {
     public class UserService : IUserService
     {
-        private IUserRepository _repository;
+        private readonly IUserRepository _repository;
 
         public UserService(IUserRepository repository)
         {

@@ -12,7 +12,7 @@ namespace BookStore.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private UserService _service;
+        private readonly UserService _service;
 
         public UserController(UserService service)
         {
@@ -33,7 +33,7 @@ namespace BookStore.Controllers
                 });
             }
             else { 
-                Unauthorized(new Response<UserDto>
+                return Unauthorized(new Response<UserDto>
                  {
                      StatusCode = (int)HttpStatusCode.Unauthorized,
                      Message = ResponseMessage.LOGIN_SUCCESS,

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ModelLayer
 {
-    class ResponseMessage
+    public class ResponseMessage
     {
+        public const string LOGIN_SUCCESS = "Login successful";
     }
 }
