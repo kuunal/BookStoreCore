@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ModelLayer;
+using ModelLayer.BookDto;
 using ModelLayer.UserDto;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace BookStore.Utility
         public AutoMapperProfile()
         {
             CreateMap<UserRequestDto, UserResponseDto>();
+            CreateMap<BookRequestDto, BookResponseDto>();
         }
     }
 }
