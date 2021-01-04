@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using ModelLayer;
+using ModelLayer.UserDto;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace BusinessLayer.Implementation
         public async Task<UserResponseDto> AuthenticateUser(LoginDto loginDto)
         {
             return await _repository.AuthenticateUser(loginDto);
+        }
+
+        public async Task<UserResponseDto> AddUser(UserRequestDto requestDto)
+        {
+            return await _repository.Insert(requestDto);
         }
     }
 }
