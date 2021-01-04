@@ -6,6 +6,7 @@ namespace RepositoryLayer.Implementation
 {
     public class SqlErrorNumbers
     {
-        public const int DuplicateKey = 2627;
+        public const int DUPLICATEKEY = 2627;
+        public const int CONSTRAINT_VOILATION = 547;
     }
 }
