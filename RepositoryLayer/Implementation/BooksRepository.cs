@@ -41,7 +41,7 @@ namespace RepositoryLayer.Implementation
             {
                 Id = (int)reader["id"],
                 Price = (int)reader["price"],
-                Quantity = (int)reader["quantity"],
+                Quantity = Convert.ToInt32(reader["quantity"]),
                 Title = (string)reader["title"],
                 Author = (string)reader["author"],
                 Image = (string)reader["image"],

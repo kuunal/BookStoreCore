@@ -9,5 +9,6 @@ namespace BusinessLayer.Interface
     public interface IBookService
     {
         Task<BookResponseDto> AddBook(BookRequestDto requestDto);
+        Task<List<BookResponseDto>> GetBooks();
     }
 }

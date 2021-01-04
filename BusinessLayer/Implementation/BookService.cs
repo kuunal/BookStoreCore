@@ -37,5 +37,10 @@ namespace BusinessLayer.Implementation
                 throw new BookstoreException("Invalid data");
             }
         }
+
+        public Task<List<BookResponseDto>> GetBooks()
+        {
+            return _repository.Get();
+        }
     }
 }
