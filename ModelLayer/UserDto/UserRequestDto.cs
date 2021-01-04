@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ModelLayer.UserDto
@@ -9,7 +10,13 @@ namespace ModelLayer.UserDto
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
+
+        [RegularExpression(@"^(?=.*[0-9])(?=.*[A-Z])(?=[a-zA-Z0-9]*[^a-zA-Z0-9][a-zA-Z0-9]*$).{8,}"
+        , ErrorMessage = "Password should contain atleast one Uppercase, lowercase, special and digit and minimum length should be 8")]
         public string Password { get; set; }
+
+        [RegularExpression(@"^[a-zA-Z0-9]+[\\.\\-\\+\\_]?[a-zA-Z0-9]+@[a-zA-Z0-9]+[.]?[a-zA-Z]{2,4}[\\.]?([a-z]{2,4})?$",
+        ErrorMessage = "Please provide valid email id")]
         public string Email { get; set; }
         public string Role { get; set; }
     }
