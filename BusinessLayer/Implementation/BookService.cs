@@ -38,6 +38,11 @@ namespace BusinessLayer.Implementation
             }
         }
 
+        public async Task<BookResponseDto> Get(int id)
+        {
+            return await _repository.Get(id);
+        }
+
         public Task<List<BookResponseDto>> GetBooks()
         {
             return _repository.Get();

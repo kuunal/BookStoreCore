@@ -66,5 +66,25 @@ namespace RepositoryLayer.Implementation
             await _conn.CloseAsync();
             return id;
         }
+
+        public async Task<BookResponseDto> Get(int id)
+        {
+            BookResponseDto book = null;
+            SqlCommand command = new SqlCommand("sp_books_detailed_view", _conn)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@id", id);
+            await _conn.OpenAsync();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    book = MapReaderTobook(reader);
+                }
+            }
+            await _conn.CloseAsync();
+            return book;
+        }
     }
 }

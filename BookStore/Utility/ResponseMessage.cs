@@ -11,5 +11,6 @@ namespace ModelLayer
         public const string USER_ADDED = "User created successfully";
         public const string BOOK_ADDED = "Book added successfully";
         public const string SUCCESSFUL = "Successful";
+        public const string BOOK_NOT_FOUND = "No such book exists!";
     }
 }

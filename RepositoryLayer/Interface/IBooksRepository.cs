@@ -10,5 +10,6 @@ namespace RepositoryLayer.Interface
     {
         Task<int> Insert(BookRequestDto requestDto);
         Task<List<BookResponseDto>> Get();
+        Task<BookResponseDto> Get(int id);
     }
 }

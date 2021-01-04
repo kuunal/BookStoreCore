@@ -43,5 +43,26 @@ namespace BookStore.Controllers
                 Data = bookList
             });
         }
+
+        [HttpGet("id")]
+        public async Task<IActionResult> GetBook(int id)
+        {
+            BookResponseDto book = await _service.Get(id);
+            if (book == null)
+            {
+                return NotFound(new Response<BookResponseDto>
+                {
+                    StatusCode = (int)HttpStatusCode.NotFound,
+                    Message = ResponseMessage.BOOK_NOT_FOUND,
+                    Data = book
+                });
+            }
+            return Ok(new Response<BookResponseDto>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.SUCCESSFUL,
+                Data = book
+            });
+        }
     }
 }

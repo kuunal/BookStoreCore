@@ -10,5 +10,7 @@ namespace BusinessLayer.Interface
     {
         Task<BookResponseDto> AddBook(BookRequestDto requestDto);
         Task<List<BookResponseDto>> GetBooks();
+        Task<BookResponseDto> Get(int id);
+
     }
 }
