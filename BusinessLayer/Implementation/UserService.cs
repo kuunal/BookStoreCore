@@ -53,7 +53,11 @@ namespace BusinessLayer.Implementation
             }
             response.Id = id;
             return response;
-            }catch(SqlException e) when (e.Number == SqlErrorNumbers.DuplicateKey)
+            }catch(SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
+            {
+                throw new BookstoreException(ExceptionMessages.INVALID_DATA, (int)HttpStatusCode.BadRequest);
+            }
+            catch (SqlException e) when (e.Number == SqlErrorNumbers.DUPLICATEKEY)
             {
                 throw new BookstoreException(ExceptionMessages.ACCOUNT_ALREADY_EXISTS, (int)HttpStatusCode.BadRequest);
             }
