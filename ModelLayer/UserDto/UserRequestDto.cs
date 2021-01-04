@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelLayer.CustomValidators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -21,6 +22,8 @@ namespace ModelLayer.UserDto
         [RegularExpression(@"^[a-zA-Z0-9]+[\\.\\-\\+\\_]?[a-zA-Z0-9]+@[a-zA-Z0-9]+[.]?[a-zA-Z]{2,4}[\\.]?([a-z]{2,4})?$",
         ErrorMessage = "Please provide valid email id")]
         public string Email { get; set; }
+        
+        [RoleValidator]
         public string Role { get; set; }
     }
 }
