@@ -9,8 +9,8 @@ namespace Greeting.TokenAuthorization
 {
     public class TokenAuthorizationFilter : Attribute, IAuthorizationFilter
     {
-        private readonly string _role;
-        public TokenAuthorizationFilter(string role)
+        private readonly string[] _role;
+        public TokenAuthorizationFilter(params string[] role)
         {
             _role = role;
         }
@@ -27,15 +27,15 @@ namespace Greeting.TokenAuthorization
                     var claimList = claimPrinciple.Claims.ToList();
                     context.HttpContext.Items["userId"] = claimList[0].Value;
                     context.HttpContext.Items["email"] = claimList[1].Value;
-                    context.HttpContext.Items["role"] = claimList[1].Value;
+                    context.HttpContext.Items["role"] = claimList[2].Value;
                 }
                 catch (Exception)
                 {
                     context.ModelState.AddModelError("Unauthorized", "Invalid token");
                 }
-                if (_role != context.HttpContext.Items["role"].ToString()) 
+                if (!_role.Any(role=> role.ToLower() == context.HttpContext.Items["role"].ToString().ToLower())) 
                 {
-                    throw new Exception("You are not authorized for this!");
+                    context.ModelState.AddModelError("Unauthorized", "You are not authorized for this!");
                 }
             }
             else
