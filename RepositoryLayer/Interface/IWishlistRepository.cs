@@ -9,5 +9,7 @@ namespace RepositoryLayer.Interface
     public interface IWishlistRepository
     {
         Task<int> Insert(WishlistDto wishlist);
+
+        Task<List<WishlistDto>> Get();
     }
 }
