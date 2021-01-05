@@ -23,13 +23,13 @@ namespace BusinessLayer.Implementation
         public async Task<WishlistDto> Insert(WishlistDto wishlist)
         {
             try
-            { 
-                if( await _repository.Insert(wishlist) == 1)
+            {
+                if (await _repository.Insert(wishlist) == 1)
                 {
                     return wishlist;
                 }
                 return null;
-            }catch(SqlException e) when(e.Message.Contains("FK__wishlist__userId"))
+            } catch (SqlException e) when (e.Message.Contains("FK__wishlist__userId"))
             {
                 throw new BookstoreException("Invalid user id");
             }
@@ -41,6 +41,11 @@ namespace BusinessLayer.Implementation
         public Task<List<WishlistDto>> Get()
         {
             return _repository.Get();
+        }
+
+        public async Task<int> Delete(WishlistDto wishlist)
+        {
+            return await _repository.Delete(wishlist);
         }
     }
 }

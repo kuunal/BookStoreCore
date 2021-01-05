@@ -10,6 +10,7 @@ namespace BusinessLayer.Interface
     {
         Task<WishlistDto> Insert(WishlistDto wishlist);
         Task<List<WishlistDto>> Get();
+        Task<int> Delete(WishlistDto wishlist);
 
     }
 }
