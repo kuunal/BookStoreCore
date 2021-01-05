@@ -11,5 +11,7 @@ namespace RepositoryLayer.Interface
         Task<int> Insert(WishlistDto wishlist);
 
         Task<List<WishlistDto>> Get();
+        Task<int> Delete(WishlistDto wishlist);
+
     }
 }

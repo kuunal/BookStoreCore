@@ -58,5 +58,19 @@ namespace RepositoryLayer.Implementation
             await _conn.CloseAsync();
             return isInserted;
         }
+
+        public async Task<int> Delete(WishlistDto wishlist)
+        {
+            SqlCommand command = new SqlCommand("sp_wishlist_insert", _conn)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@userId", wishlist.UserId);
+            command.Parameters.AddWithValue("@bookId", wishlist.BookId);
+            await _conn.OpenAsync();
+            int isDeleted = await command.ExecuteNonQueryAsync();
+            await _conn.CloseAsync();
+            return isDeleted;
+        }
     }
 }
