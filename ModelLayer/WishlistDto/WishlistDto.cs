@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLayer.WishlistDto
 {
-    public class Wishlist
+    public class WishlistDto
     {
         public int userId { get; set; }
         public int bookId { get; set; }
