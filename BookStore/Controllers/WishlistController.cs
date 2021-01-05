@@ -43,6 +43,27 @@ namespace BookStore.Controllers
                 Message = ResponseMessage.SUCCESSFUL,
                 Data = bookList
             });
+         }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveFromWishList(WishlistDto wishlist)
+        {
+            int isDeleted = await _service.Delete(wishlist);
+            if (isDeleted <= 0)
+            {
+                return NotFound(new Response<object>
+                {
+                    StatusCode = (int)HttpStatusCode.NotFound,
+                    Message = ResponseMessage.BOOK_REMOVE_FAILED,
+                    Data = null
+                });
+            }
+            return Ok(new Response<object>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.BOOK_REMOVE,
+                Data = null
+            });
         }
     }
 }
