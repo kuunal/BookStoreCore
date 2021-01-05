@@ -1,10 +1,14 @@
-﻿using System;
+﻿using ModelLayer.CartDto;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Interface
 {
-    interface ICartService
+    public interface ICartService
     {
+        Task<CartResponseDto> Insert(CartRequestDto cart);
+
     }
 }

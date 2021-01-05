@@ -27,8 +27,8 @@ namespace RepositoryLayer.Implementation
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@userId", cart.UserId);
-                command.Parameters.AddWithValue("@userId", cart.BookId);
-                command.Parameters.AddWithValue("@userId", cart.Quantity);
+                command.Parameters.AddWithValue("@bookId", cart.BookId);
+                command.Parameters.AddWithValue("@quantity", cart.Quantity);
                 await connection.OpenAsync();
                 using(SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
