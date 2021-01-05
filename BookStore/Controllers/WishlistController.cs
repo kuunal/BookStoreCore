@@ -32,5 +32,17 @@ namespace BookStore.Controllers
                 Data = addedWishlist
             });
         }
+
+        [HttpGet]
+         public async Task<IActionResult> GetWishlists()
+         {
+            List<WishlistDto> bookList = await _service.Get();
+            return Ok(new Response<List<WishlistDto>>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.SUCCESSFUL,
+                Data = bookList
+            });
+        }
     }
 }

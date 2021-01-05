@@ -38,5 +38,9 @@ namespace BusinessLayer.Implementation
                 throw new BookstoreException("Invalid book id");
             }
         }
+        public Task<List<WishlistDto>> Get()
+        {
+            return _repository.Get();
+        }
     }
 }

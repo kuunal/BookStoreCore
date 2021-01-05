@@ -6,7 +6,7 @@ namespace ModelLayer.WishlistDto
 {
     public class WishlistDto
     {
-        public int userId { get; set; }
-        public int bookId { get; set; }
+        public int UserId { get; set; }
+        public int BookId { get; set; }
     }
 }
