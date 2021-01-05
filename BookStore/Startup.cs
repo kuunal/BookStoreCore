@@ -45,6 +45,8 @@ namespace BookStore
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IWishlistService, WishlistService>();
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartService, CartService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
         }
