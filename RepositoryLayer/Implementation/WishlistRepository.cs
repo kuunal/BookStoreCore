@@ -61,7 +61,7 @@ namespace RepositoryLayer.Implementation
 
         public async Task<int> Delete(WishlistDto wishlist)
         {
-            SqlCommand command = new SqlCommand("sp_wishlist_insert", _conn)
+            SqlCommand command = new SqlCommand("sp_wishlist_delete", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };

@@ -36,6 +36,9 @@ namespace BusinessLayer.Implementation
             catch (SqlException e) when (e.Message.Contains("FK__wishlist__bookId"))
             {
                 throw new BookstoreException("Invalid book id");
+            }catch(SqlException e) when(e.Message.Contains("PK__wishlist__bookId__userId"))
+            {
+                throw new BookstoreException("Already in wishlist");
             }
         }
         public Task<List<WishlistDto>> Get()
