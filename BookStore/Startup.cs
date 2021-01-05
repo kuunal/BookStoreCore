@@ -43,6 +43,8 @@ namespace BookStore
             services.AddScoped<ITokenManager, TokenManager>();
             services.AddScoped<IBooksRepository, BooksRepository>();
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IWishlistRepository, WishlistRepository>();
+            services.AddScoped<IWishlistService, WishlistService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
         }
