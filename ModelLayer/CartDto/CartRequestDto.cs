@@ -8,13 +8,13 @@ namespace ModelLayer.CartDto
     public class CartRequestDto
     {
         [Range(1, int.MaxValue)]
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
         [Range(1, int.MaxValue)]
-        public int bookId { get; set; }
+        public int BookId { get; set; }
         
         [Range(1, int.MaxValue)]
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
 
     }
 }

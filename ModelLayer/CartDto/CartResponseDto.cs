@@ -6,10 +6,10 @@ namespace ModelLayer.CartDto
 {
     public class CartResponseDto
     {
-        public int userId { get; set; }
-        public int bookId { get; set; }
-        public int quantity { get; set; }
-        public int price { get; set; }
+        public int UserId { get; set; }
+        public int BookId { get; set; }
+        public int Quantity { get; set; }
+        public int Price { get; set; }
 
     }
 }
