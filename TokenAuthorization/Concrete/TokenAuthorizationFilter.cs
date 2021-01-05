@@ -33,7 +33,8 @@ namespace Greeting.TokenAuthorization
                 {
                     context.ModelState.AddModelError("Unauthorized", "Invalid token");
                 }
-                if (!_role.Any(role=> role.ToLower() == context.HttpContext.Items["role"].ToString().ToLower())) 
+                if (_role.Length > 0 &&
+                    !_role.Any(role=> role.ToLower() == context.HttpContext.Items["role"].ToString().ToLower())) 
                 {
                     context.ModelState.AddModelError("Unauthorized", "You are not authorized for this!");
                 }

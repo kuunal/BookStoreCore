@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using Greeting.TokenAuthorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using ModelLayer.BookDto;
@@ -22,6 +23,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
+        [TokenAuthorizationFilter("admin")]
         public async Task<IActionResult> AddBook(BookRequestDto requestDto)
         {
             BookResponseDto responseDto = await _service.AddBook(requestDto);
@@ -33,6 +35,7 @@ namespace BookStore.Controllers
         }
 
         [HttpGet]
+        [TokenAuthorizationFilter]
         public async Task<IActionResult> GetAllBooks()
         {
             List<BookResponseDto> bookList = await _service.GetBooks();
@@ -45,6 +48,7 @@ namespace BookStore.Controllers
         }
 
         [HttpGet("id")]
+        [TokenAuthorizationFilter]
         public async Task<IActionResult> GetBook(int id)
         {
             BookResponseDto book = await _service.Get(id);
@@ -66,6 +70,7 @@ namespace BookStore.Controllers
         }
 
         [HttpDelete("id")]
+        [TokenAuthorizationFilter("admin")]
         public async Task<IActionResult> RemoveBook(int id)
         {
             int isDeleted = await _service.Delete(id);
@@ -88,6 +93,7 @@ namespace BookStore.Controllers
 
 
         [HttpPost("id")]
+        [TokenAuthorizationFilter("admin")]
         public async Task<IActionResult> UpdateBook(int id, BookRequestDto requestDto)
         {
             BookResponseDto book = await _service.Update(id, requestDto);
