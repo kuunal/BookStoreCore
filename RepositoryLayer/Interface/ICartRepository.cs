@@ -9,7 +9,7 @@ namespace RepositoryLayer.Interface
     public interface ICartRepository
     {
         Task<CartResponseDto> Insert(CartRequestDto cart);
-        Task<CartResponseDto> Delete(CartRequestDto wishlist);
+        Task<int> Delete(CartRequestDto wishlist);
         Task<CartResponseDto> Update(CartRequestDto wishlist);
         Task<List<CartResponseDto>> Get();
 

@@ -33,5 +33,19 @@ namespace BusinessLayer.Implementation
                 throw new BookstoreException("Already in cart");
             }
         }
+
+        public async Task<int> Delete(CartRequestDto cart)
+        {
+            return await _repository.Delete(cart);
+        }
+
+        public async Task<CartResponseDto> Update(CartRequestDto cart)
+        {
+            return await _repository.Update(cart);
+        }
+        public async Task<List<CartResponseDto>> Get()
+        {
+            return await _repository.Get();
+        }
     }
 }
