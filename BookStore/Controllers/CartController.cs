@@ -32,5 +32,16 @@ namespace BookStore.Controllers
                 Data = cartItem
             });
         }
+
+        public async Task<IActionResult> GetItemsFromCart()
+        {
+            List<CartResponseDto> cartItem = await _service.Get();
+            return Ok(new Response<List<CartResponseDto>>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.SUCCESSFUL,
+                Data = cartItem
+            });
+        }
     }
 }
