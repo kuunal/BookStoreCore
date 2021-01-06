@@ -41,6 +41,24 @@ namespace RepositoryLayer.Implementation
             }
         }
 
+        public async Task<int> Delete(CartRequestDto wishlist)
+        {
+            using (SqlConnection connection = _dbContext.GetConnection())
+            {
+
+                SqlCommand command = new SqlCommand("sp_wishlist_delete", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@userId", wishlist.UserId);
+                command.Parameters.AddWithValue("@bookId", wishlist.BookId);
+                await connection.OpenAsync();
+                int isDeleted = await command.ExecuteNonQueryAsync();
+                await connection.CloseAsync();
+                return isDeleted;
+            }
+        }
+
         private CartResponseDto MapReaderToCartDto(SqlDataReader reader)
         {
             return new CartResponseDto
