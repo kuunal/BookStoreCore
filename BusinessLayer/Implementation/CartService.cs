@@ -19,11 +19,11 @@ namespace BusinessLayer.Implementation
             _repository = repository;
         }
 
-        public async Task<CartResponseDto> Insert(CartRequestDto cart)
+        public async Task<CartResponseDto> Insert(CartRequestDto cart, int userId)
         {
             try
             {
-                return await _repository.Insert(cart);
+                return await _repository.Insert(cart, userId);
             }catch(SqlException e) when(e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
             {
                 throw new BookstoreException("Invalid user id!");
@@ -34,18 +34,18 @@ namespace BusinessLayer.Implementation
             }
         }
 
-        public async Task<int> Delete(CartRequestDto cart)
+        public async Task<int> Delete(CartRequestDto cart, int userId)
         {
-            return await _repository.Delete(cart);
+            return await _repository.Delete(cart, userId);
         }
 
-        public async Task<CartResponseDto> Update(CartRequestDto cart)
+        public async Task<CartResponseDto> Update(CartRequestDto cart, int userId)
         {
-            return await _repository.Update(cart);
+            return await _repository.Update(cart, userId);
         }
-        public async Task<List<CartResponseDto>> Get()
+        public async Task<List<CartResponseDto>> Get(int userId)
         {
-            return await _repository.Get();
+            return await _repository.Get(userId);
         }
     }
 }

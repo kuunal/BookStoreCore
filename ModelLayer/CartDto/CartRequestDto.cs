@@ -7,8 +7,6 @@ namespace ModelLayer.CartDto
 {
     public class CartRequestDto
     {
-        [Range(1, int.MaxValue)]
-        public int UserId { get; set; }
 
         [Range(1, int.MaxValue)]
         public int BookId { get; set; }

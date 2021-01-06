@@ -8,10 +8,10 @@ namespace BusinessLayer.Interface
 {
     public interface ICartService
     {
-        Task<CartResponseDto> Insert(CartRequestDto cart);
-        Task<List<CartResponseDto>> Get();
-        Task<CartResponseDto> Update(CartRequestDto cart);
-        Task<int> Delete(CartRequestDto cart);
+        Task<CartResponseDto> Insert(CartRequestDto cart, int userId);
+        Task<List<CartResponseDto>> Get(int userId);
+        Task<CartResponseDto> Update(CartRequestDto cart, int userId);
+        Task<int> Delete(CartRequestDto cart, int userId);
 
 
     }

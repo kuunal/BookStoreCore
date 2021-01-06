@@ -24,7 +24,8 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(CartRequestDto cart)
         {
-            CartResponseDto cartItem =  await _service.Insert(cart);
+            int userId = (int) HttpContext.Items["userId"];
+            CartResponseDto cartItem =  await _service.Insert(cart, userId);
             return Ok(new Response<CartResponseDto>
             {
                 StatusCode = (int)HttpStatusCode.OK,
@@ -36,7 +37,8 @@ namespace BookStore.Controllers
         [HttpGet]
         public async Task<IActionResult> GetItemsFromCart()
         {
-            List<CartResponseDto> cartItem = await _service.Get();
+            int userId = (int)HttpContext.Items["userId"];
+            List<CartResponseDto> cartItem = await _service.Get(userId);
             return Ok(new Response<List<CartResponseDto>>
             {
                 StatusCode = (int)HttpStatusCode.OK,
@@ -45,10 +47,11 @@ namespace BookStore.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<IActionResult> RemoveFromCart(CartRequestDto cart)
         {
-            int isDeleted = await _service.Delete(cart);
+            int userId = (int)HttpContext.Items["userId"];
+            int isDeleted = await _service.Delete(cart, userId);
             if (isDeleted == 0)
             {
                 return BadRequest(new Response<CartResponseDto>
@@ -67,9 +70,11 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
+        [Route("update")]
         public async Task<IActionResult> UpdateInCart(CartRequestDto cart)
         {
-            CartResponseDto cartItem = await _service.Insert(cart);
+            int userId = (int)HttpContext.Items["userId"];
+            CartResponseDto cartItem = await _service.Update(cart, userId);
             if (cartItem == null)
             {
                 return BadRequest(new Response<CartResponseDto>

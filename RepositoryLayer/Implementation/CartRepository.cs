@@ -17,7 +17,7 @@ namespace RepositoryLayer.Implementation
             _dbContext = dBContext;
         }
 
-        public async Task<CartResponseDto> Insert(CartRequestDto cart)
+        public async Task<CartResponseDto> Insert(CartRequestDto cart, int userId)
         {
             CartResponseDto cartItem = null;
             using (SqlConnection connection = _dbContext.GetConnection())
@@ -26,7 +26,7 @@ namespace RepositoryLayer.Implementation
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@userId", cart.UserId);
+                command.Parameters.AddWithValue("@userId", userId);
                 command.Parameters.AddWithValue("@bookId", cart.BookId);
                 command.Parameters.AddWithValue("@quantity", cart.Quantity);
                 await connection.OpenAsync();
@@ -41,7 +41,7 @@ namespace RepositoryLayer.Implementation
             }
         }
 
-        public async Task<int> Delete(CartRequestDto cart)
+        public async Task<int> Delete(CartRequestDto cart, int userId)
         {
             using (SqlConnection connection = _dbContext.GetConnection())
             {
@@ -50,7 +50,7 @@ namespace RepositoryLayer.Implementation
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@userId", cart.UserId);
+                command.Parameters.AddWithValue("@userId", userId);
                 command.Parameters.AddWithValue("@bookId", cart.BookId);
                 await connection.OpenAsync();
                 int isDeleted = await command.ExecuteNonQueryAsync();
@@ -59,7 +59,7 @@ namespace RepositoryLayer.Implementation
             }
         }
 
-        public async Task<CartResponseDto> Update(CartRequestDto cart)
+        public async Task<CartResponseDto> Update(CartRequestDto cart, int userId)
         {
             CartResponseDto cartItem = null;
             using (SqlConnection connection = _dbContext.GetConnection())
@@ -69,7 +69,7 @@ namespace RepositoryLayer.Implementation
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@userId", cart.UserId);
+                command.Parameters.AddWithValue("@userId", userId);
                 command.Parameters.AddWithValue("@bookId", cart.BookId);
                 command.Parameters.AddWithValue("@quantity", cart.Quantity);
                 await connection.OpenAsync();
@@ -84,7 +84,7 @@ namespace RepositoryLayer.Implementation
             return cartItem;
         }
 
-        public async Task<List<CartResponseDto>> Get()
+        public async Task<List<CartResponseDto>> Get(int userId)
         {
             List<CartResponseDto> cartItem = new List<CartResponseDto>();
             using (SqlConnection connection = _dbContext.GetConnection())
@@ -95,6 +95,7 @@ namespace RepositoryLayer.Implementation
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
                 await connection.OpenAsync();
+                command.Parameters.AddWithValue("@id", userId);
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
