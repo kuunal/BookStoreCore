@@ -17,13 +17,14 @@ namespace RepositoryLayer.Implementation
             _conn = dBContext.GetConnection();
         }
 
-        public async Task<List<WishlistDto>> Get()
+        public async Task<List<WishlistDto>> Get(int userId)
         {
             List<WishlistDto> wishlists = new List<WishlistDto>();
             SqlCommand command = new SqlCommand("sp_wishlist_get", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
+            command.Parameters.AddWithValue("@userId", userId);
             await _conn.OpenAsync();
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
@@ -40,18 +41,17 @@ namespace RepositoryLayer.Implementation
         {
             return new WishlistDto
             {
-                BookId = (int) reader["bookId"],
-                UserId = (int) reader["userId"]
+                BookId = (int) reader["bookId"]            
             };
         }
 
-        public async Task<int> Insert(WishlistDto wishlist)
+        public async Task<int> Insert(WishlistDto wishlist, int userId)
         {
             SqlCommand command = new SqlCommand("sp_wishlist_insert", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
-            command.Parameters.AddWithValue("@userId", wishlist.UserId);
+            command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@bookId", wishlist.BookId);
             await _conn.OpenAsync();
             int isInserted = await command.ExecuteNonQueryAsync();
@@ -59,14 +59,14 @@ namespace RepositoryLayer.Implementation
             return isInserted;
         }
 
-        public async Task<int> Delete(WishlistDto wishlist)
+        public async Task<int> Delete(int bookId, int userId)
         {
             SqlCommand command = new SqlCommand("sp_wishlist_delete", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
-            command.Parameters.AddWithValue("@userId", wishlist.UserId);
-            command.Parameters.AddWithValue("@bookId", wishlist.BookId);
+            command.Parameters.AddWithValue("@userId", userId);
+            command.Parameters.AddWithValue("@bookId", bookId);
             await _conn.OpenAsync();
             int isDeleted = await command.ExecuteNonQueryAsync();
             await _conn.CloseAsync();

@@ -8,9 +8,9 @@ namespace BusinessLayer.Interface
 {
     public interface IWishlistService
     {
-        Task<WishlistDto> Insert(WishlistDto wishlist);
-        Task<List<WishlistDto>> Get();
-        Task<int> Delete(WishlistDto wishlist);
+        Task<WishlistDto> Insert(WishlistDto wishlist, int userId);
+        Task<List<WishlistDto>> Get(int userId);
+        Task<int> Delete(int bookId, int userId);
 
     }
 }

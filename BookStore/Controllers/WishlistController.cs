@@ -24,7 +24,8 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToWishList(WishlistDto wishlist)
         {
-            WishlistDto addedWishlist = await _service.Insert(wishlist);
+            int userId = (int)HttpContext.Items["userId"];
+            WishlistDto addedWishlist = await _service.Insert(wishlist, userId);
             return Ok(new Response<WishlistDto>
             {
                 StatusCode = (int)HttpStatusCode.Created,
@@ -36,7 +37,8 @@ namespace BookStore.Controllers
         [HttpGet]
          public async Task<IActionResult> GetWishlists()
          {
-            List<WishlistDto> bookList = await _service.Get();
+            int userId = (int)HttpContext.Items["userId"];
+            List<WishlistDto> bookList = await _service.Get(userId);
             return Ok(new Response<List<WishlistDto>>
             {
                 StatusCode = (int)HttpStatusCode.OK,
@@ -48,7 +50,8 @@ namespace BookStore.Controllers
         [HttpDelete]
         public async Task<IActionResult> RemoveFromWishList(WishlistDto wishlist)
         {
-            int isDeleted = await _service.Delete(wishlist);
+            int userId = (int)HttpContext.Items["userId"];
+            int isDeleted = await _service.Delete(wishlist, userId);
             if (isDeleted <= 0)
             {
                 return NotFound(new Response<object>

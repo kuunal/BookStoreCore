@@ -20,11 +20,11 @@ namespace BusinessLayer.Implementation
             _repository = repository;
         }
 
-        public async Task<WishlistDto> Insert(WishlistDto wishlist)
+        public async Task<WishlistDto> Insert(WishlistDto wishlist, int userId)
         {
             try
             {
-                if (await _repository.Insert(wishlist) == 1)
+                if (await _repository.Insert(wishlist, userId) == 1)
                 {
                     return wishlist;
                 }
@@ -41,14 +41,14 @@ namespace BusinessLayer.Implementation
                 throw new BookstoreException("Already in wishlist");
             }
         }
-        public Task<List<WishlistDto>> Get()
+        public Task<List<WishlistDto>> Get(int userId)
         {
-            return _repository.Get();
+            return _repository.Get(userId);
         }
 
-        public async Task<int> Delete(WishlistDto wishlist)
+        public async Task<int> Delete(int bookId, int userId)
         {
-            return await _repository.Delete(wishlist);
+            return await _repository.Delete(bookId, userId);
         }
     }
 }
