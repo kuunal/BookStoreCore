@@ -33,6 +33,7 @@ namespace BookStore.Controllers
             });
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetItemsFromCart()
         {
             List<CartResponseDto> cartItem = await _service.Get();
@@ -43,5 +44,48 @@ namespace BookStore.Controllers
                 Data = cartItem
             });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(CartRequestDto cart)
+        {
+            int isDeleted = await _service.Delete(cart);
+            if (isDeleted == 0)
+            {
+                return BadRequest(new Response<CartResponseDto>
+                {
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    Message = ResponseMessage.CART_ITEM_NOT_FOUND,
+                    Data = null
+                });
+            }
+            return Ok(new Response<CartResponseDto>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.SUCCESSFUL,
+                Data = null
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateInCart(CartRequestDto cart)
+        {
+            CartResponseDto cartItem = await _service.Insert(cart);
+            if (cartItem == null)
+            {
+                return BadRequest(new Response<CartResponseDto>
+                {
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    Message = ResponseMessage.CART_ITEM_NOT_FOUND,
+                    Data = null
+                });
+            }
+            return Ok(new Response<CartResponseDto>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.SUCCESSFUL,
+                Data = cartItem
+            });
+        }
+
     }
 }
