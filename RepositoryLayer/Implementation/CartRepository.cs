@@ -84,6 +84,30 @@ namespace RepositoryLayer.Implementation
             return cartItem;
         }
 
+        public async Task<List<CartResponseDto>> Get()
+        {
+            List<CartResponseDto> cartItem = new List<CartResponseDto>();
+            using (SqlConnection connection = _dbContext.GetConnection())
+            {
+
+                SqlCommand command = new SqlCommand("sp_wishlist_delete", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                await connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        cartItem.Add(MapReaderToCartDto(reader));
+                    }
+                }
+            }
+            return cartItem;
+
+        }
+
+
         private CartResponseDto MapReaderToCartDto(SqlDataReader reader)
         {
             return new CartResponseDto

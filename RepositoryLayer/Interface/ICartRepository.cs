@@ -11,6 +11,7 @@ namespace RepositoryLayer.Interface
         Task<CartResponseDto> Insert(CartRequestDto cart);
         Task<CartResponseDto> Delete(CartRequestDto wishlist);
         Task<CartResponseDto> Update(CartRequestDto wishlist);
+        Task<List<CartResponseDto>> Get();
 
     }
 }
