@@ -11,7 +11,7 @@ namespace BusinessLayer.Interface
         Task<CartResponseDto> Insert(CartRequestDto cart, int userId);
         Task<List<CartResponseDto>> Get(int userId);
         Task<CartResponseDto> Update(CartRequestDto cart, int userId);
-        Task<int> Delete(CartRequestDto cart, int userId);
+        Task<int> Delete(int bookId, int userId);
 
 
     }

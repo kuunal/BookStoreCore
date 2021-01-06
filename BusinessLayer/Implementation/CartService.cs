@@ -34,9 +34,9 @@ namespace BusinessLayer.Implementation
             }
         }
 
-        public async Task<int> Delete(CartRequestDto cart, int userId)
+        public async Task<int> Delete(int bookId, int userId)
         {
-            return await _repository.Delete(cart, userId);
+            return await _repository.Delete(bookId, userId);
         }
 
         public async Task<CartResponseDto> Update(CartRequestDto cart, int userId)

@@ -47,11 +47,11 @@ namespace BookStore.Controllers
             });
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> RemoveFromCart(CartRequestDto cart)
+        [HttpDelete("bookId")]
+        public async Task<IActionResult> RemoveFromCart(int bookId)
         {
             int userId = (int)HttpContext.Items["userId"];
-            int isDeleted = await _service.Delete(cart, userId);
+            int isDeleted = await _service.Delete(bookId, userId);
             if (isDeleted == 0)
             {
                 return BadRequest(new Response<CartResponseDto>

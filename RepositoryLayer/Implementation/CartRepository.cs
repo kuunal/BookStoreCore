@@ -41,7 +41,7 @@ namespace RepositoryLayer.Implementation
             }
         }
 
-        public async Task<int> Delete(CartRequestDto cart, int userId)
+        public async Task<int> Delete(int bookId, int userId)
         {
             using (SqlConnection connection = _dbContext.GetConnection())
             {
@@ -51,7 +51,7 @@ namespace RepositoryLayer.Implementation
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@userId", userId);
-                command.Parameters.AddWithValue("@bookId", cart.BookId);
+                command.Parameters.AddWithValue("@bookId", bookId);
                 await connection.OpenAsync();
                 int isDeleted = await command.ExecuteNonQueryAsync();
                 await connection.CloseAsync();
