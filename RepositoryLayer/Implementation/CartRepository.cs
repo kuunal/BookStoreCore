@@ -41,7 +41,7 @@ namespace RepositoryLayer.Implementation
             }
         }
 
-        public async Task<int> Delete(CartRequestDto wishlist)
+        public async Task<int> Delete(CartRequestDto cart)
         {
             using (SqlConnection connection = _dbContext.GetConnection())
             {
@@ -50,13 +50,38 @@ namespace RepositoryLayer.Implementation
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@userId", wishlist.UserId);
-                command.Parameters.AddWithValue("@bookId", wishlist.BookId);
+                command.Parameters.AddWithValue("@userId", cart.UserId);
+                command.Parameters.AddWithValue("@bookId", cart.BookId);
                 await connection.OpenAsync();
                 int isDeleted = await command.ExecuteNonQueryAsync();
                 await connection.CloseAsync();
                 return isDeleted;
             }
+        }
+
+        public async Task<CartResponseDto> Update(CartRequestDto cart)
+        {
+            CartResponseDto cartItem = null;
+            using (SqlConnection connection = _dbContext.GetConnection())
+            {
+
+                SqlCommand command = new SqlCommand("sp_wishlist_delete", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@userId", cart.UserId);
+                command.Parameters.AddWithValue("@bookId", cart.BookId);
+                command.Parameters.AddWithValue("@quantity", cart.Quantity);
+                await connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        cartItem = MapReaderToCartDto(reader);
+                    }
+                }
+            }
+            return cartItem;
         }
 
         private CartResponseDto MapReaderToCartDto(SqlDataReader reader)
