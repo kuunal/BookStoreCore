@@ -46,7 +46,7 @@ namespace RepositoryLayer.Implementation
             using (SqlConnection connection = _dbContext.GetConnection())
             {
 
-                SqlCommand command = new SqlCommand("sp_wishlist_delete", connection)
+                SqlCommand command = new SqlCommand("sp_cart_delete", connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
@@ -65,7 +65,7 @@ namespace RepositoryLayer.Implementation
             using (SqlConnection connection = _dbContext.GetConnection())
             {
 
-                SqlCommand command = new SqlCommand("sp_wishlist_delete", connection)
+                SqlCommand command = new SqlCommand("sp_cart_update", connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
@@ -90,12 +90,12 @@ namespace RepositoryLayer.Implementation
             using (SqlConnection connection = _dbContext.GetConnection())
             {
 
-                SqlCommand command = new SqlCommand("sp_wishlist_delete", connection)
+                SqlCommand command = new SqlCommand("sp_cart_get", connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
+                command.Parameters.AddWithValue("@userid", userId);
                 await connection.OpenAsync();
-                command.Parameters.AddWithValue("@id", userId);
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -114,7 +114,6 @@ namespace RepositoryLayer.Implementation
             return new CartResponseDto
             {
                 BookId = (int)reader["bookId"],
-                UserId = (int)reader["userId"],
                 Price = (int)reader["price"],
                 Quantity = (int)reader["quantity"]
             };

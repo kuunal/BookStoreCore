@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using Greeting.TokenAuthorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using ModelLayer.WishlistDto;
@@ -12,6 +13,7 @@ namespace BookStore.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [TokenAuthorizationFilter]
     public class WishlistController : ControllerBase
     {
         private readonly IWishlistService _service;
@@ -24,7 +26,7 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToWishList(WishlistDto wishlist)
         {
-            int userId = (int)HttpContext.Items["userId"];
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             WishlistDto addedWishlist = await _service.Insert(wishlist, userId);
             return Ok(new Response<WishlistDto>
             {
@@ -37,7 +39,7 @@ namespace BookStore.Controllers
         [HttpGet]
          public async Task<IActionResult> GetWishlists()
          {
-            int userId = (int)HttpContext.Items["userId"];
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             List<WishlistDto> bookList = await _service.Get(userId);
             return Ok(new Response<List<WishlistDto>>
             {
@@ -47,11 +49,11 @@ namespace BookStore.Controllers
             });
          }
 
-        [HttpDelete]
-        public async Task<IActionResult> RemoveFromWishList(WishlistDto wishlist)
+        [HttpDelete("bookId")]
+        public async Task<IActionResult> RemoveFromWishList(int bookId)
         {
-            int userId = (int)HttpContext.Items["userId"];
-            int isDeleted = await _service.Delete(wishlist, userId);
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
+            int isDeleted = await _service.Delete(bookId, userId);
             if (isDeleted <= 0)
             {
                 return NotFound(new Response<object>

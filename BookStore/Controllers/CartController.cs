@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using Greeting.TokenAuthorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using ModelLayer.CartDto;
@@ -12,6 +13,7 @@ namespace BookStore.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [TokenAuthorizationFilter]
     public class CartController : ControllerBase
     {
         private readonly ICartService _service;
@@ -24,7 +26,7 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(CartRequestDto cart)
         {
-            int userId = (int) HttpContext.Items["userId"];
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             CartResponseDto cartItem =  await _service.Insert(cart, userId);
             return Ok(new Response<CartResponseDto>
             {
@@ -37,7 +39,7 @@ namespace BookStore.Controllers
         [HttpGet]
         public async Task<IActionResult> GetItemsFromCart()
         {
-            int userId = (int)HttpContext.Items["userId"];
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             List<CartResponseDto> cartItem = await _service.Get(userId);
             return Ok(new Response<List<CartResponseDto>>
             {
@@ -50,7 +52,7 @@ namespace BookStore.Controllers
         [HttpDelete("bookId")]
         public async Task<IActionResult> RemoveFromCart(int bookId)
         {
-            int userId = (int)HttpContext.Items["userId"];
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             int isDeleted = await _service.Delete(bookId, userId);
             if (isDeleted == 0)
             {
@@ -73,7 +75,7 @@ namespace BookStore.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateInCart(CartRequestDto cart)
         {
-            int userId = (int)HttpContext.Items["userId"];
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             CartResponseDto cartItem = await _service.Update(cart, userId);
             if (cartItem == null)
             {
