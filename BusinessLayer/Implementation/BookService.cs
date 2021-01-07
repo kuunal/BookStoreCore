@@ -43,9 +43,9 @@ namespace BusinessLayer.Implementation
             return await _repository.Get(id);
         }
 
-        public Task<List<BookResponseDto>> GetBooks()
+        public Task<List<BookResponseDto>> GetBooks(string field, int limit, string lastItemValue, string sortby)
         {
-            return _repository.Get();
+            return _repository.Get(field, limit, lastItemValue, sortby);
         }
 
         public async Task<int> Delete(int id)

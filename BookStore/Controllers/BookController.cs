@@ -36,9 +36,9 @@ namespace BookStore.Controllers
 
         [HttpGet]
         [TokenAuthorizationFilter]
-        public async Task<IActionResult> GetAllBooks()
+        public async Task<IActionResult> GetAllBooks(string field, int limit, string lastItemValue, string sortby)
         {
-            List<BookResponseDto> bookList = await _service.GetBooks();
+            List<BookResponseDto> bookList = await _service.GetBooks(field, limit, lastItemValue, sortby);
             return Ok(new Response<List<BookResponseDto>>
             {
                 StatusCode = (int) HttpStatusCode.OK,
