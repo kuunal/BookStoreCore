@@ -10,16 +10,17 @@ namespace RepositoryLayer.Implementation
 {
     public class WishlistRepository : IWishlistRepository
     {
-        private readonly SqlConnection _conn;
+        private readonly IDBContext _dbContext;
 
         public WishlistRepository(IDBContext dBContext)
         {
-            _conn = dBContext.GetConnection();
+            _dbContext = dBContext;
         }
 
         public async Task<List<WishlistDto>> Get(int userId)
         {
             List<WishlistDto> wishlists = new List<WishlistDto>();
+            SqlConnection _conn = _dbContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_wishlist_get", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
@@ -47,6 +48,7 @@ namespace RepositoryLayer.Implementation
 
         public async Task<int> Insert(WishlistDto wishlist, int userId)
         {
+            SqlConnection _conn = _dbContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_wishlist_insert", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
@@ -61,6 +63,7 @@ namespace RepositoryLayer.Implementation
 
         public async Task<int> Delete(int bookId, int userId)
         {
+            SqlConnection _conn = _dbContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_wishlist_delete", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure

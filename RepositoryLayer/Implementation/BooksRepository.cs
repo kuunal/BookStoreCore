@@ -9,33 +9,35 @@ namespace RepositoryLayer.Implementation
 {
     public class BooksRepository : IBooksRepository
     {
-        private readonly SqlConnection _conn;
+        private readonly IDBContext _dBContext;
 
         public BooksRepository(IDBContext dBContext)
         {
-            _conn = dBContext.GetConnection();
+            _dBContext = dBContext;
         }
 
         public async Task<List<BookResponseDto>> Get(string field, int limit, string lastItemValue, string sortby)
         {
             List<BookResponseDto> bookList = new List<BookResponseDto>();
-            SqlCommand command = new SqlCommand("sp_books_get_paginated_result", _conn)
+            using (SqlConnection connection = _dBContext.GetConnection())
             {
-                CommandType = System.Data.CommandType.StoredProcedure
-            };
-            command.Parameters.AddWithValue("@limit", limit);
-            command.Parameters.AddWithValue("@lastItemValue", lastItemValue);
-            command.Parameters.AddWithValue("@field", field);
-            command.Parameters.AddWithValue("@sortby", sortby);
-            await _conn.OpenAsync();
-            using (SqlDataReader reader = await command.ExecuteReaderAsync())
-            {
-                while (await reader.ReadAsync())
+                SqlCommand command = new SqlCommand("sp_books_get_paginated_result", connection)
                 {
-                    bookList.Add(MapReaderTobook(reader));
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@limit", limit);
+                command.Parameters.AddWithValue("@lastItemValue", lastItemValue);
+                command.Parameters.AddWithValue("@field", field);
+                command.Parameters.AddWithValue("@sortby", sortby);
+                await connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        bookList.Add(MapReaderTobook(reader));
+                    }
                 }
             }
-            await _conn.CloseAsync();
             return bookList;
         }
 
@@ -55,7 +57,8 @@ namespace RepositoryLayer.Implementation
 
         public async Task<int> Insert(BookRequestDto requestDto)
         {
-            SqlCommand command = new SqlCommand("sp_books_insert", _conn)
+            SqlConnection connection = _dBContext.GetConnection();
+            SqlCommand command = new SqlCommand("sp_books_insert", connection)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
@@ -65,21 +68,22 @@ namespace RepositoryLayer.Implementation
             command.Parameters.AddWithValue("@image", requestDto.Image);
             command.Parameters.AddWithValue("@price", requestDto.Price);
             command.Parameters.AddWithValue("@quantity", requestDto.Quantity);
-            await _conn.OpenAsync();
+            await connection.OpenAsync();
             int id = Convert.ToInt32(await command.ExecuteScalarAsync());
-            await _conn.CloseAsync();
+            await connection.CloseAsync();
             return id;
         }
 
         public async Task<BookResponseDto> Get(int id)
         {
             BookResponseDto book = null;
-            SqlCommand command = new SqlCommand("sp_books_detailed_view", _conn)
+            SqlConnection connection = _dBContext.GetConnection();
+            SqlCommand command = new SqlCommand("sp_books_detailed_view", connection)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
             command.Parameters.AddWithValue("@id", id);
-            await _conn.OpenAsync();
+            await connection.OpenAsync();
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
                 while (await reader.ReadAsync())
@@ -87,27 +91,29 @@ namespace RepositoryLayer.Implementation
                     book = MapReaderTobook(reader);
                 }
             }
-            await _conn.CloseAsync();
+            await connection.CloseAsync();
             return book;
         }
 
         public async Task<int> Delete(int id)
         {
-            SqlCommand command = new SqlCommand("sp_books_delete", _conn)
+            SqlConnection connection = _dBContext.GetConnection();
+            SqlCommand command = new SqlCommand("sp_books_delete", connection)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
             command.Parameters.AddWithValue("@id", id);
-            await _conn.OpenAsync();
+            await connection.OpenAsync();
             int isDeleted = await command.ExecuteNonQueryAsync();
-            await _conn.CloseAsync();
+            await connection.CloseAsync();
             return isDeleted;
         }
 
         public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto)
         {
             BookResponseDto book = null;
-            SqlCommand command = new SqlCommand("sp_books_update", _conn)
+            SqlConnection connection = _dBContext.GetConnection();
+            SqlCommand command = new SqlCommand("sp_books_update", connection)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
@@ -118,7 +124,7 @@ namespace RepositoryLayer.Implementation
             command.Parameters.AddWithValue("@image", requestDto.Image);
             command.Parameters.AddWithValue("@price", requestDto.Price);
             command.Parameters.AddWithValue("@quantity", requestDto.Quantity);
-            await _conn.OpenAsync();
+            await connection.OpenAsync();
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
                 while (await reader.ReadAsync())
@@ -126,7 +132,7 @@ namespace RepositoryLayer.Implementation
                     book = MapReaderTobook(reader);
                 }
             }
-            await _conn.CloseAsync();
+            await connection.CloseAsync();
             return book;
         }
 
