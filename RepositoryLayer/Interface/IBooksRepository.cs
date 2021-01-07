@@ -9,7 +9,7 @@ namespace RepositoryLayer.Interface
     public interface IBooksRepository
     {
         Task<int> Insert(BookRequestDto requestDto);
-        Task<List<BookResponseDto>> Get();
+        Task<List<BookResponseDto>> Get(string field, int limit, string lastItemValue, string sortby);
         Task<BookResponseDto> Get(int id);
         Task<int> Delete(int id);
         Task<BookResponseDto> Update(int id, BookRequestDto requestDto);

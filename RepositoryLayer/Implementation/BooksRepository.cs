@@ -16,13 +16,17 @@ namespace RepositoryLayer.Implementation
             _conn = dBContext.GetConnection();
         }
 
-        public async Task<List<BookResponseDto>> Get()
+        public async Task<List<BookResponseDto>> Get(string field, int limit, string lastItemValue, string sortby)
         {
             List<BookResponseDto> bookList = new List<BookResponseDto>();
-            SqlCommand command = new SqlCommand("sp_books_get", _conn)
+            SqlCommand command = new SqlCommand("sp_books_get_paginated_result", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
+            command.Parameters.AddWithValue("@limit", limit);
+            command.Parameters.AddWithValue("@lastItemValue", lastItemValue);
+            command.Parameters.AddWithValue("@field", field);
+            command.Parameters.AddWithValue("@sortby", sortby);
             await _conn.OpenAsync();
             using (SqlDataReader reader = await command.ExecuteReaderAsync())
             {
