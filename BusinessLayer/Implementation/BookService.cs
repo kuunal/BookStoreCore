@@ -45,7 +45,7 @@ namespace BusinessLayer.Implementation
                 response.Id = id;
                 return response;
 
-            }catch(SqlException e) when(e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
+            } catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
             {
                 throw new BookstoreException("Invalid data");
             }
@@ -72,7 +72,7 @@ namespace BusinessLayer.Implementation
         public Task<List<BookResponseDto>> GetBooks(string field, int limit, string lastItemValue, string sortby)
         {
             FieldInfo[] fields = typeof(BookRequestDto).GetFields();
-            if(!fields.Any(field=> field.Equals(field)))
+            if (!fields.Any(field => field.Equals(field)))
             {
                 field = "author";
             }
@@ -102,11 +102,16 @@ namespace BusinessLayer.Implementation
             try
             {
                 return await _repository.Update(id, requestDto);
-            }catch(SqlException e) when(e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
+            } catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
             {
                 throw new BookstoreException("Invalid data");
             }
         }
 
+
+        public async Task<int> GetTotalNumberOfBooks()
+        {
+            return await _repository.GetTotal();
+        }
     }
 }

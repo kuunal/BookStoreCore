@@ -171,5 +171,17 @@ namespace RepositoryLayer.Implementation
             return book;
         }
 
+        public async Task<int> GetTotal()
+        {
+            SqlConnection connection = _dBContext.GetConnection();
+            SqlCommand command = new SqlCommand("sp_books_get_total_books", connection)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            await connection.OpenAsync();
+            int total = Convert.ToInt32(await command.ExecuteScalarAsync());
+            await connection.CloseAsync();
+            return total;
+        }
     }
 }

@@ -13,6 +13,6 @@ namespace RepositoryLayer.Interface
         Task<BookResponseDto> Get(int id);
         Task<int> Delete(int id);
         Task<BookResponseDto> Update(int id, BookRequestDto requestDto);
-
+        Task<int> GetTotal();
     }
 }

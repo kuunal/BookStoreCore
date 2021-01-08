@@ -144,5 +144,12 @@ namespace BookStore.Controllers
             });
         }
 
+        [HttpGet]
+        [Route("total")]
+        public async Task<IActionResult> GetTotalNumberOfBooks()
+        {
+            return await _service.GetTotalNumberOfBooks();
+        }
+        
     }
 }

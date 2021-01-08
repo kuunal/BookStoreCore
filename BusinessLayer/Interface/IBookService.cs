@@ -1,4 +1,5 @@
-﻿using ModelLayer.BookDto;
+﻿using Microsoft.AspNetCore.Mvc;
+using ModelLayer.BookDto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,6 @@ namespace BusinessLayer.Interface
         Task<BookResponseDto> Get(int id);
         Task<int> Delete(int id);
         Task<BookResponseDto> Update(int id, BookRequestDto requestDto);
-
+        Task<int> GetTotalNumberOfBooks();
     }
 }
