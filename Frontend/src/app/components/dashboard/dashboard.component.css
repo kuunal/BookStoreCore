@@ -1,0 +1,24 @@
+.container {
+  width: 70%;
+  margin: 0px auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.sub-header {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.sub-header select {
+  padding: 5px 10px;
+  outline: none;
+}
+
+.sub-header select option {
+  border: none;
+}
