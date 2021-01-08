@@ -3,10 +3,11 @@
 }
 
 .container {
-  width: 70%;
+  width: 75%;
   margin: 0px auto;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .container > * {
@@ -28,7 +29,6 @@
 }
 .mat-form-field input {
   outline: none;
-  /* width: 200px; */
 }
 
 .mat-form-field {
@@ -73,4 +73,37 @@
 }
 /deep/ .mat-form-field-appearance-outline .mat-form-field-outline-start {
   border-radius: 0px !important;
+}
+
+.logo {
+  background: none;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.logo h2 {
+  color: white;
+}
+
+.container__cart {
+  background-color: transparent;
+  width: 30%;
+}
+
+.cart__right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart__right button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
 }
