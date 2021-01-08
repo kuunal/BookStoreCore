@@ -1,1 +1,22 @@
-<p>header works!</p>
+<mat-toolbar>
+  <div class="container">
+    <span>My Application</span>
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <input
+          type="text"
+          placeholder="search"
+          aria-label="Number"
+          matInput
+          [matAutocomplete]="auto"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </div>
+</mat-toolbar>
