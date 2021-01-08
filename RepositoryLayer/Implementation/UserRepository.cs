@@ -17,6 +17,11 @@ namespace RepositoryLayer.Implementation
             this._conn = dBContext.GetConnection();
         }
 
+        /// <summary>
+        /// Authenticates the user.
+        /// </summary>
+        /// <param name="loginDto">The login dto.</param>
+        /// <returns>user and password or null</returns>
         public async Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto)
         {
             UserResponseDto user = null;
@@ -39,6 +44,11 @@ namespace RepositoryLayer.Implementation
             return (user, password);
         }
 
+        /// <summary>
+        /// Maps the user from reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>mapped object</returns>
         private UserResponseDto MapUserFromReader(SqlDataReader reader)
         {
             return new UserResponseDto
@@ -51,7 +61,12 @@ namespace RepositoryLayer.Implementation
                 Role = (string) reader["role"]
             };
         }
-        
+
+        /// <summary>
+        /// Inserts the new user into database.
+        /// </summary>
+        /// <param name="requestDto">The request dto.</param>
+        /// <returns>newly added user</returns>
         public async Task<int> Insert(UserRequestDto requestDto)
         {
             SqlCommand command = new SqlCommand("sp_users_insert", _conn)

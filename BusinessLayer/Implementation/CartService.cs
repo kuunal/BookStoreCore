@@ -19,6 +19,17 @@ namespace BusinessLayer.Implementation
             _repository = repository;
         }
 
+        /// <summary>
+        /// Inserts the specified cart.
+        /// </summary>
+        /// <param name="cart">The cart.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Added item info</returns>
+        /// <exception cref="BookstoreException">
+        /// Invalid user id!
+        /// or
+        /// Already in cart
+        /// </exception>
         public async Task<CartResponseDto> Insert(CartRequestDto cart, int userId)
         {
             try
@@ -34,15 +45,33 @@ namespace BusinessLayer.Implementation
             }
         }
 
+        /// <summary>
+        /// Deletes the specified book identifier from  cart.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Boolean result in 1/0 format</returns>
         public async Task<int> Delete(int bookId, int userId)
         {
             return await _repository.Delete(bookId, userId);
         }
 
+        /// <summary>
+        /// Updates the specified cart.
+        /// </summary>
+        /// <param name="cart">The cart.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Updated cart item infomartion</returns>
         public async Task<CartResponseDto> Update(CartRequestDto cart, int userId)
         {
             return await _repository.Update(cart, userId);
         }
+
+        /// <summary>
+        /// Gets the cart using specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<CartResponseDto>> Get(int userId)
         {
             return await _repository.Get(userId);

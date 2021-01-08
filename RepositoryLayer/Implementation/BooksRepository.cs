@@ -16,6 +16,14 @@ namespace RepositoryLayer.Implementation
             _dBContext = dBContext;
         }
 
+        /// <summary>
+        /// Gets the paginated books from database.
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="lastItemValue">The last item value.</param>
+        /// <param name="sortby">The sortby.</param>
+        /// <returns>List of book</returns>
         public async Task<List<BookResponseDto>> Get(string field, int limit, string lastItemValue, string sortby)
         {
             List<BookResponseDto> bookList = new List<BookResponseDto>();
@@ -41,6 +49,11 @@ namespace RepositoryLayer.Implementation
             return bookList;
         }
 
+        /// <summary>
+        /// Maps the reader to BookResponseDto.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>BookResponseDto object</returns>
         private BookResponseDto MapReaderTobook(SqlDataReader reader)
         {
             return new BookResponseDto
@@ -55,6 +68,11 @@ namespace RepositoryLayer.Implementation
             };
         }
 
+        /// <summary>
+        /// Inserts the book into database.
+        /// </summary>
+        /// <param name="requestDto">The request dto.</param>
+        /// <returns>Boolean result in format 1/0</returns>
         public async Task<int> Insert(BookRequestDto requestDto)
         {
             SqlConnection connection = _dBContext.GetConnection();
@@ -74,6 +92,11 @@ namespace RepositoryLayer.Implementation
             return id;
         }
 
+        /// <summary>
+        /// Gets the specified book from database.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Book with given id</returns>
         public async Task<BookResponseDto> Get(int id)
         {
             BookResponseDto book = null;
@@ -95,6 +118,12 @@ namespace RepositoryLayer.Implementation
             return book;
         }
 
+
+        /// <summary>
+        /// Deletes the specified book from databae.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>boolean reslt in format1/0</returns>
         public async Task<int> Delete(int id)
         {
             SqlConnection connection = _dBContext.GetConnection();
@@ -109,6 +138,12 @@ namespace RepositoryLayer.Implementation
             return isDeleted;
         }
 
+        /// <summary>
+        /// Updates the specified book.
+        /// </summary>
+        /// <param name="id">The book identifier.</param>
+        /// <param name="requestDto">The request dto.</param>
+        /// <returns>Updated book</returns>
         public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto)
         {
             BookResponseDto book = null;

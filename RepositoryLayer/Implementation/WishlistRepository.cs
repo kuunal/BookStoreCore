@@ -17,6 +17,11 @@ namespace RepositoryLayer.Implementation
             _dbContext = dBContext;
         }
 
+        /// <summary>
+        /// Gets the wishlist for user id.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Wishilist for loggedin user</returns>
         public async Task<List<WishlistDto>> Get(int userId)
         {
             List<WishlistDto> wishlists = new List<WishlistDto>();
@@ -38,6 +43,11 @@ namespace RepositoryLayer.Implementation
             return wishlists;
         }
 
+        /// <summary>
+        /// Maps the reader to wishlist.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
         private WishlistDto MapReaderToWishlist(SqlDataReader reader)
         {
             return new WishlistDto
@@ -46,6 +56,12 @@ namespace RepositoryLayer.Implementation
             };
         }
 
+        /// <summary>
+        /// Inserts the book into wishlist.
+        /// </summary>
+        /// <param name="wishlist">The wishlist.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<int> Insert(WishlistDto wishlist, int userId)
         {
             SqlConnection _conn = _dbContext.GetConnection();
@@ -61,6 +77,12 @@ namespace RepositoryLayer.Implementation
             return isInserted;
         }
 
+        /// <summary>
+        /// Deletes the specified book id from wishlist.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>boolean result in 1/0 format</returns>
         public async Task<int> Delete(int bookId, int userId)
         {
             SqlConnection _conn = _dbContext.GetConnection();

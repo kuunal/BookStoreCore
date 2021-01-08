@@ -20,6 +20,19 @@ namespace BusinessLayer.Implementation
             _repository = repository;
         }
 
+        /// <summary>
+        /// Inserts the specified book in wishlist.
+        /// </summary>
+        /// <param name="wishlist">The wishlist.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="BookstoreException">
+        /// Invalid user id
+        /// or
+        /// Invalid book id
+        /// or
+        /// Already in wishlist
+        /// </exception>
         public async Task<WishlistDto> Insert(WishlistDto wishlist, int userId)
         {
             try
@@ -41,11 +54,23 @@ namespace BusinessLayer.Implementation
                 throw new BookstoreException("Already in wishlist");
             }
         }
+
+        /// <summary>
+        /// Gets the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Wishlist items in WishlistDto object</returns>
         public Task<List<WishlistDto>> Get(int userId)
         {
             return _repository.Get(userId);
         }
 
+        /// <summary>
+        /// Deletes the specified book identifier.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Boolean result in 1/0 format</returns>
         public async Task<int> Delete(int bookId, int userId)
         {
             return await _repository.Delete(bookId, userId);

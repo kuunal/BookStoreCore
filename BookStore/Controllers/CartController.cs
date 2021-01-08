@@ -23,6 +23,11 @@ namespace BookStore.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Adds to cart.
+        /// </summary>
+        /// <param name="cart">The cart item info.</param>
+        /// <returns>readystate and added cart item</returns>
         [HttpPost]
         public async Task<IActionResult> AddToCart(CartRequestDto cart)
         {
@@ -36,6 +41,10 @@ namespace BookStore.Controllers
             });
         }
 
+        /// <summary>
+        /// Gets the items from cart.
+        /// </summary>
+        /// <returns>readystate and added cart item</returns>
         [HttpGet]
         public async Task<IActionResult> GetItemsFromCart()
         {
@@ -49,7 +58,12 @@ namespace BookStore.Controllers
             });
         }
 
-        [HttpDelete("bookId")]
+        /// <summary>
+        /// Removes from cart.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <returns>readystate or bad request</returns>
+        [HttpDelete("{bookId}")]
         public async Task<IActionResult> RemoveFromCart(int bookId)
         {
             int userId = Convert.ToInt32(HttpContext.Items["userId"]);
@@ -71,6 +85,11 @@ namespace BookStore.Controllers
             });
         }
 
+        /// <summary>
+        /// Updates the in cart.
+        /// </summary>
+        /// <param name="cart">The cart item update information.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateInCart(CartRequestDto cart)

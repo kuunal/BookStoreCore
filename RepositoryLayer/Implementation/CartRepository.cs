@@ -17,6 +17,12 @@ namespace RepositoryLayer.Implementation
             _dbContext = dBContext;
         }
 
+        /// <summary>
+        /// Inserts the specified book into cart.
+        /// </summary>
+        /// <param name="cart">The cart.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>added cart item information</returns>
         public async Task<CartResponseDto> Insert(CartRequestDto cart, int userId)
         {
             CartResponseDto cartItem = null;
@@ -41,6 +47,12 @@ namespace RepositoryLayer.Implementation
             }
         }
 
+        /// <summary>
+        /// Deletes the specified book from cart.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>boolean result in 1/0 format</returns>
         public async Task<int> Delete(int bookId, int userId)
         {
             using (SqlConnection connection = _dbContext.GetConnection())
@@ -59,6 +71,12 @@ namespace RepositoryLayer.Implementation
             }
         }
 
+        /// <summary>
+        /// Updates the specified cart item.
+        /// </summary>
+        /// <param name="cart">The cart.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Updated infomartion</returns>
         public async Task<CartResponseDto> Update(CartRequestDto cart, int userId)
         {
             CartResponseDto cartItem = null;
@@ -84,6 +102,11 @@ namespace RepositoryLayer.Implementation
             return cartItem;
         }
 
+        /// <summary>
+        /// Gets the all cart items.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<CartResponseDto>> Get(int userId)
         {
             List<CartResponseDto> cartItem = new List<CartResponseDto>();
@@ -108,7 +131,11 @@ namespace RepositoryLayer.Implementation
 
         }
 
-
+        /// <summary>
+        /// Maps the reader to cart dto.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>CartResponseDto object </returns>
         private CartResponseDto MapReaderToCartDto(SqlDataReader reader)
         {
             return new CartResponseDto

@@ -22,7 +22,12 @@ namespace BookStore.Controllers
         {
             _service = service;
         }
-        
+
+        /// <summary>
+        /// Adds to wish list.
+        /// </summary>
+        /// <param name="wishlist">The wishlist dto.</param>
+        /// <returns>readystate</returns>
         [HttpPost]
         public async Task<IActionResult> AddToWishList(WishlistDto wishlist)
         {
@@ -36,12 +41,16 @@ namespace BookStore.Controllers
             });
         }
 
+        /// <summary>
+        /// Gets the wishlists items.
+        /// </summary>
+        /// <returns>readystate</returns>
         [HttpGet]
          public async Task<IActionResult> GetWishlists()
          {
             int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             List<WishlistDto> bookList = await _service.Get(userId);
-            return Ok(new Response<List<WishlistDto>>
+            return Ok(new Response<List<WishlistDto>>   
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Message = ResponseMessage.SUCCESSFUL,
@@ -49,7 +58,12 @@ namespace BookStore.Controllers
             });
          }
 
-        [HttpDelete("bookId")]
+        /// <summary>
+        /// Removes from wish list.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <returns>readystate or 404</returns>
+        [HttpDelete("{bookId}")]
         public async Task<IActionResult> RemoveFromWishList(int bookId)
         {
             int userId = Convert.ToInt32(HttpContext.Items["userId"]);

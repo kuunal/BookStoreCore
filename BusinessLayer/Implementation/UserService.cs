@@ -28,6 +28,11 @@ namespace BusinessLayer.Implementation
             _tokenManager = tokenManager;
         }
 
+        /// <summary>
+        /// Authenticates the user.
+        /// </summary>
+        /// <param name="loginDto">The login dto.</param>
+        /// <returns>logged in user or null value</returns>
         public async Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto)
         {
             var (user, password) = await _repository.AuthenticateUser(loginDto);
@@ -40,6 +45,13 @@ namespace BusinessLayer.Implementation
 
         }
 
+        /// <summary>
+        /// Adds the user.
+        /// </summary>
+        /// <param name="requestDto">The request dto.</param>
+        /// <returns>Added user information</returns>
+        /// <exception cref="BookstoreException">
+        /// </exception>
         public async Task<UserResponseDto> AddUser(UserRequestDto requestDto)
         {
             try

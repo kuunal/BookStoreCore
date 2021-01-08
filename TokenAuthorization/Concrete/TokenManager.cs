@@ -23,11 +23,23 @@ namespace Greeting.TokenAuthorization
 
         }
 
+        /// <summary>
+        /// Generates jwt with default expiry time.
+        /// </summary>
+        /// <param name="account">The account.</param>
+        /// <returns>Token</returns>
         public string Encode(UserResponseDto account)
         {
             return Encode(account, expiryTime);
         }
 
+        /// <summary>
+        /// Generates jwt with custom parameters.
+        /// </summary>
+        /// <param name="account">The account.</param>
+        /// <param name="ExpiryTimeInMinutes">The expiry time in minutes.</param>
+        /// <param name="secret">The secret.</param>
+        /// <returns>Token</returns>
         public string Encode(UserResponseDto account, int ExpiryTimeInMinutes, byte[] secret=null)
         {
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -46,12 +58,22 @@ namespace Greeting.TokenAuthorization
             return tokenHandler.WriteToken(token);
         }
 
+        /// <summary>
+        /// Decodes the with default token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public ClaimsPrincipal Decode(string token)
         {
             return Decode(token, secretKey);
         }
 
-
+        /// <summary>
+        /// Decodes with specified token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <param name="secret">The secret.</param>
+        /// <returns></returns>
         public ClaimsPrincipal Decode(string token, byte[] secret)
         {
             var claims = tokenHandler.ValidateToken(token, new TokenValidationParameters

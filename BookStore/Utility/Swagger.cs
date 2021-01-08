@@ -10,6 +10,10 @@ namespace Fundoo.Utilities
 {
     public static class Swagger
     {
+        /// <summary>
+        /// Extension method to IServiceCollection that registers the swagger to services.
+        /// </summary>
+        /// <param name="services">The IServiceCollection object.</param>
         public static void AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
@@ -41,6 +45,10 @@ namespace Fundoo.Utilities
             });
         }
 
+        /// <summary>
+        /// Adds the custom swagger.
+        /// </summary>
+        /// <param name="app">The IApplicationBuilder object.</param>
         public static void UseCustomSwagger(this IApplicationBuilder app)
         {
             app.UseSwagger();

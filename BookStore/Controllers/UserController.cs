@@ -20,6 +20,11 @@ namespace BookStore.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Authenticate user.
+        /// </summary>
+        /// <param name="loginDto">The login dto.</param>
+        /// <returns>readystate or Unauthorized state</returns>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
@@ -44,6 +49,11 @@ namespace BookStore.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds the user.
+        /// </summary>
+        /// <param name="requestDto">The request dto.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> AddUser(UserRequestDto requestDto) 
         {

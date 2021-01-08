@@ -14,6 +14,10 @@ namespace RepositoryLayer.Implementation
             this.connectionString = connectionString.ConnectionString;
         }
 
+        /// <summary>
+        /// Gets the connection to database.
+        /// </summary>
+        /// <returns> </returns>
         public SqlConnection GetConnection()
         {
             return new SqlConnection(connectionString);

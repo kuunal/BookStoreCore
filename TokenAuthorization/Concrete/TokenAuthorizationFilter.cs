@@ -14,6 +14,11 @@ namespace Greeting.TokenAuthorization
         {
             _role = role;
         }
+
+        /// <summary>
+        /// Called early in the filter pipeline to confirm request is authorized.
+        /// </summary>
+        /// <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext" />.</param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var _tokenManager = (ITokenManager) context.HttpContext.RequestServices.GetService(typeof(ITokenManager));
