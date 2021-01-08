@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ModelLayer
 {
+    /// <summary>
+    /// Custom response messages.
+    /// </summary>
     public class ResponseMessage
     {
         public const string LOGIN_SUCCESS = "Login successful";

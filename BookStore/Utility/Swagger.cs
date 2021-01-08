@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using BookStore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Fundoo.Utilities
@@ -19,6 +24,7 @@ namespace Fundoo.Utilities
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Bookstore API", Version = "v1" });
+                options.IncludeXmlComments(XmlCommentsFilePath);
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
@@ -55,6 +61,16 @@ namespace Fundoo.Utilities
             app.UseSwaggerUI(option => {
                 option.SwaggerEndpoint("/swagger/v1/swagger.json", "My API Version 1");
             });
+        }
+
+        static string XmlCommentsFilePath
+        {
+            get
+            {
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                return Path.Combine(basePath, fileName);
+            }
         }
     }
 }
