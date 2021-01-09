@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class HttpServiceService {
+export class HttpService {
   constructor(private _http: HttpClient) {}
 
   post(data, url) {
     this._http.post(url, data);
   }
 
-  get(url) {
-    this._http.get(url);
+  get(url, params?) {
+    this._http.get(url, params);
   }
 
   delete(url) {
