@@ -32,7 +32,7 @@ namespace BookStore.Controllers
         /// <returns>readystate and data</returns>
         [HttpPost]
         [TokenAuthorizationFilter("admin")]
-        public async Task<IActionResult> AddBook(BookRequestDto requestDto)
+        public async Task<IActionResult> AddBook([FromBody] BookRequestDto requestDto)
         {
             BookResponseDto responseDto = await _service.AddBook(requestDto);
             return Ok(new Response<BookResponseDto> { 
@@ -124,7 +124,7 @@ namespace BookStore.Controllers
         /// <returns>readystate and updated data or 404</returns>
         [HttpPost("{id}")]
         [TokenAuthorizationFilter("admin")]
-        public async Task<IActionResult> UpdateBook(int id, BookRequestDto requestDto)
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] BookRequestDto requestDto)
         {
             BookResponseDto book = await _service.Update(id, requestDto);
             if (book == null)

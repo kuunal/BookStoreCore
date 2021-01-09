@@ -49,6 +49,7 @@ namespace BookStore
             services.AddScoped<ICartService, CartService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +59,11 @@ namespace BookStore
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options =>
+            {
+                options.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+            });
 
             app.UseExceptionHandler("/Error");
 
