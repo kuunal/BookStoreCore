@@ -1,5 +1,6 @@
 .mat-toolbar {
   background-color: #a03037;
+  position: sticky;
 }
 
 .container {

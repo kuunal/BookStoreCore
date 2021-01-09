@@ -7,11 +7,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  url: string = `${environment.backendUri}user/login`;
+  loginBackendUri: string = `${environment.backendUri}user/login`;
+  registerBackendUri: string = `${environment.backendUri}user`;
 
   constructor(private _http: HttpService) {}
 
   login(data) {
-    return this._http.post(data, this.url);
+    return this._http.post(data, this.loginBackendUri);
+  }
+
+  register(data) {
+    return this._http.post(data, this.registerBackendUri);
   }
 }

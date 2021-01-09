@@ -7,36 +7,11 @@
   border-radius: 8px;
 }
 
-.logo {
-  font-weight: bolder;
-}
-
-.f {
-  color: dodgerblue;
-}
-
-.u {
-  color: red;
-}
-
-.n {
-  color: yellow;
-}
-
-.d {
-  color: blue;
-}
-
-.o {
-  color: green;
-}
-
 .container > h1,
 h2,
 h4 {
   text-align: center;
 }
-
 .container form a {
   color: dodgerblue;
   text-decoration: none;
@@ -49,6 +24,9 @@ a:active {
 
 p {
   outline-color: violet;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 form p {
