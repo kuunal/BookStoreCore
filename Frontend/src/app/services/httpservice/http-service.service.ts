@@ -8,14 +8,14 @@ export class HttpService {
   constructor(private _http: HttpClient) {}
 
   post(data, url) {
-    this._http.post(url, data);
+    return this._http.post(url, data);
   }
 
   get(url, params?) {
-    this._http.get(url, params);
+    return this._http.get(url, params);
   }
 
   delete(url) {
-    this._http.delete(url);
+    return this._http.delete(url);
   }
 }

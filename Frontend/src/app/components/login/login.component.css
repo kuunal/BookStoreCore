@@ -1,0 +1,83 @@
+.container {
+  width: 30%;
+  min-width: 250px;
+  margin: 2% auto;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 3%;
+  border-radius: 8px;
+}
+
+.logo {
+  font-weight: bolder;
+}
+
+.f {
+  color: dodgerblue;
+}
+
+.u {
+  color: red;
+}
+
+.n {
+  color: yellow;
+}
+
+.d {
+  color: blue;
+}
+
+.o {
+  color: green;
+}
+
+.container > h1,
+h2,
+h4 {
+  text-align: center;
+}
+
+.container form a {
+  color: dodgerblue;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:active {
+  background-color: rgba(30, 144, 255, 0.5);
+}
+
+p {
+  outline-color: violet;
+}
+
+form p {
+  display: flex;
+  flex-direction: column;
+}
+
+.last-row {
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.last-row button:first-child {
+  margin-left: -4%;
+  color: dodgerblue;
+}
+
+select {
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.footer {
+  margin: auto;
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
