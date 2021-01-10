@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 const material = [
   MatToolbarModule,
@@ -13,6 +14,7 @@ const material = [
   MatAutocompleteModule,
   MatSnackBarModule,
   MatButtonModule,
+  MatCardModule,
 ];
 
 @NgModule({

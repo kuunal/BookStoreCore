@@ -1,0 +1,73 @@
+/* .mat-card {
+  width: 200px;
+}
+
+.header {
+  box-shadow: 0px 0px 5px 2px gainsboro;
+}
+
+
+
+.mat-card-header {
+  background-color: #e2e2e2;
+  width: 100%;
+}
+*/
+img {
+  height: 125px;
+  width: 100px;
+}
+.cart-btn {
+  background-color: #8f2b2f;
+  color: white;
+}
+
+.mat-button,
+.mat-icon-button,
+.mat-stroked-button,
+.mat-flat-button {
+  padding: 0 5px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.card {
+  height: 300px;
+  width: 200px;
+  border: 1px solid gainsboro;
+  box-shadow: 0px 0px 3px 0px gainsboro;
+}
+
+.header__image {
+  width: 150px;
+  background-color: gold;
+}
+
+.card {
+  margin-bottom: 15px;
+}
+
+.card__header {
+  padding: 0 50px;
+  padding-bottom: 0px;
+  padding-top: 20px;
+  height: 52%;
+  background-color: #f5f5f5;
+}
+
+.card__contents {
+  font: normal normal normal 14px/17px Lato;
+  margin: 15px 0;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.contents__title {
+  font-weight: bold;
+}

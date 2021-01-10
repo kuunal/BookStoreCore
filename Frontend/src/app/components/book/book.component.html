@@ -1,0 +1,29 @@
+<!-- <mat-card class="card">
+  <mat-card-header>
+    <img mat-card-image src="{{ book?.image }}" alt="book" />
+  </mat-card-header>
+  <mat-card-title>{{ book?.title }}</mat-card-title>
+  <mat-card-subtitle>{{ book?.author }}</mat-card-subtitle>
+  <mat-card-content>
+    <p>{{ book.description | slice: 1:20 }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button class="cart-btn" mat-stroked-button>ADD TO CART</button>
+    <button mat-stroked-button>ADD TO WISHLIST</button>
+  </mat-card-actions>
+</mat-card> -->
+
+<div class="card">
+  <div class="card__header">
+    <img src="{{ book?.image }}" alt="{{ book.title }}" />
+  </div>
+  <div class="card__contents">
+    <div class="contents__title">{{ book.title | slice: 0:20 }}</div>
+    <span [ngStyle]="style">By {{ book?.author }}</span>
+    <span>Rs.{{ book?.price }}</span>
+  </div>
+  <div class="card__actions">
+    <button class="cart-btn" mat-stroked-button>ADD TO BAG</button>
+    <button mat-stroked-button>WISHLIST</button>
+  </div>
+</div>

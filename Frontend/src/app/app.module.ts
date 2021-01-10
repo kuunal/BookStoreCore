@@ -16,6 +16,7 @@ import {
 } from '@angular/common/http';
 import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptorService } from './services/token-interceptor/token-interceptor.service';
+import { BookComponent } from './components/book/book.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +24,7 @@ import { TokenInterceptorService } from './services/token-interceptor/token-inte
     DashboardComponent,
     LoginComponent,
     RegisterComponent,
+    BookComponent,
   ],
   imports: [
     BrowserModule,
