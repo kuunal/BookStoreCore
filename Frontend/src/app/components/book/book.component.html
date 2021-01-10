@@ -12,7 +12,16 @@
     <span>Rs.{{ book?.price }}</span>
   </div>
   <div class="card__actions">
-    <button class="cart-btn" mat-stroked-button>ADD TO BAG</button>
-    <button mat-stroked-button>WISHLIST</button>
+    <div class="btns" *ngIf="!cartItem; else addedItem">
+      <button class="cart-btn" (click)="addToCart(book)" mat-stroked-button>
+        ADD TO BAG
+      </button>
+      <button mat-stroked-button>WISHLIST</button>
+    </div>
+    <ng-template #addedItem>
+      <div class="cart-btn-md">
+        <button class="added-cart-btn" mat-stroked-button>ADDED TO BAG</button>
+      </div>
+    </ng-template>
   </div>
 </div>

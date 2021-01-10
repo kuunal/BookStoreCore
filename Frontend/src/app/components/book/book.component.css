@@ -13,7 +13,7 @@ img {
 .mat-flat-button {
   padding: 0 8px;
   font-size: 12px;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .card {
@@ -48,7 +48,7 @@ img {
   flex-direction: column;
 }
 
-.card__actions {
+.btns {
   display: flex;
   justify-content: space-around;
 }
@@ -59,4 +59,18 @@ img {
 
 .mat-stroked-button {
   line-height: 30px;
+}
+
+.added-cart-btn {
+  width: 80%;
+  background-color: #3371b5;
+}
+
+.cart-btn-md {
+  width: 100%;
+  margin: 0 10%;
+}
+
+button {
+  box-shadow: 0px 0px 2px 0px #8f2b2f;
 }

@@ -1,4 +1,5 @@
 import { HttpParams } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {
   AfterViewInit,
   Component,
@@ -6,6 +7,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConsoleReporter } from 'jasmine';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
 
 @Component({
@@ -22,12 +25,14 @@ export class DashboardComponent implements OnInit {
   limit: string = '12';
   books: any;
   totalBooks: void;
+  cartItems = [];
 
-  constructor(private _service: BooksService) {}
+  constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.getBooks();
     this.getTotalNumberOfBooks();
+    this.getCartItems();
   }
 
   getTotalNumberOfBooks() {
@@ -52,7 +57,31 @@ export class DashboardComponent implements OnInit {
       })
       .subscribe(
         (response) => (this.books = response['data']),
-        (error) => console.log(error)
+        (error) => localStorage.clear()
       );
+  }
+
+  getCartItems() {
+    this._service.getCartItems().subscribe(
+      (response) => (this.cartItems = response['data']),
+      (error) =>
+        this._snackbar.open('Error fetching cart', '', {
+          duration: 2000,
+        })
+    );
+  }
+
+  isAddedInCart(book) {
+    return this.cartItems.some((item) => item.bookId === book.id) ? book : null;
+  }
+
+  addToCart(bookId) {
+    this._service.addToCart({ bookId: bookId, quantity: 1 }).subscribe(
+      (response) => this.getCartItems(),
+      (error) =>
+        this._snackbar.open('Error adding to cart', '', {
+          duration: 2000,
+        })
+    );
   }
 }

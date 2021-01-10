@@ -17,6 +17,7 @@ import {
 import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptorService } from './services/token-interceptor/token-interceptor.service';
 import { BookComponent } from './components/book/book.component';
+import { AuthGuard } from './services/auth.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { BookComponent } from './components/book/book.component';
     HttpClientModule,
   ],
   providers: [
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
