@@ -7,10 +7,15 @@ import { HttpService } from '../httpservice/http-service.service';
 })
 export class BooksService {
   getBooksApi = `${environment.backendUri}book`;
+  getTotalNumberOfBooksApi = `${environment.backendUri}book/total`;
 
   constructor(private _http: HttpService) {}
 
   getBooks(params?) {
     return this._http.get(this.getBooksApi, params);
+  }
+
+  getTotalNumberOfBooks() {
+    return this._http.get(this.getTotalNumberOfBooksApi);
   }
 }

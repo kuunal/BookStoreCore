@@ -14,18 +14,27 @@ import { BooksService } from 'src/app/services/bookservice/books-service.service
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  total: number = 54;
+  total: any;
   isDropDownOpen: boolean = false;
   field: string = 'id';
   sortby: string = 'asc';
   lastItemValue: string = '0';
   limit: string = '12';
   books: any;
+  totalBooks: void;
 
   constructor(private _service: BooksService) {}
 
   ngOnInit(): void {
     this.getBooks();
+    this.getTotalNumberOfBooks();
+  }
+
+  getTotalNumberOfBooks() {
+    this._service.getTotalNumberOfBooks().subscribe(
+      (response) => (this.total = response),
+      (error) => console.log(error)
+    );
   }
 
   getBooks() {

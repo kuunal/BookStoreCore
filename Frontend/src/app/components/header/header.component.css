@@ -1,6 +1,7 @@
 .mat-toolbar {
   background-color: #a03037;
-  position: sticky;
+  position: fixed;
+  z-index: 99;
 }
 
 .container {
@@ -107,4 +108,16 @@
   border: none;
   cursor: pointer;
   color: white;
+}
+
+@media (max-width: 750px) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 750px) {
+  input {
+    display: none;
+  }
 }
