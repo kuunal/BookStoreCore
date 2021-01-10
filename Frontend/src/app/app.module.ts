@@ -18,6 +18,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptorService } from './services/token-interceptor/token-interceptor.service';
 import { BookComponent } from './components/book/book.component';
 import { AuthGuard } from './services/auth.guard';
+import { FooterComponent } from './components/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { AuthGuard } from './services/auth.guard';
     LoginComponent,
     RegisterComponent,
     BookComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
