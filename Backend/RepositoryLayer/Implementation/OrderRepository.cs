@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryLayer.Implementation
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly IDBContext _dBContext;
         private readonly IUserRepository _userRepository;
@@ -46,8 +46,8 @@ namespace RepositoryLayer.Implementation
                     orderResponse.Quantity = (int) reader["orderedQuantity"];
                     orderResponse.OrderId = (string)reader["orderId"];
                 }
-                
             }
+            return orderResponse;
         }
 
         private AddressResponseDto MapReaderToAddressDto(SqlDataReader reader)
