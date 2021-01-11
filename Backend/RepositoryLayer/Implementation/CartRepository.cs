@@ -11,10 +11,12 @@ namespace RepositoryLayer.Implementation
     public class CartRepository : ICartRepository
     {
         private readonly IDBContext _dbContext;
+        private readonly IBooksRepository _booksRepository;
 
-        public CartRepository(IDBContext dBContext)
+        public CartRepository(IDBContext dBContext, IBooksRepository booksRepository)
         {
             _dbContext = dBContext;
+            _booksRepository = booksRepository;
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace RepositoryLayer.Implementation
                 {
                     while (await reader.ReadAsync())
                     {
-                        cartItem = MapReaderToCartDto(reader);
+                        cartItem = await MapReaderToCartDtoAsync(reader);
                     }
                 }
                 return cartItem;
@@ -95,7 +97,7 @@ namespace RepositoryLayer.Implementation
                 {
                     while (await reader.ReadAsync())
                     {
-                        cartItem = MapReaderToCartDto(reader);
+                        cartItem = await MapReaderToCartDtoAsync(reader);
                     }
                 }
             }
@@ -113,7 +115,7 @@ namespace RepositoryLayer.Implementation
             using (SqlConnection connection = _dbContext.GetConnection())
             {
 
-                SqlCommand command = new SqlCommand("sp_cart_get", connection)
+                SqlCommand command = new SqlCommand("sp_cart_get_in_depth", connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
@@ -123,7 +125,7 @@ namespace RepositoryLayer.Implementation
                 {
                     while (await reader.ReadAsync())
                     {
-                        cartItem.Add(MapReaderToCartDto(reader));
+                        cartItem.Add(await MapReaderToCartDtoAsync(reader));
                     }
                 }
             }
@@ -136,13 +138,13 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>CartResponseDto object </returns>
-        private CartResponseDto MapReaderToCartDto(SqlDataReader reader)
+        private async Task<CartResponseDto> MapReaderToCartDtoAsync(SqlDataReader reader)
         {
             return new CartResponseDto
             {
-                BookId = (int)reader["bookId"],
-                Price = (int)reader["price"],
-                Quantity = (int)reader["quantity"]
+                Book = _booksRepository.MapReaderTobook(reader),
+                Total = (int)reader["total"],
+                ItemQuantity = (int)reader["item_quantity"]
             };
         }
     }

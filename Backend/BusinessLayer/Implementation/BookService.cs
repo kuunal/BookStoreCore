@@ -109,6 +109,9 @@ namespace BusinessLayer.Implementation
             } catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
             {
                 throw new BookstoreException("Invalid data");
+            }catch(SqlException e) when(e.Number == 50000)
+            {
+                throw new BookstoreException(e.Message);
             }
         }
 

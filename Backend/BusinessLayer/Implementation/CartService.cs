@@ -64,7 +64,14 @@ namespace BusinessLayer.Implementation
         /// <returns>Updated cart item infomartion</returns>
         public async Task<CartResponseDto> Update(CartRequestDto cart, int userId)
         {
-            return await _repository.Update(cart, userId);
+            try
+            {
+                return await _repository.Update(cart, userId);
+            }
+            catch (SqlException e) when (e.Number == 50000)
+            {
+                throw new BookstoreException(e.Message);
+            }
         }
 
         /// <summary>

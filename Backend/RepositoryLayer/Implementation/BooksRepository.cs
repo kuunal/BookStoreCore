@@ -54,7 +54,7 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>BookResponseDto object</returns>
-        private BookResponseDto MapReaderTobook(SqlDataReader reader)
+        public BookResponseDto MapReaderTobook(SqlDataReader reader)
         {
             return new BookResponseDto
             {
