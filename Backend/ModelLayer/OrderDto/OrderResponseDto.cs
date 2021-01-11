@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModelLayer.BookDto;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,11 +7,12 @@ namespace ModelLayer.OrderDto
 {
     public class OrderResponseDto
     {
-        public int id { get; set; }
-        public int bookId { get; set; }
-        public int userId { get; set; }
-        public int quantity { get; set; }
-        public DateTime orderedDate { get; set; }
-        public string orderId { get; set; }
+        public int Id { get; set; }
+        public BookResponseDto Book { get; set; }
+        public UserResponseDto User  { get; set; }
+        public int Quantity { get; set; }
+        public DateTime OrderedDate { get; set; }
+        public string OrderId { get; set; }
+        public AddressDto Address { get; set; }
     }
 }

@@ -49,11 +49,11 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>mapped object</returns>
-        private UserResponseDto MapUserFromReader(SqlDataReader reader)
+        private UserResponseDto MapUserFromReader(SqlDataReader reader, string id = "id")
         {
             return new UserResponseDto
             {
-                Id = (int)reader["id"],
+                Id = (int)reader[id],
                 FirstName = (string)reader["firstname"],
                 LastName = (string)reader["lastname"],
                 PhoneNumber = (string)reader["phonenumber"],
