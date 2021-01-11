@@ -42,7 +42,7 @@ namespace RepositoryLayer.Implementation
                 {
                     while (await reader.ReadAsync())
                     {
-                        cartItem = await MapReaderToCartDtoAsync(reader);
+                        cartItem = MapReaderToCartDtoAsync(reader);
                     }
                 }
                 return cartItem;
@@ -97,7 +97,7 @@ namespace RepositoryLayer.Implementation
                 {
                     while (await reader.ReadAsync())
                     {
-                        cartItem = await MapReaderToCartDtoAsync(reader);
+                        cartItem = MapReaderToCartDtoAsync(reader);
                     }
                 }
             }
@@ -125,7 +125,7 @@ namespace RepositoryLayer.Implementation
                 {
                     while (await reader.ReadAsync())
                     {
-                        cartItem.Add(await MapReaderToCartDtoAsync(reader));
+                        cartItem.Add(MapReaderToCartDtoAsync(reader));
                     }
                 }
             }
@@ -138,7 +138,7 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>CartResponseDto object </returns>
-        private async Task<CartResponseDto> MapReaderToCartDtoAsync(SqlDataReader reader)
+        private CartResponseDto MapReaderToCartDtoAsync(SqlDataReader reader)
         {
             return new CartResponseDto
             {

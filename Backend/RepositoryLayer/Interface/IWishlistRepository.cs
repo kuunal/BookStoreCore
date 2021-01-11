@@ -8,9 +8,9 @@ namespace RepositoryLayer.Interface
 {
     public interface IWishlistRepository
     {
-        Task<int> Insert(WishlistDto wishlist, int userId);
+        Task<WishlistResponseDto> Insert(WishlistDto wishlist, int userId);
 
-        Task<List<WishlistDto>> Get(int userId);
+        Task<List<WishlistResponseDto>> Get(int userId);
         Task<int> Delete(int bookId, int userId);
 
     }

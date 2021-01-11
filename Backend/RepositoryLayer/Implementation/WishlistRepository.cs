@@ -11,10 +11,12 @@ namespace RepositoryLayer.Implementation
     public class WishlistRepository : IWishlistRepository
     {
         private readonly IDBContext _dbContext;
+        private readonly IBooksRepository _booksRepository;
 
-        public WishlistRepository(IDBContext dBContext)
+        public WishlistRepository(IDBContext dBContext, IBooksRepository booksRepository)
         {
             _dbContext = dBContext;
+            _booksRepository = booksRepository;
         }
 
         /// <summary>
@@ -22,9 +24,9 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Wishilist for loggedin user</returns>
-        public async Task<List<WishlistDto>> Get(int userId)
+        public async Task<List<WishlistResponseDto>> Get(int userId)
         {
-            List<WishlistDto> wishlists = new List<WishlistDto>();
+            List<WishlistResponseDto> wishlists = new List<WishlistResponseDto>();
             SqlConnection _conn = _dbContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_wishlist_get", _conn)
             {
@@ -48,11 +50,11 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
-        private WishlistDto MapReaderToWishlist(SqlDataReader reader)
+        private WishlistResponseDto MapReaderToWishlist(SqlDataReader reader)
         {
-            return new WishlistDto
+            return new WishlistResponseDto
             {
-                BookId = (int) reader["bookId"]            
+                Book = _booksRepository.MapReaderTobook(reader)           
             };
         }
 
@@ -62,8 +64,9 @@ namespace RepositoryLayer.Implementation
         /// <param name="wishlist">The wishlist.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<int> Insert(WishlistDto wishlist, int userId)
+        public async Task<WishlistResponseDto> Insert(WishlistDto wishlist, int userId)
         {
+            WishlistResponseDto addedItem = null;
             SqlConnection _conn = _dbContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_wishlist_insert", _conn)
             {
@@ -72,9 +75,15 @@ namespace RepositoryLayer.Implementation
             command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@bookId", wishlist.BookId);
             await _conn.OpenAsync();
-            int isInserted = await command.ExecuteNonQueryAsync();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    addedItem = MapReaderToWishlist(reader);
+                }
+            }
             await _conn.CloseAsync();
-            return isInserted;
+            return addedItem;
         }
 
         /// <summary>

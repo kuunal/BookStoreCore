@@ -32,8 +32,8 @@ namespace BookStore.Controllers
         public async Task<IActionResult> AddToWishList(WishlistDto wishlist)
         {
             int userId = Convert.ToInt32(HttpContext.Items["userId"]);
-            WishlistDto addedWishlist = await _service.Insert(wishlist, userId);
-            return Ok(new Response<WishlistDto>
+            WishlistResponseDto addedWishlist = await _service.Insert(wishlist, userId);
+            return Ok(new Response<WishlistResponseDto>
             {
                 StatusCode = (int)HttpStatusCode.Created,
                 Message = ResponseMessage.SUCCESSFUL,
@@ -49,8 +49,8 @@ namespace BookStore.Controllers
          public async Task<IActionResult> GetWishlists()
          {
             int userId = Convert.ToInt32(HttpContext.Items["userId"]);
-            List<WishlistDto> bookList = await _service.Get(userId);
-            return Ok(new Response<List<WishlistDto>>   
+            List<WishlistResponseDto> bookList = await _service.Get(userId);
+            return Ok(new Response<List<WishlistResponseDto>>   
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Message = ResponseMessage.SUCCESSFUL,

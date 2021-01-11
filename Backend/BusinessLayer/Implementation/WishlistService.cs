@@ -33,15 +33,11 @@ namespace BusinessLayer.Implementation
         /// or
         /// Already in wishlist
         /// </exception>
-        public async Task<WishlistDto> Insert(WishlistDto wishlist, int userId)
+        public async Task<WishlistResponseDto> Insert(WishlistDto wishlist, int userId)
         {
             try
             {
-                if (await _repository.Insert(wishlist, userId) == 1)
-                {
-                    return wishlist;
-                }
-                return null;
+                return await _repository.Insert(wishlist, userId);
             } catch (SqlException e) when (e.Message.Contains("FK__wishlist__userId"))
             {
                 throw new BookstoreException("Invalid user id");
@@ -49,7 +45,7 @@ namespace BusinessLayer.Implementation
             catch (SqlException e) when (e.Message.Contains("FK__wishlist__bookId"))
             {
                 throw new BookstoreException("Invalid book id");
-            }catch(SqlException e) when(e.Message.Contains("PK__wishlist__bookId__userId"))
+            }catch(SqlException e) when(e.Number == SqlErrorNumbers.DUPLICATEKEY)
             {
                 throw new BookstoreException("Already in wishlist");
             }
@@ -60,7 +56,7 @@ namespace BusinessLayer.Implementation
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Wishlist items in WishlistDto object</returns>
-        public Task<List<WishlistDto>> Get(int userId)
+        public Task<List<WishlistResponseDto>> Get(int userId)
         {
             return _repository.Get(userId);
         }

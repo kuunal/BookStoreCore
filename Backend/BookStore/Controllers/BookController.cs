@@ -121,6 +121,7 @@ namespace BookStore.Controllers
         /// Endpoint for updating book. Only admiins are authorized to delete books
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="requestDto"></param>
         /// <returns>readystate and updated data or 404</returns>
         [HttpPost("{id}")]
         [TokenAuthorizationFilter("admin")]
