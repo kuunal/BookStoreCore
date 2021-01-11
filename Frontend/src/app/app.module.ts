@@ -19,6 +19,9 @@ import { TokenInterceptorService } from './services/token-interceptor/token-inte
 import { BookComponent } from './components/book/book.component';
 import { AuthGuard } from './services/auth.guard';
 import { FooterComponent } from './components/footer/footer.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CartItemComponent } from './components/cart-item/cart-item.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +31,8 @@ import { FooterComponent } from './components/footer/footer.component';
     RegisterComponent,
     BookComponent,
     FooterComponent,
+    CartComponent,
+    CartItemComponent,
   ],
   imports: [
     BrowserModule,

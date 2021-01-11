@@ -1,0 +1,25 @@
+<div class="main">
+  <div class="container">
+    <div class="container__book">
+      <div class="book__left">
+        <img src="{{ cartItem.book?.image }}" alt="book" />
+      </div>
+      <div class="book__right">
+        <div class="book__title">{{ cartItem.book?.title | slice: 0:20 }}</div>
+        <div class="book__author">By {{ cartItem.book?.author }}</div>
+        <div class="book__price">Rs.{{ cartItem.book?.price }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="container__quantity">
+    <div class="quantity__left">
+      <button mat-icon-button>-</button>
+      <button class="quantity-btn">{{ quantity }}</button>
+      <button mat-icon-button>+</button>
+    </div>
+    <div class="quantity__right">Remove</div>
+  </div>
+  <div class="container__order">
+    <button mat-stroked-button>PLACE ORDER</button>
+  </div>
+</div>

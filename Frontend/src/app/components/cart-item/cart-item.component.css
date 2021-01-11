@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+}
+
+.book__left img {
+  height: 85px;
+  width: 65px;
+}
+
+.book__author {
+  font: normal normal normal 10px/12px Lato;
+  letter-spacing: 0px;
+  color: #9d9d9d;
+}
+
+.book__title {
+  font: normal normal normal 14px/17px Lato;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+
+.container__book {
+  display: flex;
+}
+
+.book__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0px 1em;
+}
+
+.book__right > div {
+  margin-bottom: 10px;
+}
+
+.book__price {
+  font: normal normal bold 15px/18px Lato;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+
+.quantity-btn {
+  background: none;
+  outline: none;
+  text-align: center;
+  height: 24px;
+  width: 41px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  font-size: 14px;
+  font: normal normal medium 14px/17px Lato;
+  letter-spacing: 0px;
+  color: #333232;
+}
+
+.mat-icon-button {
+  background: #fafafa 0% 0% no-repeat padding-box;
+  border: 1px solid #dbdbdb;
+  line-height: 20px;
+  height: 24px;
+  width: 24px;
+  font-size: 14px;
+  font: normal normal medium 14px/17px Lato;
+  letter-spacing: 0px;
+  color: #333232;
+}
+
+.quantity__left > button {
+  margin: 0 4px;
+}
+
+.quantity__right {
+  font: normal normal normal 12px/15px Lato;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+
+.container__quantity {
+  display: flex;
+  align-items: center;
+}
+
+.container__quantity:last-child {
+  margin: 0px 10%;
+}
+
+.quantity__right {
+  margin-left: 20px;
+}
+
+.container__order {
+  text-align: end;
+}
+
+.container__order button {
+  background-color: #3371b5;
+  color: white;
+}

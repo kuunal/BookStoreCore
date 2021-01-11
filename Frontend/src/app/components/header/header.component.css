@@ -1,6 +1,7 @@
 .mat-toolbar {
   background-color: #a03037;
-  position: fixed;
+  position: sticky;
+  top: 0;
   z-index: 99;
 }
 

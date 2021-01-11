@@ -8,7 +8,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConsoleReporter } from 'jasmine';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
 
 @Component({
@@ -72,7 +71,9 @@ export class DashboardComponent implements OnInit {
   }
 
   isAddedInCart(book) {
-    return this.cartItems.some((item) => item.bookId === book.id) ? book : null;
+    return this.cartItems.some((item) => item.book.id === book.id)
+      ? book
+      : null;
   }
 
   addToCart(bookId) {
