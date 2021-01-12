@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLayer", "ModelLayer\Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenAuthorization", "TokenAuthorization\TokenAuthorization.csproj", "{E8BB59B0-6EA0-460A-ACF3-71567FADE34F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{D7BC2F6F-4AC1-469D-989E-723D4106866C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{D7BC2F6F-4AC1-469D-989E-723D4106866C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "Caching\Caching.csproj", "{77C46C4E-BE63-44EE-ABC3-1886CCD9C44F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{D7BC2F6F-4AC1-469D-989E-723D4106866C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7BC2F6F-4AC1-469D-989E-723D4106866C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7BC2F6F-4AC1-469D-989E-723D4106866C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C46C4E-BE63-44EE-ABC3-1886CCD9C44F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C46C4E-BE63-44EE-ABC3-1886CCD9C44F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C46C4E-BE63-44EE-ABC3-1886CCD9C44F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C46C4E-BE63-44EE-ABC3-1886CCD9C44F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
