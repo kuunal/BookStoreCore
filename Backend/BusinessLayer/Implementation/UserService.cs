@@ -11,7 +11,9 @@ using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TokenAuthorization;
@@ -102,6 +104,15 @@ namespace BusinessLayer.Implementation
                     "Password Reset Email",
                     $"<h6>Click on the link to reset password<h6><a href='{url}'>{jwt}</a>");
             _mqServices.AddToQueue(message);
+        }
+
+        public async Task<int> ResetPassword(string password, string token)
+        {
+            ClaimsPrincipal claims = _tokenManager.Decode(token, Encoding.ASCII.GetBytes(_configuration.GetSection("Jwt")["ResetPasswordSecretKey"]));
+            var claim = claims.Claims.ToList();
+            string email = claim[1].Value;
+            var(user, _) = await _repository.AuthenticateUser(email);
+            return (await _repository.ResetPassword(user, BCrypt.Net.BCrypt.HashPassword(password)));
         }
     }
 }

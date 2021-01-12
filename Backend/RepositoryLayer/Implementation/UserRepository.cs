@@ -10,11 +10,11 @@ namespace RepositoryLayer.Implementation
 {
     public class UserRepository : IUserRepository
     {
-        private readonly SqlConnection _conn;
+        private IDBContext _dBContext;
 
         public UserRepository(IDBContext dBContext)
         {
-            this._conn = dBContext.GetConnection();
+            _dBContext = dBContext;
         }
 
         /// <summary>
@@ -26,6 +26,7 @@ namespace RepositoryLayer.Implementation
         {
             UserResponseDto user = null;
             string password = null;
+            SqlConnection _conn = _dBContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_users_getByEmail", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
@@ -69,6 +70,7 @@ namespace RepositoryLayer.Implementation
         /// <returns>newly added user</returns>
         public async Task<int> Insert(UserRequestDto requestDto)
         {
+            SqlConnection _conn = _dBContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_users_insert", _conn)
             {
                 CommandType = System.Data.CommandType.StoredProcedure
@@ -82,6 +84,24 @@ namespace RepositoryLayer.Implementation
             await _conn.OpenAsync();
             int id = Convert.ToInt32(await command.ExecuteScalarAsync());
             return id;
+        }
+
+        public async Task<int> ResetPassword(UserResponseDto user, string password)
+        {
+            SqlConnection _conn = _dBContext.GetConnection();
+            SqlCommand command = new SqlCommand("sp_users_update", _conn) {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@FirstName", user.FirstName);
+            command.Parameters.AddWithValue("@LastName", user.LastName);
+            command.Parameters.AddWithValue("@email", user.Email);
+            command.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
+            command.Parameters.AddWithValue("@Role", user.Role);
+            command.Parameters.AddWithValue("@password", password);
+            await _conn.OpenAsync();
+            int result = await command.ExecuteNonQueryAsync();
+            await _conn.CloseAsync();
+            return result;
         }
     }
 }

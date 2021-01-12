@@ -13,6 +13,6 @@ namespace RepositoryLayer.Interface
         Task<(UserResponseDto, string)> AuthenticateUser(string email);
         Task<int> Insert(UserRequestDto requestDto);
         UserResponseDto MapUserFromReader(SqlDataReader reader, string id = "id");
-
+        Task<int> ResetPassword(UserResponseDto user, string password);
     }
 }

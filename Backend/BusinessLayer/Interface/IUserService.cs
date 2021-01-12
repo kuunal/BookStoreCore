@@ -12,5 +12,6 @@ namespace BusinessLayer.Interface
         Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto);
         Task<UserResponseDto> AddUser(UserRequestDto requestDto);
         Task ForgotPassword(string email, string value);
+        Task<int> ResetPassword(string password, string token);
     }
 }

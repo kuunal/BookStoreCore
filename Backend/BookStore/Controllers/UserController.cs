@@ -79,5 +79,25 @@ namespace BookStore.Controllers
                 Message = ResponseMessage.MAIL_SENT
             });
         }
+
+        [HttpPost]
+        [Route("reset")]
+        public async Task<IActionResult> Reset([FromForm] string password, [FromForm] string token)
+        {
+
+            if (await _service.ResetPassword(password, token) == 1)
+                return Ok(new
+                {
+                    Data = (string)null,
+                    StatusCode = HttpStatusCode.OK,
+                    Message = ResponseMessage.SUCCESSFUL
+                });
+            return BadRequest(new
+            {
+                Data = (string)null,
+                StatusCode = HttpStatusCode.BadRequest,
+                Message = ResponseMessage.FAILED
+            });
+        }
     }
 }
