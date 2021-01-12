@@ -57,7 +57,6 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(UserRequestDto requestDto) 
         {
-
             UserResponseDto user = await _service.AddUser(requestDto);
             return Ok(new Response<UserResponseDto>
             {
@@ -65,7 +64,6 @@ namespace BookStore.Controllers
                 Message = ResponseMessage.USER_ADDED,
                 Data = user
             });
-
         }
     }
 }

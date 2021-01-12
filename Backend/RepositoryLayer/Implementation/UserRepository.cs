@@ -49,7 +49,7 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>mapped object</returns>
-        private UserResponseDto MapUserFromReader(SqlDataReader reader, string id = "id")
+        public UserResponseDto MapUserFromReader(SqlDataReader reader, string id = "id")
         {
             return new UserResponseDto
             {

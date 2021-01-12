@@ -29,22 +29,33 @@ namespace RepositoryLayer.Implementation
             {
                 await connection.OpenAsync();
                 var transaction = await connection.BeginTransactionAsync();
-                SqlCommand command = new SqlCommand("sp_orders_create")
+                try { 
+                    SqlCommand command = new SqlCommand("sp_orders_create", connection, (SqlTransaction)transaction)
+                    {
+                        CommandType = System.Data.CommandType.StoredProcedure
+                    };
+                    command.Parameters.AddWithValue("@userId", userId);            
+                    command.Parameters.AddWithValue("@bookId", order.bookId);            
+                    command.Parameters.AddWithValue("@quantity", order.quantity);            
+                    command.Parameters.AddWithValue("@addressId", order.addressId);
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync()) {
+                            orderResponse = new OrderResponseDto();
+                            orderResponse.Book = _booksRepository.MapReaderTobook(reader);
+                            orderResponse.User = _userRepository.MapUserFromReader(reader, "userId");
+                            orderResponse.Address = MapReaderToAddressDto(reader);
+                            orderResponse.OrderedDate = Convert.ToDateTime(reader["ordertime"]);
+                            orderResponse.Quantity = (int) reader["orderedQuantity"];
+                            orderResponse.OrderId = (string)reader["orderId"];
+                        }
+                    }
+                    await transaction.CommitAsync();
+                }
+                catch
                 {
-                    CommandType = System.Data.CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@userId", userId);            
-                command.Parameters.AddWithValue("@bookId", order.bookId);            
-                command.Parameters.AddWithValue("@quantity", order.quantity);            
-                command.Parameters.AddWithValue("@uuid", order.orderId);
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
-                {
-                    orderResponse.Book = _booksRepository.MapReaderTobook(reader);
-                    orderResponse.User = _userRepository.MapUserFromReader(reader, "userId");
-                    orderResponse.Address = MapReaderToAddressDto(reader);
-                    orderResponse.OrderedDate = Convert.ToDateTime((string) reader["ordertime"]);
-                    orderResponse.Quantity = (int) reader["orderedQuantity"];
-                    orderResponse.OrderId = (string)reader["orderId"];
+                    await transaction.RollbackAsync();
+                    throw;
                 }
             }
             return orderResponse;

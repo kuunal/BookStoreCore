@@ -11,10 +11,10 @@ namespace ModelLayer.OrderDto
         public int bookId { get; set; }
         
         [Range(1, int.MaxValue)]
-        public int userId { get; set; }
+        public int quantity { get; set; }
         
         [Range(1, int.MaxValue)]
-        public int quantity { get; set; }
-        public string orderId { get; set; }
+        public int addressId { get; set; }
+
     }
 }
