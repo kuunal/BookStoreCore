@@ -65,5 +65,19 @@ namespace BookStore.Controllers
                 Data = user
             });
         }
+
+        [HttpPost]
+        [Route("forgot")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            var currentUrl = HttpContext.Request.Host;
+            await _service.ForgotPassword(email, currentUrl.Value);
+            return Ok(new
+            {
+                Data = (string)null,
+                StatusCode = HttpStatusCode.OK,
+                Message = ResponseMessage.MAIL_SENT
+            });
+        }
     }
 }

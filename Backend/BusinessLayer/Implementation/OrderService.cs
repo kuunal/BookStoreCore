@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Exceptions;
 using BusinessLayer.Interface;
+using BusinessLayer.MQServices;
 using EmailService;
 using ModelLayer.OrderDto;
 using RepositoryLayer.Implementation;
@@ -15,12 +16,13 @@ namespace BusinessLayer.Implementation
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
+        private readonly IMqServices _mqServices;
         private readonly IEmailSender _emailSender;
 
-        public OrderService(IOrderRepository repository, IEmailSender emailSender)
+        public OrderService(IOrderRepository repository, IMqServices mqServices)
         {
             _repository = repository;
-            _emailSender = emailSender;
+            _mqServices = mqServices;
         }
 
         public async Task<OrderResponseDto> Add(OrderRequestDto orderRequest, int userId)
@@ -30,7 +32,7 @@ namespace BusinessLayer.Implementation
                 Message message = new Message(new string[] { "kunaldeshmukh2503@gmail.com" },
                 "Order successfully placed!",
                 $"{ItemDetailHtml(order.Book.Title, order.Book.Author, order.Book.Image, order.Book.Price, order.Book.Quantity)+ OrderDetailHtml(order.OrderId, order.OrderedDate, order.Book.Price)}");
-                await _emailSender.SendEmail(message);
+                _mqServices.AddToQueue(message);
                 return order;
             }
             catch (SqlException e) when(e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
@@ -50,8 +52,7 @@ namespace BusinessLayer.Implementation
         public string ItemDetailHtml(string title, string author, string image, int price, int quantity)
         {
             return @$"<p>Title: {title}</
->
-                    <p>Titl---e: {author}</p>
+                    <p>author: {author}</p>
                     <p> Image: <img src = '{image}'></p>
                     <p> price: {price}</p>
                     <p>Quantity: {quantity}</p>";

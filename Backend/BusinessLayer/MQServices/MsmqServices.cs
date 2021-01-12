@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BusinessLayer.MQServices
 {
-    public class MsmqServices
+    public class MsmqServices : IMqServices
     {
         private readonly MessageQueue messageQueue;
         private IEmailSender _emailSender;
@@ -41,9 +41,7 @@ namespace BusinessLayer.MQServices
         {
             var msg = messageQueue.EndReceive(e.AsyncResult);
             EmailService.Message message = JsonConvert.DeserializeObject<EmailService.Message>(msg.Body.ToString());
-
             _emailSender.SendEmail(message);
-            messageQueue.BeginReceive();
         }
     }
 }

@@ -19,6 +19,6 @@ namespace ModelLayer
         public const string BOOK_NOT_FOUND = "No such book exists!";
         public const string BOOK_UPDATED = "Book updated successfully!";
         public const string CART_ITEM_NOT_FOUND = "No such item in cart!";
-
+        public const string MAIL_SENT = "Mail has been sent! ";
     }
 }

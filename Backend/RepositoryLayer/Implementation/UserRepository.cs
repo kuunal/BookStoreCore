@@ -22,7 +22,7 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="loginDto">The login dto.</param>
         /// <returns>user and password or null</returns>
-        public async Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto)
+        public async Task<(UserResponseDto, string)> AuthenticateUser(string email)
         {
             UserResponseDto user = null;
             string password = null;
@@ -30,7 +30,7 @@ namespace RepositoryLayer.Implementation
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
-            command.Parameters.AddWithValue("@email", loginDto.Email);
+            command.Parameters.AddWithValue("@email", email);
             await _conn.OpenAsync();
             using(SqlDataReader reader = await command.ExecuteReaderAsync())
             {

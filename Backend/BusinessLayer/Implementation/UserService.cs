@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interface;
+using BusinessLayer.MQServices;
+using EmailService;
+using Microsoft.Extensions.Configuration;
 using ModelLayer;
 using ModelLayer.UserDto;
 using RepositoryLayer.Implementation;
@@ -20,12 +23,20 @@ namespace BusinessLayer.Implementation
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly ITokenManager _tokenManager;
+        private readonly IConfiguration _configuration;
+        private readonly IMqServices _mqServices;
 
-        public UserService(IUserRepository repository, IMapper mapper, ITokenManager tokenManager)
+        public UserService(IUserRepository repository
+            , IMapper mapper
+            , ITokenManager tokenManager
+            , IConfiguration configuration
+            , IMqServices mqServices)
         {
             _repository = repository;
             _mapper = mapper;
             _tokenManager = tokenManager;
+            _configuration = configuration;
+            _mqServices = mqServices;
         }
 
         /// <summary>
@@ -35,7 +46,7 @@ namespace BusinessLayer.Implementation
         /// <returns>logged in user or null value</returns>
         public async Task<(UserResponseDto, string)> AuthenticateUser(LoginDto loginDto)
         {
-            var (user, password) = await _repository.AuthenticateUser(loginDto);
+            var (user, password) = await _repository.AuthenticateUser(loginDto.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, password))
             {
                 return (null, null);
@@ -73,6 +84,24 @@ namespace BusinessLayer.Implementation
             {
                 throw new BookstoreException(ExceptionMessages.ACCOUNT_ALREADY_EXISTS, (int)HttpStatusCode.BadRequest);
             }
+        }
+
+        public async Task ForgotPassword(string email, string currentUrl)
+        {
+            var (user, password) = await _repository.AuthenticateUser(email);
+
+            if (user == null)
+            {
+                throw new BookstoreException(ExceptionMessages.INVALID_USER, 404);
+            }
+            byte[] secretKey = Encoding.ASCII.GetBytes(_configuration.GetSection("Jwt")["ResetPasswordSecretKey"]);
+            int expiryTime = Convert.ToInt32(_configuration.GetSection("Jwt")["ExpiryTime"]);
+            string jwt = _tokenManager.Encode(user, expiryTime, secretKey);
+            string url = "https://" + currentUrl + "/html/reset.html?" + jwt;
+            Message message = new Message(new string[] { user.Email },
+                    "Password Reset Email",
+                    $"<h6>Click on the link to reset password<h6><a href='{url}'>{jwt}</a>");
+            _mqServices.AddToQueue(message);
         }
     }
 }

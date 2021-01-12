@@ -19,6 +19,7 @@ using AutoMapper;
 using TokenAuthorization;
 using Greeting.TokenAuthorization;
 using EmailService;
+using BusinessLayer.MQServices;
 
 namespace BookStore
 {
@@ -54,6 +55,7 @@ namespace BookStore
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IMqServices, MsmqServices>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
             services.AddCors();
