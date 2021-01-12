@@ -53,7 +53,7 @@ namespace BookStore.Controllers
         /// Adds the user.
         /// </summary>
         /// <param name="requestDto">User data.</param>
-        /// <returns></returns>
+        /// <returns>readystate</returns>
         [HttpPost]
         public async Task<IActionResult> AddUser(UserRequestDto requestDto) 
         {
@@ -66,6 +66,11 @@ namespace BookStore.Controllers
             });
         }
 
+        /// <summary>
+        /// Sends reset link of provided email.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns>readystate</returns>
         [HttpPost]
         [Route("forgot")]
         public async Task<IActionResult> ForgotPassword(string email)
@@ -80,6 +85,12 @@ namespace BookStore.Controllers
             });
         }
 
+        /// <summary>
+        /// Sets new password given by user.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="token">The token.</param>
+        /// <returns>readystate</returns>
         [HttpPost]
         [Route("reset")]
         public async Task<IActionResult> Reset([FromForm] string password, [FromForm] string token)

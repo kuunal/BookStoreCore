@@ -86,6 +86,12 @@ namespace RepositoryLayer.Implementation
             return id;
         }
 
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="user">The user object.</param>
+        /// <param name="password">The password .</param>
+        /// <returns></returns>
         public async Task<int> ResetPassword(UserResponseDto user, string password)
         {
             SqlConnection _conn = _dBContext.GetConnection();

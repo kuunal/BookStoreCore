@@ -18,11 +18,20 @@ namespace BookStore.Controllers
     {
         private readonly IOrderService _service;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrderController"/> class.
+        /// </summary>
+        /// <param name="service">The service.</param>
         public OrderController(IOrderService service)
         {
             _service = service;
         }
 
+        /// <summary>
+        /// Places new order.
+        /// </summary>
+        /// <param name="order">The order details.</param>
+        /// <returns></returns>
         [HttpPost]
         [TokenAuthorizationFilter]
         public async Task<IActionResult> AddOrder(OrderRequestDto order)
