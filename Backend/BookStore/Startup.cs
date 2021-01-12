@@ -18,6 +18,7 @@ using Fundoo.Utilities;
 using AutoMapper;
 using TokenAuthorization;
 using Greeting.TokenAuthorization;
+using EmailService;
 
 namespace BookStore
 {
@@ -36,6 +37,9 @@ namespace BookStore
             services.AddControllers();
             DatabaseConfigurations connectionString = Configuration.GetSection("ConnectionStrings")
                                         .Get<DatabaseConfigurations>();
+            EmailConfiguration emailConfiguration = Configuration.GetSection("EmailConfiguration")
+                                        .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfiguration);
             services.AddSingleton(connectionString);
             services.AddScoped<IDBContext, DBContext>();
             services.AddScoped<IUserService, UserService>();
@@ -49,6 +53,7 @@ namespace BookStore
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
             services.AddCors();
