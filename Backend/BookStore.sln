@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryLayer", "Reposito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLayer", "ModelLayer\ModelLayer.csproj", "{7248F17D-9D10-41C3-8CFF-5ACC692FB4AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenAuthorization", "TokenAuthorization\TokenAuthorization.csproj", "{E8BB59B0-6EA0-460A-ACF3-71567FADE34F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenAuthorization", "TokenAuthorization\TokenAuthorization.csproj", "{E8BB59B0-6EA0-460A-ACF3-71567FADE34F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{D7BC2F6F-4AC1-469D-989E-723D4106866C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{E8BB59B0-6EA0-460A-ACF3-71567FADE34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8BB59B0-6EA0-460A-ACF3-71567FADE34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8BB59B0-6EA0-460A-ACF3-71567FADE34F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7BC2F6F-4AC1-469D-989E-723D4106866C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7BC2F6F-4AC1-469D-989E-723D4106866C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7BC2F6F-4AC1-469D-989E-723D4106866C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7BC2F6F-4AC1-469D-989E-723D4106866C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
