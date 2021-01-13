@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using Caching;
 using Greeting.TokenAuthorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
@@ -14,6 +15,7 @@ namespace BookStore.Controllers
     [ApiController]
     [Route("[controller]")]
     [TokenAuthorizationFilter]
+    [Cached(600)]
     public class CartController : ControllerBase
     {
         private readonly ICartService _service;

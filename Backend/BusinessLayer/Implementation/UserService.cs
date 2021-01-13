@@ -2,6 +2,7 @@
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interface;
 using BusinessLayer.MQServices;
+using Caching;
 using EmailService;
 using Microsoft.Extensions.Configuration;
 using ModelLayer;
@@ -27,18 +28,21 @@ namespace BusinessLayer.Implementation
         private readonly ITokenManager _tokenManager;
         private readonly IConfiguration _configuration;
         private readonly IMqServices _mqServices;
+        private readonly IResponseCacheService _caching;
 
         public UserService(IUserRepository repository
             , IMapper mapper
             , ITokenManager tokenManager
             , IConfiguration configuration
-            , IMqServices mqServices)
+            , IMqServices mqServices
+            , IResponseCacheService caching)
         {
             _repository = repository;
             _mapper = mapper;
             _tokenManager = tokenManager;
             _configuration = configuration;
             _mqServices = mqServices;
+            _caching = caching;
         }
 
         /// <summary>
@@ -99,11 +103,13 @@ namespace BusinessLayer.Implementation
             byte[] secretKey = Encoding.ASCII.GetBytes(_configuration.GetSection("Jwt")["ResetPasswordSecretKey"]);
             int expiryTime = Convert.ToInt32(_configuration.GetSection("Jwt")["ExpiryTime"]);
             string jwt = _tokenManager.Encode(user, expiryTime, secretKey);
-            string url = "https://" + currentUrl + "/html/reset.html?" + jwt;
+            string url = "https://" + currentUrl + "/html/reset.html?token=" + jwt;
             Message message = new Message(new string[] { user.Email },
                     "Password Reset Email",
-                    $"<h6>Click on the link to reset password<h6><a href='{url}'>{jwt}</a>");
+                    $"<h6>Click on the link to reset password<h6><a href='{url}'>{"click me"}</a>");
             _mqServices.AddToQueue(message);
+            await _caching.CacheResponseAsync(jwt, email, TimeSpan.FromSeconds(expiryTime));
+            
         }
 
         public async Task<int> ResetPassword(string password, string token)
@@ -112,7 +118,12 @@ namespace BusinessLayer.Implementation
             var claim = claims.Claims.ToList();
             string email = claim[1].Value;
             var(user, _) = await _repository.AuthenticateUser(email);
-            return (await _repository.ResetPassword(user, BCrypt.Net.BCrypt.HashPassword(password)));
+            if (await _caching.GetCachedResponseAsync(token) != null)
+            {
+                await _caching.RemoveCacheByKeyAsync(token);
+                return (await _repository.ResetPassword(user, BCrypt.Net.BCrypt.HashPassword(password)));
+            }
+            return 0;
         }
     }
 }

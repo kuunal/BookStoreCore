@@ -20,6 +20,7 @@ using TokenAuthorization;
 using Greeting.TokenAuthorization;
 using EmailService;
 using BusinessLayer.MQServices;
+using Caching;
 
 namespace BookStore
 {
@@ -40,6 +41,14 @@ namespace BookStore
                                         .Get<DatabaseConfigurations>();
             EmailConfiguration emailConfiguration = Configuration.GetSection("EmailConfiguration")
                                         .Get<EmailConfiguration>();
+            CacheConfiguration cacheConfiguration = Configuration.GetSection("CacheConfiguration")
+                                        .Get<CacheConfiguration>();
+            if (cacheConfiguration.IsEnabled)
+            {
+                services.AddStackExchangeRedisCache(options => options.Configuration = cacheConfiguration.ConnectionString);
+                services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+            }
+            services.AddSingleton(cacheConfiguration);
             services.AddSingleton(emailConfiguration);
             services.AddSingleton(connectionString);
             services.AddScoped<IDBContext, DBContext>();
