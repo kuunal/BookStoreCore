@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Caching
 {
-    public interface IResponseCache
+    public interface IResponseCacheService
     {
         Task<string> GetCachedResponseAsync(string key);
         Task CacheResponseAsync(string cacheKey, object response, TimeSpan timeToLive);
+        Task RemoveCacheByKeyAsync(string key);
     }
 }

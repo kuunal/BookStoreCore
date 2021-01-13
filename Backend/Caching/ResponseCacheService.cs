@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Caching
 {
-    public class ResponseCacheService
+    public class ResponseCacheService : IResponseCacheService
     {
         private readonly IDistributedCache _distribitedCache;
 
@@ -33,6 +33,11 @@ namespace Caching
         {
             var cachedResponse = await _distribitedCache.GetStringAsync(key);
             return string.IsNullOrEmpty(cachedResponse) ? null : cachedResponse;
+        }
+
+        public async Task RemoveCacheByKeyAsync(string key)
+        {
+            await _distribitedCache.RemoveAsync(key);
         }
     }
 }
