@@ -143,7 +143,7 @@ namespace RepositoryLayer.Implementation
             return new CartResponseDto
             {
                 Book = _booksRepository.MapReaderTobook(reader),
-                Total = (int)reader["total"],
+                Cost = (int)reader["total"],
                 ItemQuantity = (int)reader["item_quantity"]
             };
         }
