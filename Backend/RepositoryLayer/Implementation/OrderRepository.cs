@@ -2,9 +2,7 @@
 using ModelLayer.OrderDto;
 using RepositoryLayer.Interface;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RepositoryLayer.Implementation
@@ -22,7 +20,7 @@ namespace RepositoryLayer.Implementation
             _booksRepository = booksRepository;
         }
 
-        public async Task<OrderResponseDto> Add(OrderRequestDto order, int userId)
+        public async Task<OrderResponseDto> Add(int userId, int bookId, int quantity, int addressId, string guid)
         {
             OrderResponseDto orderResponse = null;
             using(SqlConnection connection = _dBContext.GetConnection())
@@ -35,9 +33,10 @@ namespace RepositoryLayer.Implementation
                         CommandType = System.Data.CommandType.StoredProcedure
                     };
                     command.Parameters.AddWithValue("@userId", userId);            
-                    command.Parameters.AddWithValue("@bookId", order.bookId);            
-                    command.Parameters.AddWithValue("@quantity", order.quantity);            
-                    command.Parameters.AddWithValue("@addressId", order.addressId);
+                    command.Parameters.AddWithValue("@bookId", bookId);            
+                    command.Parameters.AddWithValue("@quantity", quantity);            
+                    command.Parameters.AddWithValue("@addressId", addressId);
+                    command.Parameters.AddWithValue("@guid", guid);
                     using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync()) {
