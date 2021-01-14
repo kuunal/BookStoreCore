@@ -21,6 +21,7 @@ using Greeting.TokenAuthorization;
 using EmailService;
 using BusinessLayer.MQServices;
 using Caching;
+using BusinessLayer.Utility;
 
 namespace BookStore
 {
@@ -51,7 +52,7 @@ namespace BookStore
             services.AddSingleton(cacheConfiguration);
             services.AddSingleton(emailConfiguration);
             services.AddSingleton(connectionString);
-            services.AddScoped<IDBContext, DBContext>();
+            services.AddTransient<IDBContext, DBContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenManager, TokenManager>();
@@ -65,6 +66,8 @@ namespace BookStore
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IMqServices, MsmqServices>();
+            services.AddScoped<IEmailItemDetails, EmailItemDetails>();
+            services.AddScoped<ICacheRepository, CacheRepository>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
             services.AddCors();

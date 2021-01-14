@@ -9,7 +9,7 @@ namespace ModelLayer.CartDto
     {
         public BookResponseDto Book { get; set; }
         public int ItemQuantity { get; set; }
-        public int Total { get; set; }
+        public int Cost { get; set; }
 
     }
 }

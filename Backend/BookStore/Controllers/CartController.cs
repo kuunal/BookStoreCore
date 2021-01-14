@@ -4,6 +4,7 @@ using Greeting.TokenAuthorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using ModelLayer.CartDto;
+using ModelLayer.OrderDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(CartRequestDto cart)
         {
-            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
+                int userId = Convert.ToInt32(HttpContext.Items["userId"]);
             CartResponseDto cartItem =  await _service.Insert(cart, userId);
             return Ok(new Response<CartResponseDto>
             {
@@ -51,8 +52,8 @@ namespace BookStore.Controllers
         public async Task<IActionResult> GetItemsFromCart()
         {
             int userId = Convert.ToInt32(HttpContext.Items["userId"]);
-            List<CartResponseDto> cartItem = await _service.Get(userId);
-            return Ok(new Response<List<CartResponseDto>>
+            CartDetailedResponseDto cartItem = await _service.Get(userId);
+            return Ok(new Response<CartDetailedResponseDto>
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Message = ResponseMessage.SUCCESSFUL,
@@ -115,5 +116,18 @@ namespace BookStore.Controllers
             });
         }
 
+        [HttpPost]
+        [Route("order")]
+        public async Task<IActionResult> OrderCart(int addressId)
+        {
+            int userId = Convert.ToInt32(HttpContext.Items["userId"]);
+            List<OrderResponseDto> orders = await _service.PlaceOrder(userId, addressId);
+            return Ok(new Response<List<OrderResponseDto>>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.SUCCESSFUL,
+                Data = orders
+            });
+        }
     }
 }
