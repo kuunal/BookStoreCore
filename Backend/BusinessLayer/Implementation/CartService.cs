@@ -119,21 +119,15 @@ namespace BusinessLayer.Implementation
             return responseDto;
         }
         
-        public delegate void callbackDelegate(List<OrderResponseDto> orders, List<CartResponseDto> cartItems, string guid, int userId);
-
         public async Task<List<OrderResponseDto>> PlaceOrder(int userId, int addressId)
         {
             var cartItems = await _repository.Get(userId);
             string guid = Guid.NewGuid().ToString();
             List<OrderResponseDto> orders = new List<OrderResponseDto>();
-            //orders.AddRange(await Task.WhenAll(cartItems.Select(item =>
-            //   _orderRepository.Add(userId, item.Book.Id, item.ItemQuantity, addressId, guid
-            //    )))     
             cartItems.ForEach(async (item)=> {
                 await AddToListAsync(orders, userId, item.Book.Id, item.ItemQuantity, addressId, guid);
                 if(orders.Count == cartItems.Count)
                 {
-                    //callbackDelegate @delegate = new callbackDelegate(callback);
                     callback(orders, cartItems, guid, userId);
                 }
             });  
@@ -150,13 +144,13 @@ namespace BusinessLayer.Implementation
         {
             string emailHtmlMessage = "";
             orders.ForEach(item =>
-               emailHtmlMessage += _emailItems.ItemDetailHtml(item.Book.Title, item.Book.Author, item.Book.Image, item.Book.Price, item.Book.Quantity)
+               emailHtmlMessage += _emailItems.ItemDetailHtml(item.Book.Title, item.Book.Author, item.Book.Image, item.Book.Price, item.Quantity)
            );
             int total = cartItems.Aggregate(0, (sum, item) =>
                 sum + (item.Book.Price * item.ItemQuantity)
             );
             string orderDetails = _emailItems.OrderDetailHtml(guid, orders[0].OrderedDate, total);
-            Message message = new Message(new string[] { "kunaldeshmukh2503@gmail.com" },
+            Message message = new Message(new string[] { orders[0].User.Email },
                 "Order successfully placed!",
                 $"{emailHtmlMessage + orderDetails}");
             cartItems.ForEach(item => _cacheRepository.DeleteAsync(userId.ToString(), item.Book.Id));

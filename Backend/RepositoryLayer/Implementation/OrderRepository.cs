@@ -50,11 +50,16 @@ namespace RepositoryLayer.Implementation
                         }
                     }
                     await transaction.CommitAsync();
+                    await connection.CloseAsync();
                 }
                 catch
                 {
                     await transaction.RollbackAsync();
                     throw;
+                }
+                finally
+                {
+                    await connection.CloseAsync();
                 }
             }
             return orderResponse;

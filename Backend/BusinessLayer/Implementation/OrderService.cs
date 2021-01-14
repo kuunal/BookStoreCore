@@ -33,7 +33,7 @@ namespace BusinessLayer.Implementation
             try {
                 var guid = Guid.NewGuid();
                 OrderResponseDto order = await _repository.Add(userId, orderRequest.bookId, orderRequest.quantity, orderRequest.addressId, guid.ToString());
-                Message message = new Message(new string[] { "kunaldeshmukh2503@gmail.com" },
+                Message message = new Message(new string[] { order.User.Email },
                 "Order successfully placed!",
                 $"{_emailItems.ItemDetailHtml(order.Book.Title, order.Book.Author, order.Book.Image, order.Book.Price, order.Book.Quantity)+ _emailItems.OrderDetailHtml(order.OrderId, order.OrderedDate, order.Book.Price)}");
                 _mqServices.AddToQueue(message);
