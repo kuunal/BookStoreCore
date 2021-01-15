@@ -13,13 +13,13 @@ h4 {
   text-align: center;
 }
 .container form a {
-  color: dodgerblue;
+  color: #a03037;
   text-decoration: none;
   font-weight: 500;
 }
 
 a:active {
-  background-color: rgba(30, 144, 255, 0.5);
+  background-color: #a03037;
 }
 
 p {
@@ -42,7 +42,12 @@ form p {
 
 .last-row button:first-child {
   margin-left: -4%;
-  color: dodgerblue;
+  color: #a03037 !important;
+}
+
+.btn-submit {
+  background-color: #a03037 !important;
+  color: white;
 }
 
 select {
