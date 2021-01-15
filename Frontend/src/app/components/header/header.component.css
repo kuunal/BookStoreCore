@@ -39,42 +39,45 @@
   width: 100%;
 }
 
-/deep/ .mat-form-field-wrapper {
+:host /deep/ .mat-form-field-wrapper {
   padding-bottom: 0% !important;
 }
 
-/deep/ .mat-form-field-appearance-outline .mat-form-field-wrapper {
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-wrapper {
   margin: 0 !important;
 }
 
-/deep/ .mat-form-field-infix {
+:host /deep/ .mat-form-field-infix {
   border-top: 0;
 }
 
-/deep/ .mat-form-field-appearance-outline .mat-form-field-infix {
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-infix {
   padding: 10px;
   outline: none !important  ;
 }
-/deep/ .mat-form-field-flex {
+:host /deep/ .mat-form-field-flex {
   align-items: flex-start !important;
 }
 
-/deep/ .mat-form-field-appearance-outline /deep/.mat-form-field-outline-start,
+:host
+  /deep/
+  .mat-form-field-appearance-outline
+  /deep/.mat-form-field-outline-start,
 .mat-form-field-appearance-outline /deep/.mat-form-field-outline-end {
   border: none !important;
 }
 
-/deep/ .mat-form-field-appearance-outline .mat-form-field-flex {
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-flex {
   padding: 0 0.75em 0 0.75em;
   margin-top: -0.25em;
   position: relative;
   border-radius: 10px;
 }
 
-/deep/ .mat-form-field-appearance-outline .mat-form-field-outline-end {
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-outline-end {
   border-radius: 0px !important;
 }
-/deep/ .mat-form-field-appearance-outline .mat-form-field-outline-start {
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-outline-start {
   border-radius: 0px !important;
 }
 
