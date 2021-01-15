@@ -1,1 +1,120 @@
-<p>register works!</p>
+<div class="container">
+  <div class="container__left">
+    <h1>Create your Account</h1>
+    <form class="container__form" [formGroup]="myForm" (ngSubmit)="submit()">
+      <div class="form__first-row">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput autocomplete="off" formControlName="firstName" />
+            <mat-error *ngIf="firstName.invalid && firstName.touched">
+              Please provide first name!
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput autocomplete="off" formControlName="lastName" />
+            <mat-error *ngIf="lastName.invalid && lastName.touched">
+              Please provide last name!
+            </mat-error></mat-form-field
+          >
+        </p>
+      </div>
+      <div class="form__second-row">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>email</mat-label>
+            <input matInput autocomplete="off" formControlName="email" />
+            <span matSuffix>@gmail.com</span>
+            <mat-hint>You can use letters, numbers & periods</mat-hint>
+            <mat-error *ngIf="email.invalid && email.touched">
+              Please provide proper email!
+            </mat-error>
+            <!-- <mat-error *ngIf="true"> email already exists! </mat-error> -->
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="form__first-row">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              formControlName="password"
+              [type]="!showPassword ? 'password' : 'text'"
+            />
+            <mat-hint
+              >Minimum 8 characters with letters, numbers & symbols</mat-hint
+            >
+            <mat-error *ngIf="password.invalid && password.touched">
+              Please provide proper password!
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              formControlName="confirmPassword"
+              [type]="!showPassword ? 'password' : 'text'"
+            />
+            <mat-error *ngIf="!confirmPassword">
+              Please match password and confirm password!
+            </mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="form__first-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            formControlName="phonenumber"
+            type="tel"
+          />
+          <span matPrefix>+91</span>
+          <mat-error *ngIf="!confirmPassword">
+            Please match password and confirm password!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select
+            name="role"
+            formGroupName="role"
+            (selectionChange)="selectRole($event.value)"
+          >
+            <mat-option *ngFor="let role of roles" [value]="role.value">
+              {{ role.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="container__checkbox">
+        <span
+          ><mat-checkbox
+            class="example-margin"
+            color="warn"
+            formControlName="showPassword"
+            >Show Password
+          </mat-checkbox>
+        </span>
+      </div>
+      <div class="container__buttons">
+        <button
+          mat-flat-button
+          type="button"
+          (click)="signIn()"
+          class="sign-in-btn"
+        >
+          Sign in instead
+        </button>
+        <button mat-raised-button class="next-btn" [disabled]="!myForm.valid">
+          Next
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

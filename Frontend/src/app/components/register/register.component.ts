@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -12,6 +12,11 @@ import { LoginService } from 'src/app/services/loginservice/login.service';
 export class RegisterComponent implements OnInit {
   myForm: FormGroup;
   userAlreadyExists: boolean = false;
+  selectedValue: string = '';
+  roles = [
+    { value: 'admin', viewValue: 'admin' },
+    { value: 'user', viewValue: 'user' },
+  ];
 
   constructor(
     private builder: FormBuilder,
@@ -44,6 +49,11 @@ export class RegisterComponent implements OnInit {
       ],
       confirmPassword: ['', [Validators.required]],
       showPassword: 'false',
+      phonenumber: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]{10}$')],
+      ],
+      role: '',
     });
   }
 
@@ -63,6 +73,10 @@ export class RegisterComponent implements OnInit {
     return this.myForm.get('password');
   }
 
+  get role() {
+    return this.myForm.get('role');
+  }
+
   get confirmPassword() {
     return (
       this.myForm.get('confirmPassword').value ===
@@ -79,8 +93,7 @@ export class RegisterComponent implements OnInit {
 
   submit(): void {
     let data = this.myForm.value;
-    data.cartId = '5fdef64cd5d3de001e5d843a';
-    data.service = 'advance';
+    data.phonenumber = '+' + 91 + '' + data.phonenumber;
     this.service.register(data).subscribe(
       (response) => this.router.navigate(['/login']),
       (error) =>
@@ -88,6 +101,12 @@ export class RegisterComponent implements OnInit {
           duration: 2000,
         })
     );
+  }
+
+  selectRole(roleValue) {
+    this.myForm.patchValue({
+      role: roleValue,
+    });
   }
 
   setUserAlreadyExist() {
