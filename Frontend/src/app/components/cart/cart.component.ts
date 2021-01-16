@@ -15,20 +15,32 @@ export class CartComponent implements OnInit {
 
   constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
-  async ngOnInit() {
-    await this.getCartItems();
+  ngOnInit() {
+    this.getCartItems();
+    console.log('SAdsadsad', this.cartItems);
   }
 
-  async getCartItems() {
-    await this._service
-      .getCartItems()
-      .toPromise()
-      .then((response) => (this.cartItems = response['data']))
-      .catch((error) =>
+  // async getCartItems() {
+  //   await this._service
+  //     .getCartItems()
+  //     .toPromise()
+  //     .then((response) => (this.cartItems = response['data']))
+  //     .catch((error) =>
+  //       this._snackbar.open('Error fetching cart items', '', {
+  //         duration: 2000,
+  //       })
+  //     );
+  // }
+
+  getCartItems() {
+    this._service.getCartItems().subscribe(
+      async (response) =>
+        (this.cartItems = await response['Data']['cartItems']['Book']),
+      (error) =>
         this._snackbar.open('Error fetching cart items', '', {
           duration: 2000,
         })
-      );
+    );
   }
 
   isAddedInCart(book) {

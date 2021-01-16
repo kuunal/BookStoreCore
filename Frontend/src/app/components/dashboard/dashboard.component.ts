@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { forkJoin, Observable } from 'rxjs';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
 
 @Component({
@@ -24,14 +25,28 @@ export class DashboardComponent implements OnInit {
   limit: string = '12';
   books: any;
   totalBooks: void;
-  cartItems = [];
+  cartItems: [];
 
   constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
-  ngOnInit(): void {
-    this.getBooks();
+  ngOnInit() {
+    // this.getCartItems();
+
+    this._service.getCartItems().subscribe(
+      (res) => {
+        this.cartItems = res['Data']['cartItems'];
+        console.log(this.cartItems);
+      },
+      (error) => console.log(error)
+    );
+    this.getBooks1();
     this.getTotalNumberOfBooks();
-    this.getCartItems();
+    this._service
+      .getRefreshedCart()
+      .subscribe(
+        (response) => (this.cartItems = response['Data']['cartItems'])
+      );
+    console.log(this.cartItems);
   }
 
   getTotalNumberOfBooks() {
@@ -41,7 +56,27 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  getBooks() {
+  async getBooks() {
+    const httpParams = new HttpParams({
+      fromObject: {
+        field: this.field,
+        sortby: this.sortby,
+        lastItemValue: this.lastItemValue,
+        limit: this.limit,
+      },
+    });
+    await this._service
+      .getBooks({
+        params: httpParams,
+      })
+      .toPromise()
+      .then((response) => {
+        this.books = response['data'];
+      })
+      .catch((error) => localStorage.clear());
+  }
+
+  getBooks1() {
     const httpParams = new HttpParams({
       fromObject: {
         field: this.field,
@@ -55,32 +90,51 @@ export class DashboardComponent implements OnInit {
         params: httpParams,
       })
       .subscribe(
-        (response) => (this.books = response['data']),
-        (error) => localStorage.clear()
+        (resp) => {
+          this.books = resp['data'];
+        },
+        (error) => console.log(error)
       );
   }
 
-  getCartItems() {
-    this._service.getCartItems().subscribe(
-      (response) => (this.cartItems = response['data']),
-      (error) =>
-        this._snackbar.open('Error fetching cart', '', {
-          duration: 2000,
-        })
-    );
+  async getCartItems() {
+    await this._service
+      .getCartItems()
+      .toPromise()
+      .then((response) => {
+        this.cartItems = response['Data']['cartItems'];
+        console.log(this.cartItems, response);
+      })
+      .catch((error) => console.log(error));
   }
 
+  // getCartItems() {
+  //   this._service.getCartItems().subscribe(
+  //     async (response) => {
+  //       this.cartItems = await response['Data']['cartItems'];
+  //       console.log(this.cartItems, response);
+  //     },
+  //     (error) =>
+  //       this._snackbar.open('Error fetching cart items', '', {
+  //         duration: 2000,
+  //       })
+  //   );
+  // }
+
   isAddedInCart(book) {
-    return this.cartItems.some((item) => item.book.id === book.id)
+    this.cartItems.forEach((item) => console.log(item['Book']['Id']));
+
+    return this.cartItems &&
+      this.cartItems.some((item) => item['Book']['Id'] === book.id)
       ? book
       : null;
   }
 
   addToCart(bookId) {
     this._service.addToCart({ bookId: bookId, quantity: 1 }).subscribe(
-      (response) => this.getCartItems(),
+      (response) => {},
       (error) =>
-        this._snackbar.open('Error adding to cart', '', {
+        this._snackbar.open(error, '', {
           duration: 2000,
         })
     );
