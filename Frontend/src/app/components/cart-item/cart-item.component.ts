@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
 
@@ -11,6 +11,7 @@ export class CartItemComponent implements OnInit {
   @Input() cartItem: any;
   @Input() book: any;
   quantity: number;
+  @Output() bookId = new EventEmitter();
 
   constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
@@ -54,5 +55,9 @@ export class CartItemComponent implements OnInit {
           duration: 2000,
         })
     );
+  }
+
+  initiateOrder(bookId) {
+    this.bookId.emit(bookId);
   }
 }

@@ -1,8 +1,16 @@
 <div class="container">
-  <div class="container__header">
-    My Cart({{ cartItems && cartItems.length }})
-  </div>
-  <div class="cart-item" *ngFor="let item of cartItems">
-    <app-cart-item [cartItem]="item"></app-cart-item>
-  </div>
+  <mat-vertical-stepper [linear]="true" #stepper>
+    <mat-step label="Place order">
+      <div class="container__header">
+        My Cart({{ cartItems && cartItems.length }})
+      </div>
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <app-cart-item
+          [cartItem]="item"
+          (bookId)="initiateOrder($event, stepper)"
+        ></app-cart-item></div
+    ></mat-step>
+    <mat-step label=""> </mat-step>
+    <mat-step label=""> please fill the address </mat-step>
+  </mat-vertical-stepper>
 </div>

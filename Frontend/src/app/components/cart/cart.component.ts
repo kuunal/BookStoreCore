@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatStepper } from '@angular/material/stepper';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class CartComponent implements OnInit {
   books: any;
   totalBooks: void;
   cartItems = [];
+  orderedBooks: Array<number> = [];
 
   constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
@@ -25,18 +27,6 @@ export class CartComponent implements OnInit {
     );
     console.log('SAdsadsad', this.cartItems);
   }
-
-  // async getCartItems() {
-  //   await this._service
-  //     .getCartItems()
-  //     .toPromise()
-  //     .then((response) => (this.cartItems = response['data']))
-  //     .catch((error) =>
-  //       this._snackbar.open('Error fetching cart items', '', {
-  //         duration: 2000,
-  //       })
-  //     );
-  // }
 
   getCartItems() {
     this._service.getCartItems().subscribe(
@@ -52,5 +42,10 @@ export class CartComponent implements OnInit {
     return this.cartItems.some((item) => item.book.id === book.id)
       ? book
       : null;
+  }
+
+  initiateOrder(bookId: number, stepper: MatStepper) {
+    this.orderedBooks.push(bookId);
+    stepper.next();
   }
 }

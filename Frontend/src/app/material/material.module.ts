@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const material = [
   MatToolbarModule,
@@ -25,6 +26,7 @@ const material = [
   MatCheckboxModule,
   MatSelectModule,
   MatPaginatorModule,
+  MatStepperModule,
 ];
 
 @NgModule({

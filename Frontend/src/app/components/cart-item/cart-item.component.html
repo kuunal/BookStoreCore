@@ -29,9 +29,13 @@
         +
       </button>
     </div>
-    <div class="quantity__right" (click)="removeFromCart(cartItem.Book.Id)">Remove</div>
+    <div class="quantity__right" (click)="removeFromCart(cartItem.Book.Id)">
+      Remove
+    </div>
   </div>
   <div class="container__order">
-    <button mat-stroked-button>PLACE ORDER</button>
+    <button mat-stroked-button (click)="initiateOrder(cartItem.Book.Id)">
+      PLACE ORDER
+    </button>
   </div>
 </div>
