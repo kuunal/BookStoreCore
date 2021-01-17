@@ -19,12 +19,13 @@ namespace Caching
         }
         public async Task AddAsync(string key, CartResponseDto cart)
         {
-            CartDetailedResponseDto cartDetailed = JsonConvert
-                                        .DeserializeObject<CartDetailedResponseDto>(await _service
-                                        .GetCachedResponseAsync(key)
-                                        );
-            if (cartDetailed == null)
+            string cachedData = await _service
+                                        .GetCachedResponseAsync(key);
+            if (cachedData == null)
                 return;
+            CartDetailedResponseDto cartDetailed = JsonConvert
+                                        .DeserializeObject<CartDetailedResponseDto>(cachedData
+                                        );
             cartDetailed.cartItems.Add(cart);
             await _service.CacheResponseAsync(key, cartDetailed, TimeSpan.FromSeconds(600));
         }
