@@ -68,6 +68,8 @@ namespace BookStore
             services.AddScoped<IMqServices, MsmqServices>();
             services.AddScoped<IEmailItemDetails, EmailItemDetails>();
             services.AddScoped<ICacheRepository, CacheRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IAddressService, AddressService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
             services.AddCors();
