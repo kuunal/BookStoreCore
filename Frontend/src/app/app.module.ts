@@ -22,6 +22,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AddressComponent } from './components/address/address.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FooterComponent,
     CartComponent,
     CartItemComponent,
+    AddressComponent,
   ],
   imports: [
     BrowserModule,
