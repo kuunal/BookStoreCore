@@ -76,6 +76,19 @@
             <param name="cart">The cart item update information.</param>
             <returns></returns>
         </member>
+        <member name="M:BookStore.Controllers.OrderController.#ctor(BusinessLayer.Interface.IOrderService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.Controllers.OrderController"/> class.
+            </summary>
+            <param name="service">The service.</param>
+        </member>
+        <member name="M:BookStore.Controllers.OrderController.AddOrder(ModelLayer.OrderDto.OrderRequestDto)">
+            <summary>
+            Places new order.
+            </summary>
+            <param name="order">The order details.</param>
+            <returns></returns>
+        </member>
         <member name="M:BookStore.Controllers.UserController.Login(ModelLayer.LoginDto)">
             <summary>
             Authenticate user.
@@ -88,7 +101,22 @@
             Adds the user.
             </summary>
             <param name="requestDto">User data.</param>
-            <returns></returns>
+            <returns>readystate</returns>
+        </member>
+        <member name="M:BookStore.Controllers.UserController.ForgotPassword(System.String)">
+            <summary>
+            Sends reset link of provided email.
+            </summary>
+            <param name="email">The email.</param>
+            <returns>readystate</returns>
+        </member>
+        <member name="M:BookStore.Controllers.UserController.Reset(System.String,System.String)">
+            <summary>
+            Sets new password given by user.
+            </summary>
+            <param name="password">The password.</param>
+            <param name="token">The token.</param>
+            <returns>readystate</returns>
         </member>
         <member name="M:BookStore.Controllers.WishlistController.AddToWishList(ModelLayer.WishlistDto.WishlistDto)">
             <summary>

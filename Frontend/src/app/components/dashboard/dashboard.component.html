@@ -15,14 +15,26 @@
       <option value="">Newest Arrival</option>
     </select>
   </div>
-  <div class="main">
-    <span *ngFor="let book of books">
+  <div class="main" *ngIf="!!cartItems">
+    <span
+      *ngFor="
+        let book of paginatedBook
+          | paginate
+            : {
+                itemsPerPage: pageSize,
+                currentPage: p,
+                totalItems: total
+              }
+      "
+    >
       <app-book
         [book]="book"
         [cartItem]="isAddedInCart(book)"
         (cartId)="addToCart($event)"
       ></app-book>
-      {{ isAddedInCart(book) }}
     </span>
   </div>
+  <pagination-controls
+    (pageChange)="p = $event; changePage($event)"
+  ></pagination-controls>
 </div>

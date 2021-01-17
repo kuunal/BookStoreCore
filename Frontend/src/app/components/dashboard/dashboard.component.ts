@@ -22,30 +22,28 @@ export class DashboardComponent implements OnInit {
   field: string = 'id';
   sortby: string = 'asc';
   lastItemValue: string = '0';
-  limit: string = '12';
+  limit: string = '53';
   books: any;
-  totalBooks: void;
+  totalBooks: number = 0;
   cartItems: [];
+  pageSize: number = 12;
+  currentPage: number = 1;
+  p: number;
+  paginatedBook: [];
 
   constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
   ngOnInit() {
-    // this.getCartItems();
+    this.getCartItems();
 
-    this._service.getCartItems().subscribe(
-      (res) => {
-        this.cartItems = res['Data']['cartItems'];
-        console.log(this.cartItems);
-      },
-      (error) => console.log(error)
-    );
     this.getBooks1();
     this.getTotalNumberOfBooks();
-    this._service
-      .getRefreshedCart()
-      .subscribe(
-        (response) => (this.cartItems = response['Data']['cartItems'])
-      );
+    this._service.getRefreshedCart().subscribe(
+      (response) => {
+        this.getCartItems();
+      },
+      (error) => this._snackbar.open(error, '', { duration: 2000 })
+    );
     console.log(this.cartItems);
   }
 
@@ -92,38 +90,23 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         (resp) => {
           this.books = resp['data'];
+          this.paginatedBook = this.books.slice(0, this.pageSize);
         },
         (error) => console.log(error)
       );
   }
 
-  async getCartItems() {
-    await this._service
-      .getCartItems()
-      .toPromise()
-      .then((response) => {
-        this.cartItems = response['Data']['cartItems'];
-        console.log(this.cartItems, response);
-      })
-      .catch((error) => console.log(error));
+  getCartItems() {
+    this._service.getCartItems().subscribe(
+      (res) => {
+        this.cartItems = res['Data']['cartItems'];
+        console.log(this.cartItems);
+      },
+      (error) => console.log(error)
+    );
   }
 
-  // getCartItems() {
-  //   this._service.getCartItems().subscribe(
-  //     async (response) => {
-  //       this.cartItems = await response['Data']['cartItems'];
-  //       console.log(this.cartItems, response);
-  //     },
-  //     (error) =>
-  //       this._snackbar.open('Error fetching cart items', '', {
-  //         duration: 2000,
-  //       })
-  //   );
-  // }
-
   isAddedInCart(book) {
-    this.cartItems.forEach((item) => console.log(item['Book']['Id']));
-
     return this.cartItems &&
       this.cartItems.some((item) => item['Book']['Id'] === book.id)
       ? book
@@ -137,6 +120,12 @@ export class DashboardComponent implements OnInit {
         this._snackbar.open(error, '', {
           duration: 2000,
         })
+    );
+  }
+  changePage(pageNo) {
+    this.paginatedBook = this.books.slice(
+      pageNo * this.pageSize - this.pageSize,
+      pageNo * this.pageSize
     );
   }
 }

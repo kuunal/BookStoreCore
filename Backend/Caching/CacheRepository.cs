@@ -56,8 +56,13 @@ namespace Caching
                                         );
             if (cartDetailed == null)
                 return;
-            cartDetailed.cartItems.Where(item=>item.Book.Id == bookId).Select(item=>item.ItemQuantity = requestDto.ItemQuantity);
-            await _service.CacheResponseAsync(key, cartDetailed, TimeSpan.FromSeconds(600));
+            foreach(var item in cartDetailed.cartItems.Where(cart=>cart.Book.Id == bookId))
+            {
+                item.ItemQuantity = requestDto.ItemQuantity;
+            }            
+            await _service.CacheResponseAsync(key
+                , cartDetailed
+                , TimeSpan.FromSeconds(600));
         }
     }
 }

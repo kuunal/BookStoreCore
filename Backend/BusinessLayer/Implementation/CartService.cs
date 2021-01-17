@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessLayer.Implementation
@@ -66,6 +65,10 @@ namespace BusinessLayer.Implementation
             catch (SqlException e) when (e.Number == SqlErrorNumbers.DUPLICATEKEY)
             {
                 throw new BookstoreException("Already in cart");
+            }
+            catch (SqlException e) when (e.Number == 50000)
+            {
+                throw new BookstoreException(e.Message);
             }
         }
 

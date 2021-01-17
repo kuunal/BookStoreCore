@@ -34,3 +34,15 @@
 .mat-card {
   max-width: 225px;
 }
+
+:host /deep/.ngx-pagination .current {
+  background: #a03037 !important;
+  margin-bottom: 5%;
+  padding: 2% 5%;
+}
+
+:host /deep/ .ngx-pagination {
+  width: 100%;
+  margin-left: 0;
+  margin-bottom: 1rem;
+}

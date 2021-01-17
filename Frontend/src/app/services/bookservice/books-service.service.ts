@@ -13,9 +13,14 @@ export class BooksService {
   private _getTotalNumberOfBooksUri: string = `${environment.backendUri}book/total`;
   private _getCartUri: string = `${environment.backendUri}cart`;
   private _addToCartUri: string = `${environment.backendUri}cart`;
+  private _updateCartUri: string = `${environment.backendUri}cart/update`;
   private _refreshCart = new Subject();
 
   constructor(private _http: HttpService) {}
+
+  _deleteFromCartUri(bookId) {
+    return `${environment.backendUri}cart/${bookId}`;
+  }
 
   getBooks(params?) {
     return this._http.get(this._getBooksUri, params);
@@ -37,5 +42,16 @@ export class BooksService {
 
   getRefreshedCart() {
     return this._refreshCart.asObservable();
+  }
+
+  updateCart(data) {
+    return this._http
+      .post(data, this._updateCartUri)
+      .pipe(tap(() => this._refreshCart.next()));
+  }
+  deleteFromCart(bookId) {
+    return this._http
+      .delete(this._deleteFromCartUri(bookId))
+      .pipe(tap(() => this._refreshCart.next()));
   }
 }

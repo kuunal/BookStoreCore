@@ -34,7 +34,7 @@ namespace Caching
             string cachedResponse = await cachedService.GetCachedResponseAsync(key);
 
             if (!string.IsNullOrEmpty(cachedResponse) && context.HttpContext.Request.Method == "GET")
-            {
+                {
                     var contentResult = new ContentResult
                 {
                     Content =

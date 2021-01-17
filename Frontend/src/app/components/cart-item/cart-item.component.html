@@ -2,22 +2,34 @@
   <div class="container">
     <div class="container__book">
       <div class="book__left">
-        <img src="{{ cartItem.book?.image }}" alt="book" />
+        <img src="{{ cartItem.Book?.Image }}" alt="book" />
       </div>
       <div class="book__right">
-        <div class="book__title">{{ cartItem.book?.title | slice: 0:20 }}</div>
-        <div class="book__author">By {{ cartItem.book?.author }}</div>
-        <div class="book__price">Rs.{{ cartItem.book?.price }}</div>
+        <div class="book__title">{{ cartItem.Book?.Title | slice: 0:20 }}</div>
+        <div class="book__author">By {{ cartItem.Book?.Author }}</div>
+        <div class="book__price">Rs.{{ cartItem.Book?.Price }}</div>
       </div>
     </div>
   </div>
   <div class="container__quantity">
     <div class="quantity__left">
-      <button mat-icon-button>-</button>
-      <button class="quantity-btn">{{ cartItem?.itemQuantity }}</button>
-      <button mat-icon-button>+</button>
+      <button
+        mat-icon-button
+        [disabled]="cartItem?.ItemQuantity < 2"
+        (click)="decrementQuantity(cartItem?.ItemQuantity)"
+      >
+        -
+      </button>
+      <button class="quantity-btn">{{ cartItem?.ItemQuantity }}</button>
+      <button
+        mat-icon-button
+        [disabled]="cartItem && cartItem.ItemQuantity >= cartItem.Book.Quantity"
+        (click)="incrementQuantity(cartItem?.ItemQuantity)"
+      >
+        +
+      </button>
     </div>
-    <div class="quantity__right">Remove</div>
+    <div class="quantity__right" (click)="removeFromCart(cartItem.Book.Id)">Remove</div>
   </div>
   <div class="container__order">
     <button mat-stroked-button>PLACE ORDER</button>

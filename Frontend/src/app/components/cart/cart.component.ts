@@ -17,6 +17,12 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.getCartItems();
+    this._service.getRefreshedCart().subscribe(
+      (response) => {
+        this.getCartItems();
+      },
+      (error) => this._snackbar.open(error, '', { duration: 2000 })
+    );
     console.log('SAdsadsad', this.cartItems);
   }
 
@@ -34,8 +40,7 @@ export class CartComponent implements OnInit {
 
   getCartItems() {
     this._service.getCartItems().subscribe(
-      async (response) =>
-        (this.cartItems = await response['Data']['cartItems']['Book']),
+      (response) => (this.cartItems = response['Data']['cartItems']),
       (error) =>
         this._snackbar.open('Error fetching cart items', '', {
           duration: 2000,
