@@ -10,7 +10,9 @@
           (bookId)="initiateOrder($event, stepper)"
         ></app-cart-item></div
     ></mat-step>
-    <mat-step label=""> </mat-step>
-    <mat-step label=""> please fill the address </mat-step>
+    <mat-step label="Complete your address">
+      <app-address> </app-address>
+    </mat-step>
+    <mat-step label="Order Summary"> </mat-step>
   </mat-vertical-stepper>
 </div>

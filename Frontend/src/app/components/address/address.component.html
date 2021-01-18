@@ -1,1 +1,32 @@
-<p>address works!</p>
+<form [formGroup]="addressForm" *ngIf="!!address">
+  <mat-form-field appearance="outline">
+    <mat-label>Room No./ Name</mat-label>
+    <input type="text" matInput formControlName="room" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Street </mat-label>
+    <input type="text" matInput disabled formControlName="street" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Locality</mat-label>
+    <input type="text" matInput formControlName="locality" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>City</mat-label>
+    <input type="text" matInput formControlName="city" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Pincode</mat-label>
+    <input
+      type="text"
+      matInput
+      formControlName="pincode"
+      [attr.disabled]="isEditEnabled"
+    />
+  </mat-form-field>
+  <p>
+    <button mat-stroked-button (click)="isEditEnabled = !isEditEnabled">
+      {{ !isEditEnabled ? "Edit" : "Save" }}
+    </button>
+  </p>
+</form>
