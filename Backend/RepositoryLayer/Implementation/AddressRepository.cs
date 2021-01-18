@@ -10,9 +10,9 @@ namespace RepositoryLayer.Implementation
 {
     public class AddressRepository : IAddressRepository
     {
-        private readonly DBContext _dBContext;
+        private readonly IDBContext _dBContext;
 
-        public AddressRepository(DBContext dBContext)
+        public AddressRepository(IDBContext dBContext)
         {
             _dBContext = dBContext;
         }
@@ -21,7 +21,10 @@ namespace RepositoryLayer.Implementation
         {
             AddressResponseDto address = null;
             SqlConnection connection = _dBContext.GetConnection();
-            SqlCommand command = new SqlCommand("sp_address_get", connection);
+            SqlCommand command = new SqlCommand("sp_address_get", connection)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
             command.Parameters.AddWithValue("@userId", userId);
             await connection.OpenAsync();
             using(SqlDataReader reader = await command.ExecuteReaderAsync())

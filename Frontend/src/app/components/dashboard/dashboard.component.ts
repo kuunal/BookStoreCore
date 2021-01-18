@@ -30,6 +30,8 @@ export class DashboardComponent implements OnInit {
   currentPage: number = 1;
   p: number;
   paginatedBook: [];
+  isCartLoaded: boolean = false;
+  isBooksLoaded: boolean = false;
 
   constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
@@ -54,26 +56,6 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  async getBooks() {
-    const httpParams = new HttpParams({
-      fromObject: {
-        field: this.field,
-        sortby: this.sortby,
-        lastItemValue: this.lastItemValue,
-        limit: this.limit,
-      },
-    });
-    await this._service
-      .getBooks({
-        params: httpParams,
-      })
-      .toPromise()
-      .then((response) => {
-        this.books = response['data'];
-      })
-      .catch((error) => localStorage.clear());
-  }
-
   getBooks1() {
     const httpParams = new HttpParams({
       fromObject: {
@@ -92,7 +74,8 @@ export class DashboardComponent implements OnInit {
           this.books = resp['data'];
           this.paginatedBook = this.books.slice(0, this.pageSize);
         },
-        (error) => console.log(error)
+        (error) => console.log(error),
+        () => (this.isBooksLoaded = true)
       );
   }
 
@@ -102,7 +85,8 @@ export class DashboardComponent implements OnInit {
         this.cartItems = res['Data']['cartItems'];
         console.log(this.cartItems);
       },
-      (error) => console.log(error)
+      (error) => console.log(error),
+      () => (this.isCartLoaded = true)
     );
   }
 
@@ -127,5 +111,30 @@ export class DashboardComponent implements OnInit {
       pageNo * this.pageSize - this.pageSize,
       pageNo * this.pageSize
     );
+  }
+
+  filterBooks(value) {
+    switch (value) {
+      case 'PRICE_ASC':
+        this.books = [
+          ...this.books.sort((prev, next) => prev.price - next.price),
+          [],
+        ];
+        this.changePage(1);
+        break;
+      case 'PRICE_DESC':
+        this.books = [
+          ...this.books.sort((prev, next) => next.price - prev.price),
+        ];
+        this.changePage(1);
+        break;
+      case 'DESC':
+        this.books = [...this.books.sort((prev, next) => next.id - prev.id)];
+        this.changePage(1);
+        break;
+      case '*':
+        this.books = [...this.books.sort((prev, next) => prev.id - next.id)];
+        this.changePage(1);
+    }
   }
 }

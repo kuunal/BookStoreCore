@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using Greeting.TokenAuthorization;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using ModelLayer.AddressDto;
@@ -13,6 +14,7 @@ namespace BookStore.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [TokenAuthorizationFilter]
     public class AddressController : ControllerBase
     {
         private readonly IAddressService _service;

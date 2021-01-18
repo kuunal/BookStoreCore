@@ -12,6 +12,5 @@ namespace RepositoryLayer.Interface
     {
         Task<OrderResponseDto> Add(int userId, int bookId, int quantity, int addressId, string guid);
 
-
     }
 }

@@ -6,13 +6,12 @@
     <select
       name="filter"
       id="filter"
-      (mouseenter)="isDropDownOpen = !isDropDownOpen"
-      (mouseleave)="isDropDownOpen = !isDropDownOpen"
+      (change)="filterBooks($event.target.value)"
     >
-      <option value="">Sort by relevance</option>
-      <option value="">Price: High to Low</option>
-      <option value="">Price: Low to High</option>
-      <option value="">Newest Arrival</option>
+      <option value="RELEVANCE">Sort by relevance</option>
+      <option value="PRICE_DESC">Price: High to Low</option>
+      <option value="PRICE_ASC">Price: Low to High</option>
+      <option value="DESC">Newest Arrival</option>
     </select>
   </div>
   <div class="main" *ngIf="!!cartItems">
@@ -28,6 +27,7 @@
       "
     >
       <app-book
+        *ngIf="isCartLoaded && isBooksLoaded"
         [book]="book"
         [cartItem]="isAddedInCart(book)"
         (cartId)="addToCart($event)"
