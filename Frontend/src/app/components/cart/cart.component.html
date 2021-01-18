@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-vertical-stepper [linear]="true" #stepper>
+  <mat-vertical-stepper linear #stepper>
     <mat-step label="Place order">
       <div class="container__header">
         My Cart({{ cartItems && cartItems.length }})
@@ -13,6 +13,19 @@
     <mat-step label="Complete your address">
       <app-address> </app-address>
     </mat-step>
-    <mat-step label="Order Summary"> </mat-step>
+    <mat-step label="Order Summary">
+      <app-summary
+        *ngFor="let book of orderedBooks"
+        [book]="book"
+      ></app-summary>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="placeOrder()"
+        class="btn-checkout"
+      >
+        Checkout
+      </button>
+    </mat-step>
   </mat-vertical-stepper>
 </div>

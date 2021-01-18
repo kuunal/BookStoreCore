@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="container__book">
+    <div class="book__left">
+      <img src="{{ book?.Image }}" alt="book" />
+    </div>
+    <div class="book__right">
+      <div class="book__title">{{ book?.Title | slice: 0:20 }}</div>
+      <div class="book__author">By {{ book?.Author }}</div>
+      <div class="book__price">Rs.{{ book?.Price }}</div>
+    </div>
+  </div>
+</div>

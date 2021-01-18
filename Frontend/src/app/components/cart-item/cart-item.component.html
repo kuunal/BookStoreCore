@@ -1,16 +1,5 @@
 <div class="main">
-  <div class="container">
-    <div class="container__book">
-      <div class="book__left">
-        <img src="{{ cartItem.Book?.Image }}" alt="book" />
-      </div>
-      <div class="book__right">
-        <div class="book__title">{{ cartItem.Book?.Title | slice: 0:20 }}</div>
-        <div class="book__author">By {{ cartItem.Book?.Author }}</div>
-        <div class="book__price">Rs.{{ cartItem.Book?.Price }}</div>
-      </div>
-    </div>
-  </div>
+  <app-summary [book]="cartItem.Book"></app-summary>
   <div class="container__quantity">
     <div class="quantity__left">
       <button
@@ -34,7 +23,7 @@
     </div>
   </div>
   <div class="container__order">
-    <button mat-stroked-button (click)="initiateOrder(cartItem.Book.Id)">
+    <button mat-stroked-button (click)="initiateOrder(cartItem.Book)">
       PLACE ORDER
     </button>
   </div>

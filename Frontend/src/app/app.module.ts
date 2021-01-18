@@ -23,6 +23,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddressComponent } from './components/address/address.component';
+import { SummaryComponent } from './components/summary/summary.component';
+import { PlacedorderComponent } from './components/placedorder/placedorder.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { AddressComponent } from './components/address/address.component';
     CartComponent,
     CartItemComponent,
     AddressComponent,
+    SummaryComponent,
+    PlacedorderComponent,
   ],
   imports: [
     BrowserModule,

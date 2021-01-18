@@ -16,7 +16,6 @@ export class CartItemComponent implements OnInit {
   constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
 
   ngOnInit(): void {
-    console.log(this.cartItem);
     this.quantity = this.cartItem.itemQuantity;
   }
 

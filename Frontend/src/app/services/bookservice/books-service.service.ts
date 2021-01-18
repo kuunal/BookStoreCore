@@ -15,6 +15,7 @@ export class BooksService {
   private _addToCartUri: string = `${environment.backendUri}cart`;
   private _updateCartUri: string = `${environment.backendUri}cart/update`;
   private _addressCartUri: string = `${environment.backendUri}address`;
+  private _placeOrderUri: string = `${environment.backendUri}order`;
   private _refreshCart = new Subject();
 
   constructor(private _http: HttpService) {}
@@ -58,5 +59,9 @@ export class BooksService {
 
   getAddress() {
     return this._http.get(this._addressCartUri);
+  }
+
+  placeOrder(data) {
+    return this._http.post(data, this._placeOrderUri);
   }
 }

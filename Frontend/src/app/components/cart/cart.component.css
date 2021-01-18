@@ -23,3 +23,7 @@
   height: 34px;
   border-radius: 1px;
 }
+
+.btn-checkout {
+  text-align: end;
+}

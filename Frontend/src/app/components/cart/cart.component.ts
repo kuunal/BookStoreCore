@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
 
 @Component({
@@ -15,7 +16,12 @@ export class CartComponent implements OnInit {
   cartItems = [];
   orderedBooks: Array<number> = [];
 
-  constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
+  constructor(
+    private _service: BooksService,
+    private _snackbar: MatSnackBar,
+    private _router: Router,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.getCartItems();
@@ -46,6 +52,25 @@ export class CartComponent implements OnInit {
 
   initiateOrder(bookId: number, stepper: MatStepper) {
     this.orderedBooks.push(bookId);
+    console.log(this.orderedBooks);
     stepper.next();
+  }
+
+  placeOrder() {
+    let data = {
+      bookId: this.orderedBooks[0]['Id'],
+      addressId: 1,
+      quantity: 1,
+    };
+    this._service.placeOrder(data).subscribe(
+      (response) => {
+        console.log(response);
+        this._router.navigate(['order/success', response['data']['orderId']]);
+      },
+      (error) =>
+        this._snackbar.open('Unable to place order', '', {
+          duration: 2000,
+        })
+    );
   }
 }

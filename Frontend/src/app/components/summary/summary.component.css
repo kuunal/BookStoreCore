@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+}
+.book__left img {
+  height: 85px;
+  width: 65px;
+}
+
+.book__author {
+  font: normal normal normal 10px/12px Lato;
+  letter-spacing: 0px;
+  color: #9d9d9d;
+}
+
+.book__title {
+  font: normal normal normal 14px/17px Lato;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+
+.container__book {
+  display: flex;
+}
+
+.book__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0px 1em;
+}
+
+.book__right > div {
+  margin-bottom: 10px;
+}
