@@ -115,10 +115,15 @@ namespace BusinessLayer.Implementation
             }
         }
 
-
         public async Task<int> GetTotalNumberOfBooks()
         {
             return await _repository.GetTotal();
         }
+
+        public async Task<List<BookResponseDto>> GetSearchedBooks(string searchText)
+        {
+            return await _repository.GetSearchedBooks(searchText);
+        }
+
     }
 }

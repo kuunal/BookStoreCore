@@ -35,8 +35,8 @@ namespace BookStore.Controllers
         public async Task<IActionResult> AddBook([FromBody] BookRequestDto requestDto)
         {
             BookResponseDto responseDto = await _service.AddBook(requestDto);
-            return Ok(new Response<BookResponseDto> { 
-                StatusCode = (int) HttpStatusCode.OK,
+            return Ok(new Response<BookResponseDto> {
+                StatusCode = (int)HttpStatusCode.OK,
                 Message = ResponseMessage.BOOK_ADDED,
                 Data = responseDto
             });
@@ -57,7 +57,7 @@ namespace BookStore.Controllers
             List<BookResponseDto> bookList = await _service.GetBooks(field, limit, lastItemValue, sortby);
             return Ok(new Response<List<BookResponseDto>>
             {
-                StatusCode = (int) HttpStatusCode.OK,
+                StatusCode = (int)HttpStatusCode.OK,
                 Message = ResponseMessage.SUCCESSFUL,
                 Data = bookList
             });
@@ -151,6 +151,12 @@ namespace BookStore.Controllers
         {
             return await _service.GetTotalNumberOfBooks();
         }
-        
+
+        [HttpGet("search/{query}")]
+        public async Task<List<BookResponseDto>> GetSearchedBooks(string query)
+        {
+            return await _service.GetSearchedBooks(query);
+        }
+
     }
 }

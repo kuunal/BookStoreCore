@@ -15,5 +15,6 @@ namespace BusinessLayer.Interface
         Task<int> Delete(int id);
         Task<BookResponseDto> Update(int id, BookRequestDto requestDto);
         Task<int> GetTotalNumberOfBooks();
+        Task<List<BookResponseDto>> GetSearchedBooks(string searchText);
     }
 }
