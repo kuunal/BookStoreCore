@@ -16,6 +16,6 @@ namespace RepositoryLayer.Interface
         Task<BookResponseDto> Update(int id, BookRequestDto requestDto);
         Task<int> GetTotal();
         BookResponseDto MapReaderTobook(SqlDataReader reader);
-
+        Task<List<BookResponseDto>> GetSearchedBooks(string searchText);
     }
 }

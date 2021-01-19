@@ -183,5 +183,26 @@ namespace RepositoryLayer.Implementation
             await connection.CloseAsync();
             return total;
         }
+
+        public async Task<List<BookResponseDto>> GetSearchedBooks(string searchText)
+        {
+            List<BookResponseDto> book = new List<BookResponseDto>();
+            SqlConnection connection = _dBContext.GetConnection();
+            SqlCommand command = new SqlCommand("sp_books_search_by_title", connection)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@search_text", searchText);
+            await connection.OpenAsync();
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    book.Add(MapReaderTobook(reader));
+                }
+            }
+            await connection.CloseAsync();
+            return book;
+        }
     }
 }
