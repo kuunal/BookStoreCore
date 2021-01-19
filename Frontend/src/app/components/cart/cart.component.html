@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-vertical-stepper linear #stepper>
+  <mat-vertical-stepper [linear]="true" #stepper>
     <mat-step label="Place order">
       <div class="container__header">
         My Cart({{ cartItems && cartItems.length }})

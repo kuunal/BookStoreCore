@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin, Observable } from 'rxjs';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
@@ -32,8 +33,13 @@ export class DashboardComponent implements OnInit {
   paginatedBook: [];
   isCartLoaded: boolean = false;
   isBooksLoaded: boolean = false;
+  isAdmin: string = JSON.parse(localStorage.getItem('userData')).role;
 
-  constructor(private _service: BooksService, private _snackbar: MatSnackBar) {}
+  constructor(
+    private _service: BooksService,
+    private _snackbar: MatSnackBar,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getCartItems();
@@ -132,9 +138,13 @@ export class DashboardComponent implements OnInit {
         this.books = [...this.books.sort((prev, next) => next.id - prev.id)];
         this.changePage(1);
         break;
-      case '*':
+      default:
         this.books = [...this.books.sort((prev, next) => prev.id - next.id)];
         this.changePage(1);
     }
+  }
+
+  openDialog() {
+    // this.dialog.open();
   }
 }

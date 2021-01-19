@@ -3,7 +3,12 @@ import { error } from 'protractor';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpService } from '../httpservice/http-service.service';
-import { tap } from 'rxjs/operators';
+import {
+  debounce,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +27,10 @@ export class BooksService {
 
   _deleteFromCartUri(bookId) {
     return `${environment.backendUri}cart/${bookId}`;
+  }
+
+  _searchByTitleUri(value) {
+    return `${environment.backendUri}book/search?query=${value}`;
   }
 
   getBooks(params?) {
@@ -63,5 +72,9 @@ export class BooksService {
 
   placeOrder(data) {
     return this._http.post(data, this._placeOrderUri);
+  }
+
+  searchByTitle(searchText) {
+    return this._http.get(this._searchByTitleUri(searchText));
   }
 }

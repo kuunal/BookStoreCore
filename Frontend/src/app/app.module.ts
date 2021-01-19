@@ -25,6 +25,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AddressComponent } from './components/address/address.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { PlacedorderComponent } from './components/placedorder/placedorder.component';
+import { AddBookComponent } from './components/add-book/add-book.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PlacedorderComponent } from './components/placedorder/placedorder.compo
     AddressComponent,
     SummaryComponent,
     PlacedorderComponent,
+    AddBookComponent,
   ],
   imports: [
     BrowserModule,

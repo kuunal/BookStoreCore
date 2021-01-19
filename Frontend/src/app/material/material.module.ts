@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const material = [
   MatToolbarModule,
@@ -27,6 +28,7 @@ const material = [
   MatSelectModule,
   MatPaginatorModule,
   MatStepperModule,
+  MatDialogModule,
 ];
 
 @NgModule({

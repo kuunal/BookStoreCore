@@ -1,8 +1,16 @@
 <div class="container">
   <div class="sub-header">
-    <h3>
+    <h3 *ngIf="isAdmin === 'user'; else addBook">
       Books <sub>{{ "(" + total + ")" }}</sub>
     </h3>
+    <ng-template #addBook>
+      <div (click)="openDialog()">
+        <h3>
+          Add Books <sub>{{ "(" + total + ")" }}</sub>
+        </h3>
+      </div>
+    </ng-template>
+
     <select
       name="filter"
       id="filter"
@@ -27,7 +35,7 @@
       "
     >
       <app-book
-        *ngIf="isCartLoaded && isBooksLoaded"
+        *ngIf="isCartLoaded && !!paginatedBook"
         [book]="book"
         [cartItem]="isAddedInCart(book)"
         (cartId)="addToCart($event)"

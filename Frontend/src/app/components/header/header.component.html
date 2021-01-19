@@ -13,23 +13,24 @@
           placeholder="search"
           aria-label="Number"
           matInput
+          [formControl]="searchInput"
           [matAutocomplete]="auto"
         />
         <mat-icon matPrefix>search</mat-icon>
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="" [value]="option">
-            {{ option }}
+          <mat-option *ngFor="let option of searchedResult" [value]="option">
+            {{ option.title }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
     </form>
     <div class="container__cart">
       <div class="cart__right">
-        <button>
+        <button (click)="redirectToCart()">
           <span>Cart</span>
           <mat-icon>
             <img
-              src="https://public-v2links.adobecc.com/f01e3875-2a95-4975-7ad1-9a60aa079aec/component?params=component_id%3A6861d6b7-251c-4183-b182-3281feb8b845&params=version%3A0&token=1610220091_da39a3ee_e8cbe432263a0816954e5b3dd4a8110d432765c1&api_key=CometServer1"
+              src="https://public-v2links.adobecc.com/f01e3875-2a95-4975-7ad1-9a60aa079aec/component?params=component_id%3A6861d6b7-251c-4183-b182-3281feb8b845&params=version%3A0&token=1611134892_da39a3ee_9beb997a4bc9194400094d7466c1b56fbfafd695&api_key=CometServer1"
               alt="cart"
             />
           </mat-icon>
