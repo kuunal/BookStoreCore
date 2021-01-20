@@ -145,6 +145,11 @@ namespace BookStore.Controllers
             });
         }
 
+
+        /// <summary>
+        /// Gets the total number of books.
+        /// </summary>
+        /// <returns>Total number of books</returns>
         [HttpGet]
         [Route("total")]
         public async Task<int> GetTotalNumberOfBooks()
@@ -152,10 +157,22 @@ namespace BookStore.Controllers
             return await _service.GetTotalNumberOfBooks();
         }
 
-        [HttpGet("search/{query}")]
-        public async Task<List<BookResponseDto>> GetSearchedBooks(string query)
+        /// <summary>
+        /// Gets the searched books.
+        /// </summary>
+        /// <param name="query">Words in book title.</param>
+        /// <returns></returns>
+        [HttpGet("search")]
+        public async Task<IActionResult> GetSearchedBooks([FromQuery(Name ="query")] string query)
         {
-            return await _service.GetSearchedBooks(query);
+            List<BookResponseDto> bookList =  await _service.GetSearchedBooks(query);
+            return Ok(new Response<List<BookResponseDto>>
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Message = ResponseMessage.SUCCESSFUL,
+                Data = bookList
+            });
+
         }
 
     }
