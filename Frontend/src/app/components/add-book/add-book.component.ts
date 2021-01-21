@@ -70,7 +70,7 @@ export class AddBookComponent implements OnInit {
     body.append('Quantity', this.Quantity);
     if (this.bookForm.valid === true) {
       if (this.book) {
-        this._service.updateBook(body, this.book.Id).subscribe(
+        this._service.updateBook(body, this.book.id).subscribe(
           (response) => {},
           (error) =>
             this._snackbar.open('Error updating book', '', {

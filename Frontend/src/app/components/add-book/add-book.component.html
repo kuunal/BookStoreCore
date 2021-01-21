@@ -23,9 +23,16 @@
     <textarea matInput formControlName="Description"></textarea>
   </mat-form-field>
   <div class="btn">
-    <button mat-stroked-button class="add-btn" (click)="addBook()">
+    <button
+      mat-stroked-button
+      class="add-btn"
+      mat-dialog-close
+      (click)="addBook()"
+    >
       {{ this.book ? "SAVE" : "ADD" }}
     </button>
-    <button mat-stroked-button type="button">CANCEL</button>
+    <button mat-stroked-button type="button" mat-dialog-close="true">
+      CANCEL
+    </button>
   </div>
 </form>
