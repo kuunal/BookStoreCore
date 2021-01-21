@@ -26,6 +26,7 @@ import { AddressComponent } from './components/address/address.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { PlacedorderComponent } from './components/placedorder/placedorder.component';
 import { AddBookComponent } from './components/add-book/add-book.component';
+import { LoggedinGuard } from './services/loggedin-guard/loggedin.guard';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AddBookComponent } from './components/add-book/add-book.component';
       useClass: TokenInterceptorService,
       multi: true,
     },
+    LoggedinGuard,
   ],
   bootstrap: [AppComponent],
 })

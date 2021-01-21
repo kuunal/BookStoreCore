@@ -1,0 +1,35 @@
+form {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.mat-form-field {
+  width: 40%;
+}
+
+.mat-label {
+  font-size: 14px;
+}
+
+.description-field,
+.image-field {
+  width: 90%;
+}
+
+.btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.mat-stroked-button {
+  width: 40%;
+}
+
+.add-btn {
+  background: #a03037;
+  color: whitesmoke;
+}

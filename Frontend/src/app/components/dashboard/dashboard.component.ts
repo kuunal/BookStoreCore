@@ -9,8 +9,10 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
+import { AddBookComponent } from '../add-book/add-book.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,13 +40,14 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _service: BooksService,
     private _snackbar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _router: Router
   ) {}
 
   ngOnInit() {
     this.getCartItems();
 
-    this.getBooks1();
+    this.getBooks();
     this.getTotalNumberOfBooks();
     this._service.getRefreshedCart().subscribe(
       (response) => {
@@ -62,7 +65,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  getBooks1() {
+  getBooks() {
     const httpParams = new HttpParams({
       fromObject: {
         field: this.field,
@@ -80,7 +83,12 @@ export class DashboardComponent implements OnInit {
           this.books = resp['data'];
           this.paginatedBook = this.books.slice(0, this.pageSize);
         },
-        (error) => console.log(error),
+        (error) => {
+          if (error.status === 400) {
+            localStorage.clear();
+            this._router.navigate(['']);
+          }
+        },
         () => (this.isBooksLoaded = true)
       );
   }
@@ -120,6 +128,7 @@ export class DashboardComponent implements OnInit {
   }
 
   filterBooks(value) {
+    this.p = 1;
     switch (value) {
       case 'PRICE_ASC':
         this.books = [
@@ -145,6 +154,8 @@ export class DashboardComponent implements OnInit {
   }
 
   openDialog() {
-    // this.dialog.open();
+    let dialogref = this.dialog.open(AddBookComponent, {
+      width: '50%',
+    });
   }
 }

@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
     { value: 'admin', viewValue: 'admin' },
     { value: 'user', viewValue: 'user' },
   ];
+  isLoggedIn = !!localStorage.getItem('token');
 
   constructor(
     private builder: FormBuilder,

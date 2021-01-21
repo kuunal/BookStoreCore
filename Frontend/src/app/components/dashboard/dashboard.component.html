@@ -35,7 +35,7 @@
       "
     >
       <app-book
-        *ngIf="isCartLoaded && !!paginatedBook"
+        *ngIf="isCartLoaded && paginatedBook"
         [book]="book"
         [cartItem]="isAddedInCart(book)"
         (cartId)="addToCart($event)"

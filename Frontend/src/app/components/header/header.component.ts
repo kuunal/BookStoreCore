@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -12,6 +12,9 @@ import { BooksService } from 'src/app/services/bookservice/books-service.service
 export class HeaderComponent implements OnInit {
   searchInput = new FormControl();
   searchedResult: [];
+  isLoggedIn = !!localStorage.getItem('token');
+
+  @Input() isLoginRegister: boolean = false;
 
   constructor(private _router: Router, private _service: BooksService) {}
 

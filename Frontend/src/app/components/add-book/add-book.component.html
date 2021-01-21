@@ -1,1 +1,29 @@
-<p>add-book works!</p>
+<form [formGroup]="bookForm">
+  <mat-form-field floatLabel="always">
+    <mat-label>Author</mat-label>
+    <input type="text" matInput formControlName="Author" />
+  </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label>Title</mat-label>
+    <input type="text" matInput formControlName="Title" />
+  </mat-form-field>
+  <div class="image-field">
+    <input type="file" (change)="getImage($event)" />
+  </div>
+  <mat-form-field floatLabel="always">
+    <mat-label>Price</mat-label>
+    <input type="number" matInput formControlName="Price" />
+  </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label>Quantity</mat-label>
+    <input type="number" matInput formControlName="Quantity" />
+  </mat-form-field>
+  <mat-form-field floatLabel="always" class="description-field">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="Description"></textarea>
+  </mat-form-field>
+  <div class="btn">
+    <button mat-stroked-button class="add-btn" (click)="addBook()">ADD</button>
+    <button mat-stroked-button type="button">CANCEL</button>
+  </div>
+</form>

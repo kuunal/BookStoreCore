@@ -19,4 +19,8 @@ export class LoginService {
   register(data) {
     return this._http.post(data, this.registerBackendUri);
   }
+
+  isLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
 }
