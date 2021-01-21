@@ -73,7 +73,7 @@ namespace RepositoryLayer.Implementation
         /// </summary>
         /// <param name="requestDto">The request dto.</param>
         /// <returns>Boolean result in format 1/0</returns>
-        public async Task<int> Insert(BookRequestDto requestDto)
+        public async Task<int> Insert(BookRequestDto requestDto, string imageUrl)
         {
             SqlConnection connection = _dBContext.GetConnection();
             SqlCommand command = new SqlCommand("sp_books_insert", connection)
@@ -83,7 +83,7 @@ namespace RepositoryLayer.Implementation
             command.Parameters.AddWithValue("@description", requestDto.Description);
             command.Parameters.AddWithValue("@title", requestDto.Title);
             command.Parameters.AddWithValue("@author", requestDto.Author);
-            command.Parameters.AddWithValue("@image", requestDto.Image);
+            command.Parameters.AddWithValue("@image", imageUrl);
             command.Parameters.AddWithValue("@price", requestDto.Price);
             command.Parameters.AddWithValue("@quantity", requestDto.Quantity);
             await connection.OpenAsync();

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLayer.CloudServices;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interface;
 using ModelLayer.BookDto;
@@ -18,16 +19,20 @@ namespace BusinessLayer.Implementation
     {
         private readonly IBooksRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ICloudService _cloudService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BookService"/> class.
         /// </summary>
         /// <param name="repository">The book repository object.</param>
         /// <param name="mapper">The automapper object for mapping.</param>
-        public BookService(IBooksRepository repository, IMapper mapper)
+        public BookService(IBooksRepository repository
+            , IMapper mapper
+            , ICloudService cloudService)
         {
             _repository = repository;
             _mapper = mapper;
+            _cloudService = cloudService;
         }
 
         /// <summary>
@@ -36,13 +41,15 @@ namespace BusinessLayer.Implementation
         /// <param name="requestDto">The request dto.</param>
         /// <returns>BookResponseDto object</returns>
         /// <exception cref="BookstoreException">Invalid data</exception>
-        public async Task<BookResponseDto> AddBook(BookRequestDto requestDto)
+        public async Task<BookResponseDto> AddBook(BookRequestDto requestDto, string email)
         {
             try
             {
-                int id = await _repository.Insert(requestDto);
+                string uploadedImageUrl = await _cloudService.UpdloadToCloud(requestDto.Image, email);
+                int id = await _repository.Insert(requestDto, uploadedImageUrl);
                 BookResponseDto response = _mapper.Map<BookResponseDto>(requestDto);
                 response.Id = id;
+                response.Image = uploadedImageUrl;
                 return response;
 
             } catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)

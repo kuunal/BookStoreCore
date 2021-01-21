@@ -22,6 +22,7 @@ using EmailService;
 using BusinessLayer.MQServices;
 using Caching;
 using BusinessLayer.Utility;
+using BusinessLayer.CloudServices;
 
 namespace BookStore
 {
@@ -49,9 +50,12 @@ namespace BookStore
                 services.AddStackExchangeRedisCache(options => options.Configuration = cacheConfiguration.ConnectionString);
                 services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             }
+            CloudConfiguration cloudConfiguration = Configuration.GetSection("CLOUDINARY")
+                                        .Get<CloudConfiguration>();
             services.AddSingleton(cacheConfiguration);
             services.AddSingleton(emailConfiguration);
             services.AddSingleton(connectionString);
+            services.AddSingleton(cloudConfiguration);
             services.AddTransient<IDBContext, DBContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -70,6 +74,7 @@ namespace BookStore
             services.AddScoped<ICacheRepository, CacheRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<ICloudService, CloudService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSwagger();
             services.AddCors();

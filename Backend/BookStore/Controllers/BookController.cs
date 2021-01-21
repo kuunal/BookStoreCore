@@ -32,9 +32,10 @@ namespace BookStore.Controllers
         /// <returns>readystate and data</returns>
         [HttpPost]
         [TokenAuthorizationFilter("admin")]
-        public async Task<IActionResult> AddBook([FromBody] BookRequestDto requestDto)
+        public async Task<IActionResult> AddBook([FromForm] BookRequestDto requestDto)
         {
-            BookResponseDto responseDto = await _service.AddBook(requestDto);
+            string email = (string)HttpContext.Items["email"];
+            BookResponseDto responseDto = await _service.AddBook(requestDto, email);
             return Ok(new Response<BookResponseDto> {
                 StatusCode = (int)HttpStatusCode.OK,
                 Message = ResponseMessage.BOOK_ADDED,
