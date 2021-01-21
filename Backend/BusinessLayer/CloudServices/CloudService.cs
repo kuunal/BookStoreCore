@@ -23,7 +23,7 @@ namespace BusinessLayer.CloudServices
         public async Task<string> UpdloadToCloud(IFormFile image, string email)
         {
             var uploadResult = new ImageUploadResult();
-            if (image.Length > 0)
+            if (image != null && image.Length > 0)
             {
                 using (var stream = image.OpenReadStream())
                 {
