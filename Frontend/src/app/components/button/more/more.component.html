@@ -1,0 +1,25 @@
+<button
+  mat-icon-button
+  type="button"
+  class="delete-btn"
+  [matMenuTriggerFor]="menu"
+  *ngIf="isAdmin"
+  [style.opacity]="isFocused ? '1' : '0'"
+>
+  <img
+    class="delete-image"
+    src="https://cdn0.iconfinder.com/data/icons/modern-ui-1/64/dots-vertical-nav-more-512.png"
+    alt=""
+  />
+</button>
+
+<mat-menu #menu="matMenu" [hasBackdrop]="false">
+  <button mat-menu-item>
+    <mat-icon (click)="deleteBook()">delete</mat-icon>
+    <span>Delete</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon (click)="editBook()">create</mat-icon>
+    <span>Edit</span>
+  </button>
+</mat-menu>

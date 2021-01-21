@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BooksService } from 'src/app/services/bookservice/books-service.service';
 
@@ -14,17 +15,25 @@ export class AddBookComponent implements OnInit {
   constructor(
     private _builder: FormBuilder,
     private _service: BooksService,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public book
   ) {}
 
   ngOnInit(): void {
     this.bookForm = this._builder.group({
-      Author: ['', [Validators.required]],
-      Title: ['', [Validators.required]],
-      Description: ['', [Validators.required]],
-      Price: [9, [Validators.required]],
-      Quantity: [9, [Validators.required]],
+      Author: [this.book.author ? this.book.author : '', [Validators.required]],
+      Title: [this.book.title ? this.book.title : '', [Validators.required]],
+      Description: [
+        this.book.description ? this.book.description : '',
+        [Validators.required],
+      ],
+      Price: [this.book.price ? this.book.price : '', [Validators.required]],
+      Quantity: [
+        this.book.quantity ? this.book.quantity : '',
+        [Validators.required],
+      ],
     });
+    console.log(this.book);
   }
 
   get Author() {
@@ -60,17 +69,23 @@ export class AddBookComponent implements OnInit {
     body.append('Price', this.Price);
     body.append('Quantity', this.Quantity);
     if (this.bookForm.valid === true) {
-      let data = this.bookForm.value;
-      let dataWithImage = { ...data, Image: this.image };
-      let stringifiedData = JSON.stringify(dataWithImage);
-      this.image = null;
-      this._service.addBook(body).subscribe(
-        (response) => alert('successful'),
-        (error) =>
-          this._snackbar.open('Error adding book', '', {
-            duration: 2000,
-          })
-      );
+      if (this.book) {
+        this._service.updateBook(body, this.book.Id).subscribe(
+          (response) => {},
+          (error) =>
+            this._snackbar.open('Error updating book', '', {
+              duration: 2000,
+            })
+        );
+      } else {
+        this._service.addBook(body).subscribe(
+          (response) => {},
+          (error) =>
+            this._snackbar.open('Error adding book', '', {
+              duration: 2000,
+            })
+        );
+      }
     }
   }
 }

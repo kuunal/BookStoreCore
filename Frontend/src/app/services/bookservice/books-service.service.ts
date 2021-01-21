@@ -34,6 +34,14 @@ export class BooksService {
     return `${environment.backendUri}book/search?query=${value}`;
   }
 
+  _deleteBookUri(id) {
+    return `${environment.backendUri}book/${id}`;
+  }
+
+  _updateBookUri(id) {
+    return `${environment.backendUri}book/${id}`;
+  }
+
   getBooks(params?) {
     return this._http.get(this._getBooksUri, params);
   }
@@ -82,6 +90,18 @@ export class BooksService {
   addBook(data) {
     return this._http
       .post(data, this._addBookUri)
+      .pipe(tap(() => this._refreshCart.next()));
+  }
+
+  deleteBook(id) {
+    return this._http
+      .delete(this._deleteBookUri(id))
+      .pipe(tap(() => this._refreshCart.next()));
+  }
+
+  updateBook(data, id) {
+    return this._http
+      .post(data, this._updateBookUri(id))
       .pipe(tap(() => this._refreshCart.next()));
   }
 }
