@@ -23,6 +23,7 @@ export class BooksService {
   private _placeOrderUri: string = `${environment.backendUri}order`;
   private _addBookUri: string = `${environment.backendUri}book`;
   private _refreshCart = new Subject();
+  private _refreshBook = new Subject();
 
   constructor(private _http: HttpService) {}
 
@@ -32,6 +33,14 @@ export class BooksService {
 
   _searchByTitleUri(value) {
     return `${environment.backendUri}book/search?query=${value}`;
+  }
+
+  _deleteBookUri(id) {
+    return `${environment.backendUri}book/${id}`;
+  }
+
+  _updateBookUri(id) {
+    return `${environment.backendUri}book/${id}`;
   }
 
   getBooks(params?) {
@@ -54,6 +63,10 @@ export class BooksService {
 
   getRefreshedCart() {
     return this._refreshCart.asObservable();
+  }
+
+  getRefreshedBook() {
+    return this._refreshBook.asObservable();
   }
 
   updateCart(data) {
@@ -83,5 +96,23 @@ export class BooksService {
     return this._http
       .post(data, this._addBookUri)
       .pipe(tap(() => this._refreshCart.next()));
+  }
+
+  deleteBook(id) {
+    return this._http.delete(this._deleteBookUri(id)).pipe(
+      tap(() => {
+        this._refreshCart.next();
+        this._refreshBook.next();
+      })
+    );
+  }
+
+  updateBook(data, id) {
+    return this._http.post(data, this._updateBookUri(id)).pipe(
+      tap(() => {
+        this._refreshCart.next();
+        this._refreshBook.next();
+      })
+    );
   }
 }

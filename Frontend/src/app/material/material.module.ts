@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
 const material = [
   MatToolbarModule,
@@ -29,6 +30,7 @@ const material = [
   MatPaginatorModule,
   MatStepperModule,
   MatDialogModule,
+  MatMenuModule,
 ];
 
 @NgModule({

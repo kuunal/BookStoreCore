@@ -126,7 +126,7 @@ namespace BookStore.Controllers
         /// <returns>readystate and updated data or 404</returns>
         [HttpPost("{id}")]
         [TokenAuthorizationFilter("admin")]
-        public async Task<IActionResult> UpdateBook(int id, [FromBody] BookRequestDto requestDto)
+        public async Task<IActionResult> UpdateBook(int id, [FromForm] BookRequestDto requestDto)
         {
             string email = (HttpContext.Items["email"]).ToString();
             BookResponseDto book = await _service.Update(id, requestDto, email);

@@ -16,7 +16,7 @@ namespace ModelLayer.BookDto
         [Range(1, int.MaxValue, ErrorMessage = "Quantity cannot be negative!")]
         public int Quantity { get; set; }
         
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
     }

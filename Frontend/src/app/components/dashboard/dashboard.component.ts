@@ -55,6 +55,12 @@ export class DashboardComponent implements OnInit {
       },
       (error) => this._snackbar.open(error, '', { duration: 2000 })
     );
+    this._service.getRefreshedBook().subscribe(
+      (response) => {
+        this.books();
+      },
+      (error) => this._snackbar.open(error, '', { duration: 2000 })
+    );
     console.log(this.cartItems);
   }
 

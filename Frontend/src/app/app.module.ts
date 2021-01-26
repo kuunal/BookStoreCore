@@ -27,6 +27,7 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { PlacedorderComponent } from './components/placedorder/placedorder.component';
 import { AddBookComponent } from './components/add-book/add-book.component';
 import { LoggedinGuard } from './services/loggedin-guard/loggedin.guard';
+import { MoreComponent } from './components/button/more/more.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { LoggedinGuard } from './services/loggedin-guard/loggedin.guard';
     SummaryComponent,
     PlacedorderComponent,
     AddBookComponent,
+    MoreComponent,
   ],
   imports: [
     BrowserModule,
