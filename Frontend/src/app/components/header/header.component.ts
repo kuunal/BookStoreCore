@@ -35,4 +35,9 @@ export class HeaderComponent implements OnInit {
   redirectToCart() {
     this._router.navigate(['cart']);
   }
+
+  logout() {
+    localStorage.clear();
+    this._router.navigate(['login']);
+  }
 }
