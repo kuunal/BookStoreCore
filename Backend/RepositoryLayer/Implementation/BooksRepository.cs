@@ -64,7 +64,7 @@ namespace RepositoryLayer.Implementation
                 Title = (string)reader["title"],
                 Author = (string)reader["author"],
                 Image = (string)reader["image"],
-                Description = (string) reader["description"]
+                Description = (string)reader["description"]
             };
         }
 
@@ -144,7 +144,7 @@ namespace RepositoryLayer.Implementation
         /// <param name="id">The book identifier.</param>
         /// <param name="requestDto">The request dto.</param>
         /// <returns>Updated book</returns>
-        public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto)
+        public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto, string uploadedImageUrl)
         {
             BookResponseDto book = null;
             SqlConnection connection = _dBContext.GetConnection();
@@ -152,11 +152,11 @@ namespace RepositoryLayer.Implementation
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
-            command.Parameters.AddWithValue("@id",id);
+            command.Parameters.AddWithValue("@id", id);
             command.Parameters.AddWithValue("@description", requestDto.Description);
             command.Parameters.AddWithValue("@author", requestDto.Author);
             command.Parameters.AddWithValue("@title", requestDto.Title);
-            command.Parameters.AddWithValue("@image", requestDto.Image);
+            command.Parameters.AddWithValue("@image", uploadedImageUrl);
             command.Parameters.AddWithValue("@price", requestDto.Price);
             command.Parameters.AddWithValue("@quantity", requestDto.Quantity);
             await connection.OpenAsync();

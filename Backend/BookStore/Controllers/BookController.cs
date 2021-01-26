@@ -128,7 +128,8 @@ namespace BookStore.Controllers
         [TokenAuthorizationFilter("admin")]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] BookRequestDto requestDto)
         {
-            BookResponseDto book = await _service.Update(id, requestDto);
+            string email = (HttpContext.Items["email"]).ToString();
+            BookResponseDto book = await _service.Update(id, requestDto, email);
             if (book == null)
             {
                 return NotFound(new Response<BookResponseDto>

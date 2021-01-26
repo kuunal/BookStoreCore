@@ -65,7 +65,7 @@ export class AddBookComponent implements OnInit {
       let stringifiedData = JSON.stringify(dataWithImage);
       this.image = null;
       this._service.addBook(body).subscribe(
-        (response) => alert('successful'),
+        (response) => {},
         (error) =>
           this._snackbar.open('Error adding book', '', {
             duration: 2000,

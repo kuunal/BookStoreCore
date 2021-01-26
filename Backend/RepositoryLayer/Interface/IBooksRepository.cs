@@ -13,7 +13,7 @@ namespace RepositoryLayer.Interface
         Task<List<BookResponseDto>> Get(string field, int limit, string lastItemValue, string sortby);
         Task<BookResponseDto> Get(int id);
         Task<int> Delete(int id);
-        Task<BookResponseDto> Update(int id, BookRequestDto requestDto);
+        Task<BookResponseDto> Update(int id, BookRequestDto requestDto, string uploadedImageUrl);
         Task<int> GetTotal();
         BookResponseDto MapReaderTobook(SqlDataReader reader);
         Task<List<BookResponseDto>> GetSearchedBooks(string searchText);

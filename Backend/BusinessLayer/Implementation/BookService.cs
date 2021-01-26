@@ -52,7 +52,8 @@ namespace BusinessLayer.Implementation
                 response.Image = uploadedImageUrl;
                 return response;
 
-            } catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
+            }
+            catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
             {
                 throw new BookstoreException("Invalid data");
             }
@@ -83,7 +84,7 @@ namespace BusinessLayer.Implementation
             {
                 field = "author";
             }
-            if(sortby!="asc" && sortby != "desc")
+            if (sortby != "asc" && sortby != "desc")
             {
                 sortby = "asc";
             }
@@ -108,15 +109,23 @@ namespace BusinessLayer.Implementation
         /// <param name="requestDto">The request dto.</param>
         /// <returns>book information</returns>
         /// <exception cref="BookstoreException">Invalid data</exception>
-        public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto)
+        public async Task<BookResponseDto> Update(int id, BookRequestDto requestDto, string email)
         {
             try
             {
-                return await _repository.Update(id, requestDto);
-            } catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
+                string uploadedImageUrl = null;
+                if (requestDto.Image != null)
+                {
+                    uploadedImageUrl = await _cloudService.UpdloadToCloud(requestDto.Image, email);
+
+                }
+                return await _repository.Update(id, requestDto, uploadedImageUrl);
+            }
+            catch (SqlException e) when (e.Number == SqlErrorNumbers.CONSTRAINT_VOILATION)
             {
                 throw new BookstoreException("Invalid data");
-            }catch(SqlException e) when(e.Number == 50000)
+            }
+            catch (SqlException e) when (e.Number == 50000)
             {
                 throw new BookstoreException(e.Message);
             }
